@@ -36,6 +36,16 @@ export default {
           Token: token
         };
       },
+      filters: {
+        htmlfilter(s) {
+          s = s.replace(/<\s*script[^>]*>(.|[\r\n])*?<\s*\/script[^>]*>/gi, "");
+          s = s.replace(/<\s*style[^>]*>(.|[\r\n])*?<\s*\/style[^>]*>/gi, "");
+          s = s.replace(/<\/?[^>]+>/g, "");
+          s = s.replace(/\&[a-z]+;/gi, "");
+          s = s.replace(/\s+/g, "\n");
+          return s;
+        }
+      },
       methods: {
         doLogout() {
           storage.remove("userToken");

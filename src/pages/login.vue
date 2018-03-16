@@ -28,8 +28,9 @@
       <div class="ui-form-item">
         <label>
           <input type='checkbox' v-model='isChecked' />
-          <span>登录即表示您同意《<a class="link">超职用户协议</a>》</span>
+          <span>登录即表示您同意</span>
         </label>
+        《<a class="link">超职用户协议</a>》
       </div>
       <div class="ui-form-item">
         <mt-button size='large' @click.native='doLogin' :disabled="!isChecked" type="danger">登录超职</mt-button>

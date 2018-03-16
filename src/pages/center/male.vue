@@ -14,26 +14,34 @@
     <div class="cate-list">
       <mt-button :type="cateActive==0?'danger':'default'" @click='changeCate(0)' size="small">全部</mt-button><mt-button v-for='item in category' :key='item.id' :type="cateActive==item.id?'danger':'default'" @click='changeCate(item.id)' size="small">{{item.name}}</mt-button>
     </div>
-    <div class="product-list">
-      <div class="product-list-item" v-for="item in 10" :key='item'>
-          <div flex>
+    <div class="product-list" 
+      v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="10">
+      <div class="product-list-item" v-for="item in rows" :key='item.id'>
+          <div flex class="mb-10">
             <div flex-box="0">
-              <img src='http://aci-api.chaozhiedu.com/api/file/10241' style='width:6rem;margin-right:.5rem;'>
+              <img :src='item.img' style='width:6rem;margin-right:.5rem;'>
             </div>
             <div flex-box="1">
-              <div class="mb-10">ACI心理咨询师-普通心理</div>
-              <div class="mb-10">活动价:
-                <span class="t-orange">13200</span>元
-                <s class="t-xs t-gray">13200元</s>
+              <div class="mb-10 t-sm">{{item.name}}</div>
+              <div class="mb-10 t-sm">
+                <span class="t-orange t-bold">{{item.price}}</span>元
+                <s class="t-xs t-gray">{{item.original_price}}元</s>
               </div>
-              <div class='t-right'>
-                <mt-button type="danger" @click.native='$router.push("./pay")' size="small">立即购买</mt-button>
+              <div flex class="t-left">
+                <div flex-box='1'>
+                  <mt-button type="danger" @click.native='$router.push("./pay")' size="small">立即购买</mt-button></div>
+                <div flex-box='1'>
+                  <mt-button @click.native='$router.push("./pay")' size="small">课程介绍</mt-button>
+                </div>
               </div>
             </div>
           </div>
-          <div class="t-gray t-xs">
-            <span>课程介绍：</span>是我校理、工、经管类本科生必修的一门重要的基础课。也是工学、 经济学硕士研究生入学考试的一 门必考科目
-          </div>
+          <!-- <div class="t-gray t-xs">
+            <div>课程介绍：</div>
+            <div class="t-ell-2" style='height:1.4rem;'>{{item.description|htmlfilter}}</div>
+          </div> -->
       </div>
     </div>
   </div>
@@ -44,7 +52,15 @@ import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
-      cateActive: 0
+      cateActive: 0,
+      params: {
+        p: 1,
+        offset: 10,
+        category_id: ""
+      },
+      rows: [],
+      total: 10,
+      isloading: false
     };
   },
   computed: {
@@ -54,15 +70,36 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCategory: "getCategory"
+      getCategory: "getCategory",
+      getProductList: "getProductList"
     }),
     changeCate(cateId) {
-      console.log(cateId);
+      //console.log(cateId);
       this.cateActive = cateId;
+
+      this.params.category_id = cateId || "";
+      this.rows = [];
+      this.getRows(1);
+    },
+    getRows(page) {
+      this.isloading = true;
+      this.params.p = page ? page : this.params.p;
+      this.getProductList(this.params).then(({ code, data, msg }) => {
+        this.total = data.total;
+        this.rows = [...this.rows, ...data.rows];
+        this.$nextTick(() => {
+          this.isloading = false;
+        });
+      });
+    },
+    loadMore() {
+      if (this.rows.length >= this.total || this.isloading) return false;
+      this.getRows(++this.params.p);
     }
   },
   mounted() {
     this.getCategory();
+    this.changeCate(0);
   }
 };
 </script>

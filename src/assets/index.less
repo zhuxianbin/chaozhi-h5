@@ -65,6 +65,10 @@ input {
     .font-size(1rem);
 }
 
+.t-bold {
+    font-weight: bold;
+}
+
 .t-gray {
     color: #666;
 }
@@ -97,6 +101,10 @@ input {
     background: #f60;
 }
 
+.mint-button--default {
+    background: #fff;
+}
+
 .border(@position: bottom) {
     background-image: linear-gradient( 180deg, #d9d9d9, #d9d9d9 50%, transparent 50%);
     background-size: 100% 1px;
@@ -123,10 +131,26 @@ input {
     }
 }
 
-.btn-link{
-    padding:.5rem;
+.btn-link {
+    padding: 0.5rem;
     color: #08f;
     background: none;
-    border:0;
-    font-size:.6rem;
+    border: 0;
+    font-size: 0.6rem;
+}
+
+.t-ell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.t-ell-2 {
+    display: -webkit-box;
+    overflow: hidden;
+    white-space: normal !important;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }

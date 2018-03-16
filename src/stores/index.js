@@ -7,6 +7,7 @@ import api from "../utils/api";
 const Login = "Login";
 const getPhoneCaptcha = "getPhoneCaptcha";
 const getCategory = "getCategory";
+const getProductList = "getProductList";
 
 export default new Vuex.Store({
   state: {
@@ -27,9 +28,12 @@ export default new Vuex.Store({
     [getCategory]({ commit }, params) {
       let ret = api.getCategory(params);
       ret.then(res => {
-        commit(getCategory,res);
+        commit(getCategory, res);
       });
       return ret;
+    },
+    [getProductList]({ commit }, params) {
+      return api.getProductList(params);
     }
   },
   mutations: {
