@@ -51,11 +51,17 @@ export default {
 
     return ret;
   },
-  get(url, data) {
+  get(url, data, token) {
+    let headers = {};
+
+    if (token) {
+      headers.token = token;
+    }
+
     let params = this.formatParams(data);
     return fetch(`${baseUrl}${url}?${params}`, {
-      method:"GET",
-      headers:{},
+      method: "GET",
+      headers
     }).then(function(requst) {
       return requst.json();
     });

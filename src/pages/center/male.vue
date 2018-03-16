@@ -31,7 +31,7 @@
               </div>
               <div flex class="t-left">
                 <div flex-box='1'>
-                  <mt-button type="danger" @click.native='$router.push("./pay")' size="small">立即购买</mt-button></div>
+                  <mt-button type="danger" @click.native='$router.push({path:"./pay",query:{id:item.id}})' size="small">立即购买</mt-button></div>
                 <div flex-box='1'>
                   <mt-button @click.native='showDesc(item)' size="small">课程介绍</mt-button>
                 </div>
@@ -72,9 +72,9 @@ export default {
       rows: [],
       total: 10,
       isloading: false,
-      popups:{
-        show:false,
-        content:""
+      popups: {
+        show: false,
+        content: ""
       }
     };
   },
@@ -111,7 +111,7 @@ export default {
       if (this.rows.length >= this.total || this.isloading) return false;
       this.getRows(++this.params.p);
     },
-    showDesc(item){
+    showDesc(item) {
       this.popups.content = item.description;
       this.popups.show = true;
     }

@@ -8,6 +8,8 @@ const Login = "Login";
 const getPhoneCaptcha = "getPhoneCaptcha";
 const getCategory = "getCategory";
 const getProductList = "getProductList";
+const getPayInfo = "getPayInfo";
+const refreshPrice = "refreshPrice";
 
 export default new Vuex.Store({
   state: {
@@ -34,6 +36,12 @@ export default new Vuex.Store({
     },
     [getProductList]({ commit }, params) {
       return api.getProductList(params);
+    },
+    [getPayInfo]({ commit }, params) {
+      return api.getPayInfo(params);
+    },
+    [refreshPrice]({ commit }, params) {
+      return api.refreshPrice(params);
     }
   },
   mutations: {

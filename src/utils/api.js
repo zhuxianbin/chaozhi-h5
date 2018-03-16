@@ -1,4 +1,5 @@
 import async from "./async";
+import storage from "./storage";
 export default {
   /**
    * 取得登陆验证码
@@ -106,7 +107,8 @@ export default {
    * product_id 产品列表的ID字段
    * */
   getPayInfo: function(param) {
-    return async.post("/api/get-pay-info", param);
+    let { token } = storage.get("userToken");
+    return async.post("/api/get-pay-info", param, token);
   },
 
   /**
@@ -116,8 +118,9 @@ export default {
    * token 直接拼在url后
    * 示例: /api/pay/refresh-price/1802055004745729
    * */
-  refreshPrice: function(param) {
-    return async.post("/api/pay/refresh-price/" + param.token, param, "get");
+  refreshPrice: function(orderToken) {
+    let { token } = storage.get("userToken");
+    return async.get(`/api/pay/refresh-price/${orderToken}`, {}, token);
   },
 
   /**

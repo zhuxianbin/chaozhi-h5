@@ -4,18 +4,18 @@
     <div class="order-info ui-list">
         <div class='ui-list-item' flex>
           <div class='ui-list-label' flex-box="0">订单内容</div>
-          <div flex-box="1">购买ACI心理咨询师课程</div>
+          <div flex-box="1">购买{{product.name}}</div>
         </div>
         <div class='ui-list-item' flex>
           <div class='ui-list-label' flex-box="0">订单价格</div>
           <div flex-box="1">
-            <span class="t-orange">13000</span>元
+            <span class="t-orange">{{price}}</span>元
           </div>
         </div>
         <div class='ui-list-item' flex>
           <div class='ui-list-label' flex-box="0"></div>
           <div flex-box="1">
-            <mt-button plain size="small">刷新价格</mt-button>
+            <mt-button plain size="small" @click.native="doRefreshPrice">刷新价格</mt-button>
           </div>
         </div>
     </div>
@@ -62,17 +62,42 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
-      popupFail: true,
+      popupFail: false,
       popupSuccess: true,
-      popupPaying: true
+      popupPaying: true,
+      product: {},
+      orderId: "",
+      price: 0
     };
   },
-  methods: {},
+  methods: {
+    ...mapActions({
+      getPayInfo: "getPayInfo",
+      refreshPrice: "refreshPrice"
+    }),
+    doRefreshPrice() {
+      this.refreshPrice(this.orderId).then(({ code, data, msg }) => {
+        this.$toast(msg);
+        if (code == 200) {
+          this.price = data;
+        }
+      });
+    }
+  },
   mounted() {
-    let { id } = this.$route.query;
+    let { id: product_id } = this.$route.query;
+    this.getPayInfo({ product_id }).then(
+      ({ code, msg, price, token, product }) => {
+        this.price = price;
+        this.orderId = token;
+        this.product = product;
+      }
+    );
   }
 };
 </script>
