@@ -120,6 +120,7 @@ input {
     width: 90vw;
     overflow: hidden;
     .ui-alert-title {
+        position: relative;
         padding: 0.5rem;
         .border(bottom);
         font-size: 0.55rem;
@@ -128,6 +129,11 @@ input {
         padding: 1rem; //line-height: 2;
         font-size: 0.6rem;
         color: #666;
+    }
+    .ui-alert-close {
+        position: absolute;
+        right: .5rem;
+        top: .5rem;
     }
 }
 

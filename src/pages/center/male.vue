@@ -33,7 +33,7 @@
                 <div flex-box='1'>
                   <mt-button type="danger" @click.native='$router.push("./pay")' size="small">立即购买</mt-button></div>
                 <div flex-box='1'>
-                  <mt-button @click.native='$router.push("./pay")' size="small">课程介绍</mt-button>
+                  <mt-button @click.native='showDesc(item)' size="small">课程介绍</mt-button>
                 </div>
               </div>
             </div>
@@ -44,6 +44,17 @@
           </div> -->
       </div>
     </div>
+    <mt-popup
+      v-model="popups.show"
+      popup-transition="popup-fade">
+      <div class="ui-alert">
+        <div class="ui-alert-title">
+          <span>课程介绍</span>
+          <i @click="popups.show=false" class="ui-alert-close iconfont icon-guanbi"></i>
+        </div>
+        <div class="ui-alert-body" v-html="popups.content"></div>
+      </div>
+    </mt-popup>
   </div>
 </template>
 
@@ -60,7 +71,11 @@ export default {
       },
       rows: [],
       total: 10,
-      isloading: false
+      isloading: false,
+      popups:{
+        show:false,
+        content:""
+      }
     };
   },
   computed: {
@@ -95,6 +110,10 @@ export default {
     loadMore() {
       if (this.rows.length >= this.total || this.isloading) return false;
       this.getRows(++this.params.p);
+    },
+    showDesc(item){
+      this.popups.content = item.description;
+      this.popups.show = true;
     }
   },
   mounted() {
