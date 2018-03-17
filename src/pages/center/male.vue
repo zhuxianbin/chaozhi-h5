@@ -123,7 +123,7 @@ export default {
 };
 </script>
 
-<style lang='less'>
+<style lang='less' scoped>
 .page {
   padding: 40px 0 50px;
 }
