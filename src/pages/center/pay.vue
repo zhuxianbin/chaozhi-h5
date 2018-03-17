@@ -22,7 +22,8 @@
     <div class="t-gray t-sm" style='padding:.5rem;'>支持微信、支付宝、银联在线支付</div>
     <div style='padding:1rem;background:#fff;'>
       <div class='mb-20'>
-        <a v-if='payResult.url' target='_blank' :href='payResult.url' class="btn-pay mint-button mint-button--danger mint-button--large">进入支付页面</a>
+        <a v-if='payResult.url&&isAlipayOrWechat' target='_blank' :href='payResult.url' class="btn-pay mint-button mint-button--danger mint-button--large">进入支付页面</a>
+        <mt-button v-if='!isAlipayOrWechat' @click.native="doPay" type='danger' size='large'>进入支付页面</mt-button>
       </div>
       <div class="t-center">
         <img src="@/assets/20180316111851.png" style='width:100%;'/>
@@ -74,14 +75,16 @@ export default {
       orderId: "",
       price: 0,
       productId: "",
-      payResult: {}
+      payResult: {},
+      isAlipayOrWechat: false
     };
   },
   methods: {
     ...mapActions({
       getPayInfo: "getPayInfo",
       refreshPrice: "refreshPrice",
-      pay: "pay"
+      pay: "pay",
+      umsH5: "umsH5"
     }),
     doRefreshPrice() {
       this.refreshPrice(this.orderId).then(({ code, data, msg }) => {
@@ -97,12 +100,23 @@ export default {
         product_id: this.productId,
         channel: "ums"
       }).then(data => {
-        console.log(data);
+        //console.log(data);
         this.payResult = data;
       });
+    },
+    doPay() {
+      //能进入此处,说明用户不是双端访问者
+      //       与子偕老:
+      // aci-api.chaozhiedu.com/api/pay/umsH5/{token}/{type}
+      // 与子偕老:
+      this.umsH5({ orderId: this.orderId, type: "wechat" }).then(res => {
+        console.log(res);
+      });
+      // type 的取值 alipay wechat
     }
   },
   mounted() {
+    this.isAlipayOrWechat = this.$TOOLS.isAlipayOrWechat();
     let { id: product_id } = this.$route.query;
     this.productId = product_id;
     this.getPayInfo({ product_id }).then(
@@ -110,9 +124,11 @@ export default {
         this.price = price;
         this.orderId = token;
         this.product = product;
-        this.getQRcode();
+        this.isAlipayOrWechat && this.getQRcode();
       }
     );
+
+    //console.log(this.isAlipayOrWechat);
   }
 };
 </script>
@@ -134,8 +150,8 @@ export default {
     width: 3.2rem;
   }
 }
-.btn-pay{
+.btn-pay {
   line-height: 41px;
-  text-decoration:none;
+  text-decoration: none;
 }
 </style>

@@ -72,5 +72,19 @@ export default {
     Vue.prototype.$storage = storage;
 
     Vue.prototype.$cookie = $cookie;
+
+    Vue.prototype.$TOOLS = {
+      isWeChat() {
+        var userAgent = navigator.userAgent.toLowerCase();
+        return userAgent.match(/MicroMessenger/i) == "micromessenger";
+      },
+      isAlipay() {
+        var userAgent = navigator.userAgent.toLowerCase();
+        return userAgent.match(/Alipay/i) == "alipay";
+      },
+      isAlipayOrWechat() {
+        return this.isWeChat() || this.isAlipay();
+      }
+    };
   }
 };

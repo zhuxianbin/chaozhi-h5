@@ -131,9 +131,12 @@ export default {
    * */
   pay: function(param) {
     let { token } = storage.get("userToken");
-    return async.post("/api/pay", param,token);
+    return async.post("/api/pay", param, token);
   },
-
+  umsH5({ orderId, type }) {
+    let { token } = storage.get("userToken");
+    return async.get(`/api/pay/umsH5/${orderId}/${type}`, {}, token);
+  },
   /**
    * 取得课程分类
    * URL (/api/course/cateogry) METHOD GET

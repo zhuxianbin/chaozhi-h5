@@ -11,6 +11,7 @@ const getProductList = "getProductList";
 const getPayInfo = "getPayInfo";
 const refreshPrice = "refreshPrice";
 const pay = "pay";
+const umsH5 = "umsH5";
 
 export default new Vuex.Store({
   state: {
@@ -46,6 +47,9 @@ export default new Vuex.Store({
     },
     [pay]({ commit }, params) {
       return api.pay(params);
+    },
+    [umsH5]({ commit }, params) {
+      return api.umsH5(params);
     }
   },
   mutations: {
