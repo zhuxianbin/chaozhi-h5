@@ -10,6 +10,7 @@ const getCategory = "getCategory";
 const getProductList = "getProductList";
 const getPayInfo = "getPayInfo";
 const refreshPrice = "refreshPrice";
+const pay = "pay";
 
 export default new Vuex.Store({
   state: {
@@ -42,6 +43,9 @@ export default new Vuex.Store({
     },
     [refreshPrice]({ commit }, params) {
       return api.refreshPrice(params);
+    },
+    [pay]({ commit }, params) {
+      return api.pay(params);
     }
   },
   mutations: {

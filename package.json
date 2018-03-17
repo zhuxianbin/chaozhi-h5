@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --env.dev",
-    "build": "rimraf dist && webpack -p --progress --hide-modules"
+    "build": "rimraf dist && webpack -p --progress --hide-modules",
+    "push":"git push https://github.com/zhuxianbin/zhuxianbin.github.io.git master"
   },
   "dependencies": {
     "flex.css": "^1.1.7",

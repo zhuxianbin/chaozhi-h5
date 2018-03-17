@@ -130,7 +130,8 @@ export default {
    * product_id 产品列表的ID字段 channel 支付渠道 wechat,alipay
    * */
   pay: function(param) {
-    return async.post("/api/pay", param);
+    let { token } = storage.get("userToken");
+    return async.post("/api/pay", param,token);
   },
 
   /**

@@ -22,7 +22,7 @@
     <div class="t-gray t-sm" style='padding:.5rem;'>支持微信、支付宝、银联在线支付</div>
     <div style='padding:1rem;background:#fff;'>
       <div class='mb-20'>
-        <mt-button type="danger" size="large">进入支付页面</mt-button>
+        <a v-if='payResult.url' target='_blank' :href='payResult.url' class="btn-pay mint-button mint-button--danger mint-button--large">进入支付页面</a>
       </div>
       <div class="t-center">
         <img src="@/assets/20180316111851.png" style='width:100%;'/>
@@ -72,30 +72,45 @@ export default {
       popupPaying: true,
       product: {},
       orderId: "",
-      price: 0
+      price: 0,
+      productId: "",
+      payResult: {}
     };
   },
   methods: {
     ...mapActions({
       getPayInfo: "getPayInfo",
-      refreshPrice: "refreshPrice"
+      refreshPrice: "refreshPrice",
+      pay: "pay"
     }),
     doRefreshPrice() {
       this.refreshPrice(this.orderId).then(({ code, data, msg }) => {
         this.$toast(msg);
         if (code == 200) {
           this.price = data;
+          this.getQRcode();
         }
+      });
+    },
+    getQRcode() {
+      this.pay({
+        product_id: this.productId,
+        channel: "ums"
+      }).then(data => {
+        console.log(data);
+        this.payResult = data;
       });
     }
   },
   mounted() {
     let { id: product_id } = this.$route.query;
+    this.productId = product_id;
     this.getPayInfo({ product_id }).then(
       ({ code, msg, price, token, product }) => {
         this.price = price;
         this.orderId = token;
         this.product = product;
+        this.getQRcode();
       }
     );
   }
@@ -118,5 +133,9 @@ export default {
     color: #666;
     width: 3.2rem;
   }
+}
+.btn-pay{
+  line-height: 41px;
+  text-decoration:none;
 }
 </style>
