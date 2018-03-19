@@ -19,13 +19,18 @@
           </div>
         </div>
     </div>
-    <div class="t-gray t-sm" style='padding:.5rem;'>支持微信、支付宝、银联在线支付</div>
+    <div v-if="!isAlipayOrWechat" class="t-gray t-sm" style='padding:.5rem;'>支持微信、支付宝、银联在线支付</div>
     <div style='padding:1rem;background:#fff;'>
       <div class='mb-20'>
-        <a v-if='payResult.url&&isAlipayOrWechat' target='_blank' :href='payResult.url' class="btn-pay mint-button mint-button--danger mint-button--large">进入支付页面</a>
-        <mt-button v-if='!isAlipayOrWechat' @click.native="doPay" type='danger' size='large'>进入支付页面</mt-button>
+        <a v-if='payResult.url&&isWechat' target='_blank' :href='payResult.url' class="btn-pay mint-button mint-button--success mint-button--large">微信支付</a>
+        <a v-if='payResult.url&&isAlipay' target='_blank' :href='payResult.url' class="btn-pay mint-button mint-button--primary mint-button--large">支付宝支付</a>
+        <div v-if="!isAlipayOrWechat">
+          <mt-button class="mb-10 mint-button--success" @click.native="doPay('wechat')"  size='large'>微信</mt-button>
+          <mt-button class="mb-10" @click.native="doPay('alipay')" type='primary' size='large'>支付宝</mt-button>
+          <mt-button class="mb-10" @click.native="doPay('ums')" type='danger' size='large'>银联</mt-button>
+        </div>
       </div>
-      <div class="t-center">
+      <div v-if="!isAlipayOrWechat" class="t-center">
         <img src="@/assets/20180316111851.png" style='width:100%;'/>
       </div>
     </div>
@@ -76,7 +81,9 @@ export default {
       price: 0,
       productId: "",
       payResult: {},
-      isAlipayOrWechat: false
+      isAlipayOrWechat: false,
+      isWechat: false,
+      isAlipay: false
     };
   },
   methods: {
@@ -100,23 +107,35 @@ export default {
         product_id: this.productId,
         channel: "ums"
       }).then(data => {
-        //console.log(data);
         this.payResult = data;
       });
     },
-    doPay() {
+    doPay(payType) {
+      if (this.isAlipayOrWechat) {
+        window.location.href = this.payResult.url;
+      } else {
+        window.location.href = `http://aci-api.chaozhiedu.com/api/pay/umsH5/${
+          this.orderId
+        }/${payType}`;
+        // this.umsH5({ orderId: this.orderId, type: payType }).then(res => {
+        //   console.log(res);
+        // });
+      }
+
       //能进入此处,说明用户不是双端访问者
       //       与子偕老:
       // aci-api.chaozhiedu.com/api/pay/umsH5/{token}/{type}
       // 与子偕老:
-      this.umsH5({ orderId: this.orderId, type: "wechat" }).then(res => {
-        console.log(res);
-      });
+
       // type 的取值 alipay wechat
     }
   },
   mounted() {
+    console.log(this.$TOOLS);
     this.isAlipayOrWechat = this.$TOOLS.isAlipayOrWechat();
+    this.isAlipay = this.$TOOLS.isAlipay();
+    this.isWechat = this.$TOOLS.isWechat();
+
     let { id: product_id } = this.$route.query;
     this.productId = product_id;
     this.getPayInfo({ product_id }).then(
@@ -127,8 +146,6 @@ export default {
         this.isAlipayOrWechat && this.getQRcode();
       }
     );
-
-    //console.log(this.isAlipayOrWechat);
   }
 };
 </script>

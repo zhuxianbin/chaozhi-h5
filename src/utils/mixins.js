@@ -74,7 +74,7 @@ export default {
     Vue.prototype.$cookie = $cookie;
 
     Vue.prototype.$TOOLS = {
-      isWeChat() {
+      isWechat() {
         var userAgent = navigator.userAgent.toLowerCase();
         return userAgent.match(/MicroMessenger/i) == "micromessenger";
       },
@@ -83,7 +83,7 @@ export default {
         return userAgent.match(/Alipay/i) == "alipay";
       },
       isAlipayOrWechat() {
-        return this.isWeChat() || this.isAlipay();
+        return this.isWechat() || this.isAlipay();
       }
     };
   }
