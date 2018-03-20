@@ -56,7 +56,7 @@
           <!-- tab-container -->
           <mt-tab-container v-model="item.selected">
             <mt-tab-container-item id="1">
-              <embed :src="item.products.live_url"></embed>
+              <iframe v-if='item.selected==1' frameborder=0 style='margin:2vw;width:96vw;height:72vw;' :src='item.products.live_url'></iframe>
             </mt-tab-container-item>
             <mt-tab-container-item id="2">
               <div style='background:#f9f9f9;margin-top:.5rem;'>
