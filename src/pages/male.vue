@@ -2,10 +2,10 @@
   <div class="page">
     <mt-swipe style='height:140px;' :auto="5000">
       <mt-swipe-item>
-        <img src="../../assets/20180316155148.png" style='height:140px;'>
+        <img src="../assets/20180316155148.png" style='height:140px;'>
       </mt-swipe-item>
       <mt-swipe-item>
-        <img src="../../assets/20180316155148.png" style='height:140px;'>
+        <img src="../assets/20180316155148.png" style='height:140px;'>
       </mt-swipe-item>
     </mt-swipe>
     <div class="t-gray" style='background:#f9f9f9;padding:.5rem;'>

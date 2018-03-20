@@ -142,7 +142,7 @@ export default {
         // action="./#/center/index"
       });
     }
-  }
+  },
 };
 </script>
 

@@ -13,6 +13,10 @@ const refreshPrice = "refreshPrice";
 const pay = "pay";
 const umsH5 = "umsH5";
 
+const getCourseList = "getCourseList";
+const getCourseInfo = "getCourseInfo";
+const getCoursePlan = "getCoursePlan";
+
 export default new Vuex.Store({
   state: {
     category: []
@@ -50,6 +54,15 @@ export default new Vuex.Store({
     },
     [umsH5]({ commit }, params) {
       return api.umsH5(params);
+    },
+    [getCourseList]({ commit }, params) {
+      return api.getCourseList(params);
+    },
+    [getCourseInfo]({ commit }, params) {
+      return api.getCourseInfo(params);
+    },
+    [getCoursePlan]({ commit }, params) {
+      return api.getCoursePlan(params);
     }
   },
   mutations: {

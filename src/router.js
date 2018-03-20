@@ -1,15 +1,19 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import home from "./pages/home.vue";
+import index from "./pages/index.vue";
 import login from "./pages/login.vue";
 
-import layout from "./pages/center/layout.vue";
-import index from "./pages/center/index.vue";
+// import index from "./pages/center/index.vue";
+import courseList from "./pages/center/course.list.vue";
 import course from "./pages/center/course.vue";
-import male from "./pages/center/male.vue";
-import pay from "./pages/center/pay.vue";
+
+import male from "./pages/male.vue";
+import pay from "./pages/pay.vue";
 import info from "./pages/center/info.vue";
+
+import center from "./pages/center/layout.vue";
+import centerIndex from "./pages/center/index.vue";
 
 Vue.use(Router);
 
@@ -17,9 +21,16 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      redirect: '/center/index',
-      component: home
+      name: "root",
+      redirect: "/index"
+      //component: home
+    },
+    {
+      path: "/index",
+      name: "index",
+      component: index
+      //redirect: "/index"
+      //component: home
     },
     {
       path: "/login",
@@ -27,36 +38,40 @@ export default new Router({
       component: login
     },
     {
+      path: "/male",
+      name: "male",
+      component: male
+    },
+    {
+      path: "/pay",
+      name: "pay",
+      component: pay
+    },
+
+    {
       path: "/center",
       name: "center",
-      component: layout,
-      children: [
-        {
-          path: "index",
-          name: "index",
-          component: index
-        },
-        {
-          path: "course",
-          name: "course",
-          component: course
-        },
-        {
-          path: "male",
-          name: "male",
-          component: male
-        },
-        {
-          path: "pay",
-          name: "pay",
-          component: pay
-        },
-        {
-          path: "info",
-          name: "info",
-          component: info
-        }
-      ]
+      component: centerIndex
+    },
+    {
+      path: "/courseList",
+      name: "courseList",
+      component: courseList
+    },
+    {
+      path: "/course",
+      name: "course",
+      component: course
     }
+    // {
+    //   path: "/info",
+    //   name: "info",
+    //   component: info
+    // },
+    // {
+    //   path: "/me",
+    //   name: "me",
+    //   component: info
+    // }
   ]
 });

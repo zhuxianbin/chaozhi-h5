@@ -57,7 +57,8 @@ export default {
    * 无需参数，直接获取 ，注意要带上token
    * */
   getCourseList: function(param) {
-    return async.post("/api/course/list", param);
+    let { token } = storage.get("userToken");
+    return async.post("/api/course/list", param, token);
   },
 
   /**
@@ -67,7 +68,8 @@ export default {
    * pid 产品ID 必传 p 分页 必传 offset 每页显示的数量 默认为10
    * */
   getCourseInfo: function(param) {
-    return async.post("/api/course/information", param);
+    let { token } = storage.get("userToken");
+    return async.post("/api/course/information", param,token);
   },
 
   /**
@@ -77,7 +79,8 @@ export default {
    * pid 产品ID 必传 p 分页 必传 offset 每页显示的数量 默认为10
    * */
   getCoursePlan: function(param) {
-    return async.post("/api/course/plan", param);
+    let { token } = storage.get("userToken");
+    return async.post("/api/course/plan", param,token);
   },
 
   /**
