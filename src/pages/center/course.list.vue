@@ -16,7 +16,7 @@
     </div>
     <div>
       <div class="mb-10" style='background:#fff;box-shadow:0 1px 2px 0 #eee;' v-for='item in rows' :key='item.id'>
-        <div flex style='padding:.5rem;' @click='toCourse(item)'>
+        <div flex style='padding:.5rem;'>
           <div flex-box="0" style='margin-right:.5rem;'>
             <img :src='item.products.img' style='width:5rem;' >
           </div>
@@ -29,14 +29,14 @@
               </div>
               <div flex>
                 <div flex-box="0" class="t-right" style='width:2.5rem;'>总课时：</div>
-                <div flex-box="1">12节</div>
+                <div flex-box="1">{{item.products.total_course}}节</div>
               </div>
             </div>
           </div>
         </div>
         <div flex class="t-xs border-bottom" style='padding:0 .5rem .5rem;'>
-          <div flex-box="1">直播开始时间：<span class="t-orange">2018-03-25 18:00</span> </div>
-          <div flex-box="0">当前课时：第2节</div>
+          <div flex-box="1">直播开始时间：<span class="t-orange">{{item.products.live_time}}</span></div>
+          <div flex-box="0">当前课时：第{{item.products.current_course}}节</div>
         </div>
         <div class="t-xs">
           <mt-navbar v-model="item.selected">
