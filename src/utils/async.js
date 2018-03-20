@@ -32,23 +32,13 @@ export default {
       token
     });
 
-    // ret
-    //   .then(({ code, message }) => {
-    //     if (code != 200) {
-    //       window.$message({
-    //         type: "error",
-    //         message
-    //       });
-    //     }
-    //     if (code === 904) {
-    //       window.location.href = `./#/${platform}/login`;
-    //     }
-    //     if (code === 905) {
-    //       window.location.href = `./#/${platform}/login`;
-    //     }
-    //   })
-    //   .catch(res => {});
-
+    ret
+      .then(({ code, msg }) => {
+        if (code === 404) {
+          window.location.href = `./#/login`;
+        }
+      })
+      .catch(res => {});
     return ret;
   },
   get(url, data, token) {
