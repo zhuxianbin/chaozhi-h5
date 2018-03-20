@@ -137,12 +137,18 @@ export default {
           return this.$toast(msg);
         }
         this.$storage.set("userToken", { token, expired });
-        this.$router.push("./center/index");
+        this.$router.push("./index");
 
         // action="./#/center/index"
       });
+    },
+    mounted() {
+      let { token } = this.$storage.get("userToken");
+      if (token) {
+        this.$router.push("./index");
+      }
     }
-  },
+  }
 };
 </script>
 
