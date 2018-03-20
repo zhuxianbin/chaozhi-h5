@@ -17,10 +17,14 @@ const getCourseList = "getCourseList";
 const getCourseInfo = "getCourseInfo";
 const getCoursePlan = "getCoursePlan";
 
+const getUserInfo = "getUserInfo";
+
 export default new Vuex.Store({
   state: {
-    category: []
-    // menu: [],
+    category: [],
+    userInfo: {
+      user: {}
+    }
   },
   getters: {
     // theme: state => state.theme,
@@ -63,14 +67,21 @@ export default new Vuex.Store({
     },
     [getCoursePlan]({ commit }, params) {
       return api.getCoursePlan(params);
+    },
+    [getUserInfo]({ commit }, params) {
+      let ret = api.getUserInfo(params);
+      ret.then(res => {
+        commit(getUserInfo, res);
+      });
+      return ret;
     }
   },
   mutations: {
     [getCategory](state, { data, code }) {
       state.category = data;
+    },
+    [getUserInfo](state, res) {
+      state.userInfo = res;
     }
-    // [CHANGE_MENU](state, val) {
-    //     state.menu = val;
-    // }
   }
 });

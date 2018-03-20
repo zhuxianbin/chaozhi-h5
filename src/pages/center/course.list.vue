@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div flex class="mb-10" style='background:#fff;padding:.5rem;'>
+    <div v-if='userInfo.code==200&&!userInfo.orders' flex class="mb-10" style='background:#fff;padding:.5rem;'>
       <div flex-box="0" style='margin-right:1rem;'>
         <i style='color:#FF5900;font-size:2rem;' class="iconfont icon-course"></i>
       </div>
@@ -100,16 +100,21 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
       rows: [],
-      play:{
-        show:false,
-        src:""
+      play: {
+        show: false,
+        src: ""
       }
     };
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.userInfo
+    })
   },
   methods: {
     ...mapActions({
@@ -172,5 +177,4 @@ export default {
 .mint-tab-item {
   padding: 5px 0;
 }
-
 </style>

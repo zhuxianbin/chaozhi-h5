@@ -26,7 +26,8 @@ export default {
    * 无需参数，直接获取 ，注意要带上token
    * */
   getUserInfo: function(param) {
-    return async.post("/api/user", param || {}, "get");
+    let { token } = storage.get("userToken");
+    return async.get("/api/user", param || {}, token);
   },
 
   /**
@@ -69,7 +70,7 @@ export default {
    * */
   getCourseInfo: function(param) {
     let { token } = storage.get("userToken");
-    return async.post("/api/course/information", param,token);
+    return async.post("/api/course/information", param, token);
   },
 
   /**
@@ -80,7 +81,7 @@ export default {
    * */
   getCoursePlan: function(param) {
     let { token } = storage.get("userToken");
-    return async.post("/api/course/plan", param,token);
+    return async.post("/api/course/plan", param, token);
   },
 
   /**

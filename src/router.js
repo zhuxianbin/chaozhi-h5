@@ -62,12 +62,12 @@ export default new Router({
       path: "/course",
       name: "course",
       component: course
-    }
-    // {
-    //   path: "/info",
-    //   name: "info",
-    //   component: info
-    // },
+    },
+    {
+      path: "/info",
+      name: "info",
+      component: info
+    },
     // {
     //   path: "/me",
     //   name: "me",
