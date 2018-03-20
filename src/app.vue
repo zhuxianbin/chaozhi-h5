@@ -1,13 +1,13 @@
 <template>
   <div>
-    <mt-header v-if='tabActive!="login"' class='layout-header' fixed title="">
+    <mt-header v-if='currentRouter!="login"' class='layout-header' fixed title="">
       <mt-button v-if="showBack" slot="left" @click.native='$router.back()' icon="back"></mt-button>
       <div slot="right">
         <mt-button style='width:100%;' plain size="small">立即咨询</mt-button>
       </div>
     </mt-header>
     <router-view></router-view>
-    <mt-tabbar v-if='tabActive!="login"' :fixed="true" v-model="tabActive">
+    <mt-tabbar v-if='currentRouter!="login"' :fixed="true" v-model="tabActive">
       <mt-tab-item v-for='item in tabList' :key='item.id' :id="item.id">
         <i class='iconfont' :class='item.icon'></i>
         {{item.name}}
@@ -43,6 +43,7 @@ export default {
           icon: "icon-wode"
         }
       ],
+      currentRouter: "index",
       tabActive: "index"
     };
   },
@@ -58,7 +59,7 @@ export default {
           return item.id == name;
         });
         this.showBack = !has;
-        //this.tabActive = name;
+        this.currentRouter = name;
       },
       immediate: true
     }

@@ -142,13 +142,13 @@ export default {
         // action="./#/center/index"
       });
     },
-    mounted() {
+  },
+  mounted() {
       let { token } = this.$storage.get("userToken");
       if (token) {
         this.$router.push("./index");
       }
     }
-  }
 };
 </script>
 
