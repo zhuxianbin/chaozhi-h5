@@ -56,7 +56,7 @@ export default {
       return requst.json();
     });
   },
-  upload(url, data) {
+  upload(url, data,token) {
     let [requstUrl, formData] = [`${baseUrl}${url}`, new FormData()];
 
     for (const key in data) {
@@ -67,7 +67,7 @@ export default {
       method: "POST",
       headers: {
         //signature: this.getSign(this.formatParams(data)),
-        //token
+        token
       },
       body: formData
     })

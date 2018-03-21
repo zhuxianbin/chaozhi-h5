@@ -19,6 +19,11 @@ const getCoursePlan = "getCoursePlan";
 
 const getUserInfo = "getUserInfo";
 
+const submitUserInfo = "submitUserInfo";
+const addUserInfo = "addUserInfo";
+
+const fileUpload = "fileUpload";
+
 export default new Vuex.Store({
   state: {
     category: [],
@@ -74,6 +79,15 @@ export default new Vuex.Store({
         commit(getUserInfo, res);
       });
       return ret;
+    },
+    [submitUserInfo]({ commit }, params) {
+      return api.submitUserInfo(params);
+    },
+    [addUserInfo]({ commit }, params) {
+      return api.addUserInfo(params);
+    },
+    [fileUpload]({ commit }, params) {
+      return api.fileUpload(params);
     }
   },
   mutations: {

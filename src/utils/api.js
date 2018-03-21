@@ -38,7 +38,8 @@ export default {
    * email contacts_phone addr period idcard_front idcard_reverse edu degree entry_form avatar
    * */
   addUserInfo: function(param) {
-    return async.post("/api/user", param);
+    let { token } = storage.get("userToken");
+    return async.post("/api/user", param, token);
   },
 
   /**
@@ -49,7 +50,8 @@ export default {
    * email contacts_phone addr period idcard_front idcard_reverse edu degree entry_form avatar
    * */
   submitUserInfo: function(param) {
-    return async.post("/api/user/submit", param);
+    let { token } = storage.get("userToken");
+    return async.post("/api/user/submit", param, token);
   },
 
   /**
@@ -91,7 +93,8 @@ export default {
    * 上传名称为 file
    * */
   fileUpload: function(param) {
-    return async.post("/api/file/upload", param);
+    let { token } = storage.get("userToken");
+    return async.upload("/api/file/upload", param, token);
   },
 
   /**
