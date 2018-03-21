@@ -5,7 +5,7 @@
     </div>
     <div style='background:#fff;padding-top:1rem;'>
       <div class="t-center t-lg">超职课程</div>
-      <div class='swipe-box' style='height:50vh;'>
+      <div class='swipe-box' style='height:52vh;'>
         <div class="iconfont icon-back"></div>
         <div class="iconfont icon-right"></div>
         <mt-swipe :showIndicators='false'>

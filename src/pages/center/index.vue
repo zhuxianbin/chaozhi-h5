@@ -44,7 +44,7 @@
         <span v-if='userInfo.code==201' class='t-gray'>未报名</span>
         <span v-if='userInfo.code==200' style="color: green">已报名</span>
       </mt-cell>
-      <mt-cell @click.native='userInfo.code==200&&$router.push("./courseList")' title="我购买的课程" is-link>
+      <mt-cell @click.native='userInfo.courseCount?$router.push("./courseList"):$toast("您还没有购买课程")' title="我购买的课程" is-link>
         <span>已购{{courseCount}}个课程</span>
       </mt-cell>
       <mt-cell title="客服热线" :to='"tel:"+tel' is-link>
