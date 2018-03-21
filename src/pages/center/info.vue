@@ -148,16 +148,20 @@ export default {
       getUserInfo: "getUserInfo"
     }),
     doSubmit() {
-      this.submitUserInfo(this.params).then(({ code, msg }) => {
-        this.$toast(msg);
-        code == 200 && this.getUserInfo();
-      });
+      this.submitUserInfo({ ...this.params, ...{ entry_form: -1 } }).then(
+        ({ code, msg }) => {
+          this.$toast(msg);
+          code == 200 && this.getUserInfo();
+        }
+      );
     },
     doSave() {
-      this.addUserInfo(this.params).then(({ code, msg }) => {
-        this.$toast(msg);
-        code == 200 && this.getUserInfo();
-      });
+      this.addUserInfo({ ...this.params, ...{ entry_form: -1 } }).then(
+        ({ code, msg }) => {
+          this.$toast(msg);
+          code == 200 && this.getUserInfo();
+        }
+      );
     }
   },
   mounted() {

@@ -2,7 +2,7 @@
 //import MD5 from 'md5.js';
 // import qs from 'querystring';
 import { baseUrl } from "./config.js";
-
+import storage from "./storage.js";
 export default {
   baseUrl,
   // getToken(url, data) {
@@ -34,7 +34,8 @@ export default {
 
     ret
       .then(({ code, msg }) => {
-        if (code === 404) {
+        if (code >= 600 && code < 700) {
+          storage.remove("userToken");
           window.location.href = `./#/login`;
         }
       })
@@ -49,14 +50,23 @@ export default {
     }
 
     let params = this.formatParams(data);
-    return fetch(`${baseUrl}${url}?${params}`, {
+    let ret = fetch(`${baseUrl}${url}?${params}`, {
       method: "GET",
       headers
     }).then(function(requst) {
       return requst.json();
     });
+    ret
+      .then(({ code, msg }) => {
+        if (code >= 600 && code < 700) {
+          storage.remove("userToken");
+          window.location.href = `./#/login`;
+        }
+      })
+      .catch(res => {});
+    return ret;
   },
-  upload(url, data,token) {
+  upload(url, data, token) {
     let [requstUrl, formData] = [`${baseUrl}${url}`, new FormData()];
 
     for (const key in data) {

@@ -160,5 +160,9 @@ export default {
    * */
   getPayResult: function(param) {
     return async.post(`/api/pay/result/${param.token}`, param, "get");
+  },
+  getCourseCount: function(param) {
+    let { token } = storage.get("userToken");
+    return async.post(`/api/course/count`, param, token);
   }
 };

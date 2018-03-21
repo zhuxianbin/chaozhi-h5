@@ -21,11 +21,11 @@
           您已参考网校的ACI注册国际心理咨询师课程培训，可以进行报名。
         </div>
         <div class="t-xs">
-          <mt-button type='danger' size='small'>点击填写报名资料</mt-button>
+          <mt-button type='danger' @click.native='$router.push("./info")' size='small'>点击填写报名资料</mt-button>
         </div>
       </div>
     </div>
-    <div v-if='userInfo.code==200&&!userInfo.orders' flex class="mb-20 user-info">
+    <div v-if='userInfo.code==200&&!userInfo.courseCount' flex class="mb-20 user-info">
       <div flex-box="0" style='margin-right:1rem;'>
         <i style='color:#FF5900;font-size:2rem;' class="iconfont icon-course"></i>
       </div>
@@ -45,7 +45,7 @@
         <span v-if='userInfo.code==200' style="color: green">已报名</span>
       </mt-cell>
       <mt-cell @click.native='userInfo.code==200&&$router.push("./courseList")' title="我购买的课程" is-link>
-        <span>已购{{userInfo.orders?userInfo.orders.length:0}}个课程</span>
+        <span>已购{{courseCount}}个课程</span>
       </mt-cell>
       <mt-cell title="客服热线" :to='"tel:"+tel' is-link>
         <span>{{tel}}</span>
@@ -68,7 +68,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      getUserInfo: "getUserInfo"
+      getUserInfo: "getUserInfo",
+      getCourseCount:"getCourseCount"
     }),
     doLogout() {
       this.$storage.remove("userToken");
@@ -77,11 +78,13 @@ export default {
   },
   computed: {
     ...mapState({
-      userInfo: state => state.userInfo
+      userInfo: state => state.userInfo,
+      courseCount: state => state.courseCount
     })
   },
   mounted() {
     this.getUserInfo();
+    this.getCourseCount();
   }
 };
 </script>
