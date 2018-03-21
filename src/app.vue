@@ -3,7 +3,7 @@
     <mt-header v-if='currentRouter!="login"' class='layout-header' fixed title="">
       <mt-button v-if="showBack" slot="left" @click.native='$router.back()' icon="back"></mt-button>
       <div slot="right">
-        <mt-button style='width:100%;' plain size="small">立即咨询</mt-button>
+        <mt-button style='width:100%;' @click.native='doCallServer' plain size="small">立即咨询</mt-button>
       </div>
     </mt-header>
     <router-view></router-view>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -62,6 +63,19 @@ export default {
         this.currentRouter = name;
       },
       immediate: true
+    }
+  },
+  methods: {
+    // ...mapActions({
+
+    // }),
+    doCallServer() {
+      console.log(this);
+      this.$messagebox
+        .prompt("请输入您的联系电话")
+        .then(({ value, action }) => {
+          console.log(value, action);
+        });
     }
   },
   mounted() {
