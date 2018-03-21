@@ -7,10 +7,10 @@
       <div class="t-center t-lg">超职课程</div>
       <div style='height:50vh'>
         <mt-swipe :showIndicators='false'>
-          <mt-swipe-item v-for='item in 4' :key="item">
+          <mt-swipe-item>
             <div style='padding:1rem 2rem;'>
               <div class="t-center mb-10">
-                <img src='../assets/images/20180317235843.png' style='width:60vw;'>
+                <img src='http://www.chaozhiedu.com/static/images/Bitmap1.png' style='width:60vw;'>
               </div>
               <div>
                 <div class="t-center t-md mb-10">
@@ -18,6 +18,51 @@
                 </div>
                 <div class="t-gray t-sm">
                   教育部规定每个学校必须配备心理咨询师、中小学增设心理课外辅导一些灾难事件也需要更多心理咨询师加入安慰家属服务行列，如汶川地震、马航失踪……
+                </div>
+              </div>
+            </div>
+          </mt-swipe-item>
+          <mt-swipe-item>
+            <div style='padding:1rem 2rem;'>
+              <div class="t-center mb-10">
+                <img src='http://www.chaozhiedu.com/static/images/Bitmap2.png' style='width:60vw;'>
+              </div>
+              <div>
+                <div class="t-center t-md mb-10">
+                  经济师
+                </div>
+                <div class="t-gray t-sm">
+                  2018年经济师报考条件：凡中华人民共和国公民、遵守国家法律法规、恪守职业道德、并具备下列条件的，可申请参加初/中级经济师考试
+                </div>
+              </div>
+            </div>
+          </mt-swipe-item>
+          <mt-swipe-item>
+            <div style='padding:1rem 2rem;'>
+              <div class="t-center mb-10">
+                <img src='http://www.chaozhiedu.com/static/images/Bitmap3.png' style='width:60vw;'>
+              </div>
+              <div>
+                <div class="t-center t-md mb-10">
+                  人力资源管理师
+                </div>
+                <div class="t-gray t-sm">
+                  尽快考人力资源师证书，错过本次考试，将延误至少半年，甚至是一辈子
+                </div>
+              </div>
+            </div>
+          </mt-swipe-item>
+          <mt-swipe-item>
+            <div style='padding:1rem 2rem;'>
+              <div class="t-center mb-10">
+                <img src='http://www.chaozhiedu.com/static/images/Bitmap4.png' style='width:60vw;'>
+              </div>
+              <div>
+                <div class="t-center t-md mb-10">
+                  营养师
+                </div>
+                <div class="t-gray t-sm">
+                  通常只涉及教学大纲，并不会通过条框教材进行限定 。课程是由ACI授权 讲师根据教学大纲设置课程内容和考核方式
                 </div>
               </div>
             </div>
@@ -76,43 +121,43 @@
         </div>
         <div class='teachers'>
           <div class='teacher-item'>
-            <div style='border:4px solid #AFE0FF;padding:.5rem;border-radius:10px;' class="t-center">
-                <img style='width:36vw;' src='../assets/images/20180318000758.png'>
-                <p style='color:#029EFF' class="t-md">029EFF</p>
+            <div class="t-center teacher-item-content">
+                <img style='width:36vw;' src='http://www.chaozhiedu.com/static/images/%E9%83%AD%E8%81%AA%E8%8D%A3.png'>
+                <p style='color:#029EFF' class="t-md">郭聪荣</p>
                 <p class="t-sm t-left" style='white-space: normal;'>
-                  心理学硕士，心理专家。
-                  北京中医药大学心理讲师，
-                  共青团心理辅导员培训与督导师</p>
+                  心理学硕士，心理专家。 北京中医药大学心理讲师，共青团心理辅导员培训与督导师</p>
             </div>
           </div>
-           <div style='display:inline-block;width:50vw;margin:.5rem;'>
-            <div style='border:4px solid #AFE0FF;padding:.5rem;' class="t-center">
-                <img style='width:36vw;' src='../assets/images/20180318000758.png'>
-                <p style='color:#029EFF' class="t-md">029EFF</p>
+           <div class='teacher-item'>
+            <div class="t-center teacher-item-content">
+                <img style='width:36vw;' src='http://www.chaozhiedu.com/static/images/%E7%8E%8B%E6%B5%B7%E7%87%95.png'>
+                <p style='color:#029EFF' class="t-md">王海燕</p>
                 <p class="t-sm" style='white-space: normal;'>
-                  心理学硕士，心理专家。
-                  北京中医药大学心理讲师，
-                  共青团心理辅导员培训与督导师</p>
+                  心理学硕士，心理治疗师，北大医院心理医生</p>
             </div>
           </div>
-           <div style='display:inline-block;width:50vw;margin:.5rem;'>
-            <div style='border:4px solid #AFE0FF;padding:.5rem;' class="t-center">
-                <img style='width:36vw;' src='../assets/images/20180318000758.png'>
-                <p style='color:#029EFF' class="t-md">029EFF</p>
+           <div class='teacher-item'>
+            <div class="t-center teacher-item-content">
+                <img style='width:36vw;' src='http://www.chaozhiedu.com/static/images/%E9%83%91%E6%B5%B7%E8%8B%B1.png'>
+                <p style='color:#029EFF' class="t-md">郑海英</p>
                 <p class="t-sm" style='white-space: normal;'>
-                  心理学硕士，心理专家。
-                  北京中医药大学心理讲师，
-                  共青团心理辅导员培训与督导师</p>
+                  硕士研究生，国家二级心理咨询师，华北理工大学心理学院教师，华北理工大学附属医院心理科心理咨询师</p>
             </div>
           </div>
-           <div style='display:inline-block;width:50vw;margin:.5rem;'>
-            <div style='border:4px solid #AFE0FF;padding:.5rem;' class="t-center">
-                <img style='width:36vw;' src='../assets/images/20180318000758.png'>
-                <p style='color:#029EFF' class="t-md">029EFF</p>
+           <div class='teacher-item'>
+            <div class="t-center teacher-item-content">
+                <img style='width:36vw;' src='http://www.chaozhiedu.com/static/images/%E6%A0%91%E5%BF%83.png'>
+                <p style='color:#029EFF' class="t-md">树心</p>
                 <p class="t-sm" style='white-space: normal;'>
-                  心理学硕士，心理专家。
-                  北京中医药大学心理讲师，
-                  共青团心理辅导员培训与督导师</p>
+                  心理学硕士，国内实力派咨询专家，二级心理咨询师</p>
+            </div>
+          </div>
+          <div class='teacher-item'>
+            <div class="t-center teacher-item-content">
+                <img style='width:36vw;' src='http://www.chaozhiedu.com/static/images/%E6%9E%9C%E6%9E%9C.png'>
+                <p style='color:#029EFF' class="t-md">果果</p>
+                <p class="t-sm" style='white-space: normal;'>
+                  心理学硕士，心理治疗师</p>
             </div>
           </div>
         </div>
@@ -226,8 +271,15 @@ export default {};
 }
 
 .teacher-item {
+  vertical-align: top;
   display: inline-block;
   width: 50vw;
   margin: 0.5rem;
+}
+.teacher-item-content {
+  border: 4px solid #afe0ff;
+  padding: 0.5rem;
+  border-radius: 10px;
+  height:46vh;
 }
 </style>
