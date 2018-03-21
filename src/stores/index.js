@@ -93,7 +93,9 @@ export default new Vuex.Store({
       return api.fileUpload(params);
     },
     [getCourseCount]({ commit }, params) {
-      return api.getCourseCount(params);
+      api.getCourseCount(params).then((res)=>{
+        commit(getCourseCount,res);
+      });
     }
   },
   mutations: {

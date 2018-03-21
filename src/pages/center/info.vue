@@ -149,19 +149,30 @@ export default {
     }),
     doSubmit() {
       this.submitUserInfo({ ...this.params, ...{ entry_form: -1 } }).then(
-        ({ code, msg }) => {
+        ({ code, data_msg, msg }) => {
           this.$toast(msg);
           code == 200 && this.getUserInfo();
+          data_msg && this.errorAlert(data_msg);
         }
       );
     },
     doSave() {
       this.addUserInfo({ ...this.params, ...{ entry_form: -1 } }).then(
-        ({ code, msg }) => {
+        ({ code, data_msg, msg }) => {
           this.$toast(msg);
           code == 200 && this.getUserInfo();
+
+          data_msg && this.errorAlert(data_msg);
         }
       );
+    },
+    errorAlert(data_msg) {
+      let [key] = Object.keys.call(this, data_msg);
+      const errs = {
+        edu_num: "学历编号"
+      };
+
+      this.$toast(`${errs[key]||""}错误`);
     }
   },
   mounted() {

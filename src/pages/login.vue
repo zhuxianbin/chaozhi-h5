@@ -35,7 +35,7 @@
       <div class="ui-form-item">
         <mt-button size='large' @click.native='doLogin' :disabled="!isChecked" type="danger">登录超职</mt-button>
       </div>
-      <div class="ui-form-item t-center">
+      <div class="ui-form-item t-center" @click="$router.push('./index')">
         <i class="iconfont icon-return link"></i>
         <a class="link">返回</a>
       </div>

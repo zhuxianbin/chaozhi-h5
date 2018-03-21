@@ -5,7 +5,9 @@
     </div>
     <div style='background:#fff;padding-top:1rem;'>
       <div class="t-center t-lg">超职课程</div>
-      <div style='height:50vh'>
+      <div class='swipe-box' style='height:50vh;'>
+        <div class="iconfont icon-back"></div>
+        <div class="iconfont icon-right"></div>
         <mt-swipe :showIndicators='false'>
           <mt-swipe-item>
             <div style='padding:1rem 2rem;'>
@@ -280,6 +282,19 @@ export default {};
   border: 4px solid #afe0ff;
   padding: 0.5rem;
   border-radius: 10px;
-  height:46vh;
+  height: 46vh;
+}
+
+.swipe-box {
+  position: relative;
+  .iconfont {
+    position: absolute;
+    top: 3rem;
+    font-size: 2rem;
+    color: #ccc;
+  }
+  .icon-right {
+    right: 0;
+  }
 }
 </style>
