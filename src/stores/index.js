@@ -30,7 +30,9 @@ export default new Vuex.Store({
   state: {
     category: [],
     userInfo: {
-      user: {}
+      user: {
+        avatar_file:""
+      }
     },
     courseCount:0,
   },
