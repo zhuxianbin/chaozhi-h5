@@ -21,7 +21,7 @@
     </div>
     <div v-if="!isAlipayOrWechat" class="t-gray t-sm" style='padding:.5rem;'>支持微信、支付宝、银联在线支付</div>
     <div style='padding:1rem;background:#fff;'>
-      <div class='mb-20'>
+      <!-- <div class='mb-20'>
         <a v-if='payResult.url&&isWechat' target='_blank' :href='payResult.url' class="btn-pay mint-button mint-button--success mint-button--large">微信支付</a>
         <a v-if='payResult.url&&isAlipay' target='_blank' :href='payResult.url' class="btn-pay mint-button mint-button--primary mint-button--large">支付宝支付</a>
         <div v-if="!isAlipayOrWechat">
@@ -29,6 +29,10 @@
           <mt-button class="mb-10" @click.native="doPay('alipay')" type='primary' size='large'>支付宝</mt-button>
           <mt-button class="mb-10" @click.native="doPay('ums')" type='danger' size='large'>银联</mt-button>
         </div>
+      </div> -->
+      <div class="mb-20 t-center">
+        <div class="t-xs mb-10">请扫二维码进行支付</div>
+        <img :src='payResult.qrcode' style='width:50vw;height:50vw;' /> 
       </div>
       <div v-if="!isAlipayOrWechat" class="t-center">
         <img src="@/assets/20180316111851.png" style='width:100%;'/>
@@ -131,7 +135,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$TOOLS);
+    //console.log(this.$TOOLS);
     this.isAlipayOrWechat = this.$TOOLS.isAlipayOrWechat();
     this.isAlipay = this.$TOOLS.isAlipay();
     this.isWechat = this.$TOOLS.isWechat();
@@ -143,7 +147,8 @@ export default {
         this.price = price;
         this.orderId = token;
         this.product = product;
-        this.isAlipayOrWechat && this.getQRcode();
+        //this.isAlipayOrWechat && this.getQRcode();
+        this.getQRcode();
       }
     );
   }

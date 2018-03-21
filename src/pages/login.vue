@@ -35,9 +35,9 @@
       <div class="ui-form-item">
         <mt-button size='large' @click.native='doLogin' :disabled="!isChecked" type="danger">登录超职</mt-button>
       </div>
-      <div class="ui-form-item t-center" @click="toBack">
+      <div class="ui-form-item t-center">
         <i class="iconfont icon-return link"></i>
-        <a class="link">返回</a>
+        <a class="link" href="/">返回</a>
       </div>
     </div>
     <mt-popup
@@ -141,17 +141,17 @@ export default {
 
         // action="./#/center/index"
       });
-    },
-    toBack(){
-      window.location.href="./";
     }
+    // toBack() {
+    //   window.location.href = "./";
+    // }
   },
   mounted() {
-      let { token } = this.$storage.get("userToken");
-      if (token) {
-        this.$router.push("./index");
-      }
+    let { token } = this.$storage.get("userToken");
+    if (token) {
+      this.$router.push("./index");
     }
+  }
 };
 </script>
 
