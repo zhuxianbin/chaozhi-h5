@@ -35,7 +35,7 @@
       <div class="ui-form-item">
         <mt-button size='large' @click.native='doLogin' :disabled="!isChecked" type="danger">登录超职</mt-button>
       </div>
-      <div class="ui-form-item t-center" @click="$router.push('./index')">
+      <div class="ui-form-item t-center" @click="toBack">
         <i class="iconfont icon-return link"></i>
         <a class="link">返回</a>
       </div>
@@ -142,6 +142,9 @@ export default {
         // action="./#/center/index"
       });
     },
+    toBack(){
+      window.location.href="./";
+    }
   },
   mounted() {
       let { token } = this.$storage.get("userToken");
