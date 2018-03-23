@@ -27,7 +27,7 @@
         <div v-if="!isAlipayOrWechat">
           <mt-button class="mb-10 mint-button--success" @click.native="doPay('wechat')"  size='large'>微信</mt-button>
           <mt-button class="mb-10" @click.native="doPay('alipay')" type='primary' size='large'>支付宝</mt-button>
-          <mt-button class="mb-10" @click.native="doPay('ums')" type='danger' size='large'>银联</mt-button>
+          <mt-button class="mb-10" @click.native="doPay('unionpay')" type='danger' size='large'>银联</mt-button>
         </div>
       </div> -->
       <div class="mb-20 t-center">

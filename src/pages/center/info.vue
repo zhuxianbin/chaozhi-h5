@@ -54,6 +54,9 @@
         params.edu = data.id;
         params.edu_file = data.url}' title='学历复印件'></mt-field-upload>
       <mt-field-upload @success='(data)=>{ 
+        params.degree = data.id;
+        params.degree_file = data.url}' title='学位复印件'></mt-field-upload>
+      <mt-field-upload @success='(data)=>{ 
         params.idcard_front = data.id;
         params.idcard_front_file = data.url}'  title='身份证复印件正面'></mt-field-upload>
       <mt-field-upload @success='(data)=>{ 
@@ -113,7 +116,8 @@ export default {
         entry_form: "",
         idcard: "",
         period: "",
-
+        degree: "",
+        degree_file: "",
         sex: "",
         cn_name: "",
         en_name: "",
@@ -133,8 +137,8 @@ export default {
   },
   watch: {
     userInfo: {
-      handler(val) {
-        let { user } = val;
+      handler({ user }) {
+        //let { user } = val;
         this.params = user;
       },
       immediate: true
@@ -172,7 +176,7 @@ export default {
         edu_num: "学历编号"
       };
 
-      this.$toast(`${errs[key]||""}错误`);
+      this.$toast(`${errs[key] || ""}错误`);
     }
   },
   mounted() {

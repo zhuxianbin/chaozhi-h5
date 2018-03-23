@@ -14,7 +14,7 @@
       </mt-tab-item>
     </mt-tabbar>
 
-    <mt-popup
+    <!-- <mt-popup
       v-model="popupASK"
       popup-transition="popup-fade">
       <div class="ui-alert">
@@ -43,7 +43,7 @@
           </div>
         </div>
       </div>
-    </mt-popup>
+    </mt-popup> -->
   </div>
 </template>
 
@@ -77,7 +77,7 @@ export default {
       ],
       currentRouter: "index",
       tabActive: "index",
-      popupASK:false,
+      //popupASK:false,
     };
   },
   watch: {
@@ -101,14 +101,14 @@ export default {
     // ...mapActions({
 
     // }),
-    doCallServer() {
-      console.log(this);
-      this.$messagebox
-        .prompt("请输入您的联系电话")
-        .then(({ value, action }) => {
-          console.log(value, action);
-        });
-    }
+    // doCallServer() {
+    //   console.log(this);
+    //   this.$messagebox
+    //     .prompt("请输入您的联系电话")
+    //     .then(({ value, action }) => {
+    //       console.log(value, action);
+    //     });
+    // }
   },
   mounted() {
     let { path, name } = this.$route;
