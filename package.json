@@ -6,10 +6,13 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --env.dev",
     "build": "rimraf dist && webpack -p --progress --hide-modules",
-    "push":"git push https://zhuxianbin:zhuxian124@github.com/zhuxianbin/zhuxianbin.github.io.git master",
-    "prod":"git push http://zhuxianbin:zhuxian124@123.57.36.218:82/hongji/aci_mobile_aci_frontend.git master"
+    "push": "git push https://zhuxianbin:zhuxian124@github.com/zhuxianbin/zhuxianbin.github.io.git master",
+    "prod": "git push http://zhuxianbin:zhuxian124@123.57.36.218:82/hongji/aci_mobile_aci_frontend.git master"
   },
   "dependencies": {
+    "es5-shim": "^4.5.10",
+    "es6-promise": "^4.2.4",
+    "fetch-ie8": "^1.5.0",
     "flex.css": "^1.1.7",
     "mint-ui": "^2.2.13",
     "vue": "^2.5.16",
