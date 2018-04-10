@@ -32,7 +32,7 @@
       </div> -->
       <div class="mb-20 t-center">
         <div class="t-xs mb-10">请扫二维码进行支付</div>
-        <img :src='payResult.qrcode' style='width:50vw;height:50vw;' /> 
+        <img :src='payResult.qrcode' style='width:50vw;height:50vw;max-width:300px;max-height:300px;' /> 
       </div>
       <div v-if="!isAlipayOrWechat" class="t-center">
         <img src="@/assets/20180316111851.png" style='width:100%;'/>
@@ -157,8 +157,6 @@ export default {
 <style lang="less" scoped>
 .page {
   padding: 40px 0 50px;
-  height: 100vh;
-  box-sizing: border-box;
 }
 .order-info {
   background: #fff;
