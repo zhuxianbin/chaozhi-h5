@@ -148,9 +148,11 @@ export default {
         this.orderId = token;
         this.product = product;
         //this.isAlipayOrWechat && this.getQRcode();
-        this.getQRcode();
+        //this.getQRcode();
       }
     );
+    
+    product_id && this.getQRcode();
   }
 };
 </script>
