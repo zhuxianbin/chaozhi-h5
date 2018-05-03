@@ -41,9 +41,12 @@
         <div class="t-xs">
           <div style='background:#f9f9f9;margin-top:.5rem;'>
             <div style='padding:.5rem;background:#fff' class="mb-10">
-              <div flex v-for='plan in item.products.live_more' :key='plan.name'>
+              <div flex v-for='plan in item.products.live_more' :key='plan.live_name' class="mb-10">
                 <div flex-box="1">
-                  <div style='line-height:33px;'>{{plan.live_name}}</div>
+                  <div>
+                    <span class="t-bold t-sm">{{plan.live_name}}</span><br>
+                    <span class="t-gray">{{plan.live_time}}</span>
+                  </div>
                 </div>
                 <div flex-box="0">
                   <mt-button v-if='plan.live_days > 0' size='small' disabled>
