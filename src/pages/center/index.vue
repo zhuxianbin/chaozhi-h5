@@ -7,7 +7,7 @@
       <div flex-box="1">
         <div class="mb-10">学员账号:<span v-text='userInfo.user.phone'></span></div>
         <div class="t-xs">
-          欢迎您来到超职ACI课程培训中心
+          欢迎您来到超职ACI课程培训中心<br>您已购{{courseCount}}个课程
         </div>
       </div>
     </div>
@@ -44,6 +44,9 @@
         <span v-if='userInfo.code==201' class='t-gray'>未报名</span>
         <span v-if='userInfo.code==200' style="color: green">已报名</span>
       </mt-cell>
+      <mt-cell @click.native='courseCount?$router.push("./live"):$toast("您还没有购买课程")' title="我的课程直播" is-link>
+        <span>点击查看</span>
+      </mt-cell>
       <mt-cell @click.native='courseCount?$router.push("./courseList"):$toast("您还没有购买课程")' title="我购买的课程" is-link>
         <span>已购{{courseCount}}个课程</span>
       </mt-cell>
@@ -69,7 +72,7 @@ export default {
   methods: {
     ...mapActions({
       getUserInfo: "getUserInfo",
-      getCourseCount:"getCourseCount"
+      getCourseCount: "getCourseCount"
     }),
     doLogout() {
       this.$storage.remove("userToken");

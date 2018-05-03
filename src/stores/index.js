@@ -25,16 +25,17 @@ const addUserInfo = "addUserInfo";
 const fileUpload = "fileUpload";
 
 const getCourseCount = "getCourseCount";
+const getLiveList = "getLiveList";
 
 export default new Vuex.Store({
   state: {
     category: [],
     userInfo: {
       user: {
-        avatar_file:""
+        avatar_file: ""
       }
     },
-    courseCount:0,
+    courseCount: 0
   },
   getters: {
     // theme: state => state.theme,
@@ -95,9 +96,12 @@ export default new Vuex.Store({
       return api.fileUpload(params);
     },
     [getCourseCount]({ commit }, params) {
-      api.getCourseCount(params).then((res)=>{
-        commit(getCourseCount,res);
+      api.getCourseCount(params).then(res => {
+        commit(getCourseCount, res);
       });
+    },
+    [getLiveList]({ commit }, params) {
+      return api.getLiveList(params);
     }
   },
   mutations: {
@@ -109,6 +113,6 @@ export default new Vuex.Store({
     },
     [getCourseCount](state, res) {
       state.courseCount = res.count;
-    },
+    }
   }
 });

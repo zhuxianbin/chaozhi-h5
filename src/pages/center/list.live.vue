@@ -23,66 +23,45 @@
           <div flex-box="1">
             <div class="mb-10">{{item.product_name}}</div>
             <div class="t-xs mb-10">
-              <div flex>
+              <!-- <div flex>
                 <div flex-box="0" class="t-right mb-10" style='width:2.5rem;'>直播课程：</div>
                 <div flex-box="1">{{item.products.live_name}}</div>
-              </div>
-              <div flex>
+              </div> -->
+              <!-- <div flex>
                 <div flex-box="0" class="t-right" style='width:2.5rem;'>总课时：</div>
                 <div flex-box="1">{{item.products.total_course}}节</div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
-        <div flex class="t-xs border-bottom" style='padding:0 .5rem .5rem;'>
+        <!-- <div flex class="t-xs border-bottom" style='padding:0 .5rem .5rem;'>
           <div flex-box="1">直播开始时间：<span class="t-orange">{{item.products.live_time}}</span></div>
           <div flex-box="0">当前课时：第{{item.products.current_course}}节</div>
-        </div>
+        </div> -->
         <div class="t-xs">
-          <mt-navbar v-model="item.selected">
-            <!-- <mt-tab-item id="1">
-              <i class="v-center t-orange t-lg iconfont icon-zhibodating"></i>
-              <span>进入直播课堂</span>
-            </mt-tab-item> -->
-            <mt-tab-item id="2">
-              <i class="v-center t-blue t-lg iconfont icon-kechenghuifang"></i>
-              <span>查看录播</span>
-            </mt-tab-item>
-            <mt-tab-item id="3">
-              <i class="v-center t-lg iconfont icon-xiazai-xue"></i>
-              <span>下载资料</span>
-            </mt-tab-item>
-          </mt-navbar>
-          <!-- tab-container -->
-          <mt-tab-container v-model="item.selected">
-            <!-- <mt-tab-container-item id="1">
-              
-            </mt-tab-container-item> -->
-            <mt-tab-container-item id="2">
-              <div style='background:#f9f9f9;margin-top:.5rem;'>
-                <div style='padding:.5rem 0;background:#fff' class="mb-10" v-for='course in item.planLine' :key='course.id'>
-                  <div class="t-sm mb-10" style='padding:0 .5rem ;'>
-                    <span class="t-bold">{{course.name}}</span>
-                    <span class="t-gray">讲师:{{course.teacher}}</span>
-                  </div>
-                  <div style='padding-left:.5rem;box-sizing:border-box;width:100%;overflow:auto;white-space:nowrap'>
-                    <mt-button type='primary' style='margin-right:.5rem' @click.native='toPlay(plan)' size='small' v-for='plan in course.teach_plan' :key='plan.name'>
-                      <i class="t-md v-center iconfont icon-kechenghuifang"></i>
-                      <span>{{plan.name}}</span>
-                    </mt-button>
-                  </div>
+          <div style='background:#f9f9f9;margin-top:.5rem;'>
+            <div style='padding:.5rem;background:#fff' class="mb-10">
+              <div flex v-for='plan in item.products.live_more' :key='plan.name'>
+                <div flex-box="1">
+                  <div style='line-height:33px;'>{{plan.live_name}}</div>
+                </div>
+                <div flex-box="0">
+                  <mt-button v-if='plan.live_days > 0' size='small' disabled>
+                      <i class="iconfont icon-zhibodating"></i>
+                      <span>直播还没开始</span>
+                  </mt-button>
+                  <a target="_blank" style='line-height:33px;text-decoration: none;' v-if='plan.live_days == 0' :href="plan.live_url" class="mint-button mint-button--danger mint-button--small">
+                      <i class="iconfont icon-bofang1"></i>
+                      <span>进入直播课堂</span>
+                  </a>
+                  <a target="_blank" style='line-height:33px;text-decoration: none;' v-if='plan.live_days<0' :href="plan.live_url" class="mint-button mint-button--primary mint-button--small">
+                      <i class="iconfont icon-kechenghuifang"></i>
+                      <span>回访直播视频</span>
+                  </a>
                 </div>
               </div>
-            </mt-tab-container-item>
-            <mt-tab-container-item id="3">
-              <mt-cell v-for="dl in item.downList" :key='dl.id'
-                :title="dl.file_name"
-                :to="dl.file"
-                is-link
-                value="下载">
-              </mt-cell>
-            </mt-tab-container-item>
-          </mt-tab-container>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -118,23 +97,14 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCourseList: "getCourseList",
-      getCourseInfo: "getCourseInfo",
-      getCoursePlan: "getCoursePlan"
+      getLiveList: "getLiveList"
     }),
     getRows() {
-      this.getCourseList().then(({ data, code }) => {
-        this.rows = data.map(item => {
-          item.planLine = [];
-          item.downList = [];
-          item.selected = "";
-          return item;
-        });
-
-        this.rows.forEach((item, index) => {
-          this.getInfo(item, index);
-          this.getPlan(item, index);
-        });
+      this.getLiveList({
+        p: 1,
+        offset: 100
+      }).then(({ data, code }) => {
+        this.rows = data;
       });
     },
     getInfo(item, index) {

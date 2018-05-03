@@ -40,10 +40,10 @@
         </div>
         <div class="t-xs">
           <mt-navbar v-model="item.selected">
-            <!-- <mt-tab-item id="1">
+            <mt-tab-item id="1">
               <i class="v-center t-orange t-lg iconfont icon-zhibodating"></i>
               <span>进入直播课堂</span>
-            </mt-tab-item> -->
+            </mt-tab-item>
             <mt-tab-item id="2">
               <i class="v-center t-blue t-lg iconfont icon-kechenghuifang"></i>
               <span>查看录播</span>
@@ -55,9 +55,9 @@
           </mt-navbar>
           <!-- tab-container -->
           <mt-tab-container v-model="item.selected">
-            <!-- <mt-tab-container-item id="1">
-              
-            </mt-tab-container-item> -->
+            <mt-tab-container-item id="1">
+              <!-- 直播列表 -->
+            </mt-tab-container-item>
             <mt-tab-container-item id="2">
               <div style='background:#f9f9f9;margin-top:.5rem;'>
                 <div style='padding:.5rem 0;background:#fff' class="mb-10" v-for='course in item.planLine' :key='course.id'>

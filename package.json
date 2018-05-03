@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --env.dev",
     "build": "rimraf dist && webpack -p --progress --hide-modules",
-    "push": "git push https://zhuxianbin:zhuxian124@github.com/zhuxianbin/zhuxianbin.github.io.git master",
+    "push": "git push https://zhuxianbin:zhuxian124@github.com/zhuxianbin/chaozhi-h5.git master",
     "prod": "git push http://zhuxianbin:zhuxian124@123.57.36.218:82/hongji/aci_mobile_aci_frontend.git master"
   },
   "dependencies": {

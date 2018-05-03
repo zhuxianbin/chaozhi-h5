@@ -68,6 +68,11 @@ export default new Router({
       name: "info",
       component: info
     },
+    {
+      path: "/live",
+      name: "live",
+      component: () => import("./pages/center/list.live.vue")
+    }
     // {
     //   path: "/me",
     //   name: "me",

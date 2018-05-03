@@ -164,5 +164,35 @@ export default {
   getCourseCount: function(param) {
     let { token } = storage.get("userToken");
     return async.post(`/api/course/count`, param, token);
+  },
+
+  /**
+   * 支付报名费
+   * URL (/api/user/paysingup) METHOD GET
+   * 接收参数 无
+   * */
+  paySingup: function(param) {
+    let { token } = storage.get("userToken");
+    return async.get(`/api/user/paysingup`, param, token);
+  },
+
+  /**
+   * 直播列表
+   * URL (/api/userlive/list) METHOD POST
+   * 接收参数 无
+   * */
+  getLiveList: function(param) {
+    let { token } = storage.get("userToken");
+    return async.post(`/api/userlive/list`, param, token);
+  },
+
+  /**
+   * 报名费用是否支付
+   * URL (/api/user/getpayinfo) METHOD GET
+   * 接收参数 无
+   * */
+  getSingupPayInfo: function(param) {
+    let { token } = storage.get("userToken");
+    return async.get(`/api/user/getpayinfo`, param, token);
   }
 };
