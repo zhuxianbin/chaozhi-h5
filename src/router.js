@@ -72,6 +72,11 @@ export default new Router({
       path: "/live",
       name: "live",
       component: () => import("./pages/center/list.live.vue")
+    },
+    {
+      path:"/signup",
+      name: "signup",
+      component: () => import("./pages/center/signup.vue")
     }
     // {
     //   path: "/me",

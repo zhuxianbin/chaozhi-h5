@@ -27,6 +27,11 @@ const fileUpload = "fileUpload";
 const getCourseCount = "getCourseCount";
 const getLiveList = "getLiveList";
 
+
+const paySingup = "paySingup";
+const getSingupPayInfo = "getSingupPayInfo";
+
+
 export default new Vuex.Store({
   state: {
     category: [],
@@ -102,7 +107,13 @@ export default new Vuex.Store({
     },
     [getLiveList]({ commit }, params) {
       return api.getLiveList(params);
-    }
+    },
+    [paySingup]({ commit }, params) {
+      return api.paySingup(params);
+    },
+    [getSingupPayInfo]({ commit }, params) {
+      return api.getSingupPayInfo(params);
+    },
   },
   mutations: {
     [getCategory](state, { data, code }) {

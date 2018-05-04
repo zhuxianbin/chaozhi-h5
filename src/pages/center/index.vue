@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <div v-if='userInfo.code==201' flex class="mb-20 user-info">
+    <div v-if='userInfo.status==0&&courseCount>0' flex class="mb-20 user-info">
       <div flex-box="0" style='margin-right:1rem;'>
         <i style='color:#7ED321;font-size:2rem;' class="iconfont icon-caifang-tianbaoren"></i>
       </div>
@@ -21,11 +21,11 @@
           您已参考网校的ACI注册国际心理咨询师课程培训，可以进行报名。
         </div>
         <div class="t-xs">
-          <mt-button type='danger' @click.native='$router.push("./info")' size='small'>点击填写报名资料</mt-button>
+          <mt-button type='danger' @click.native='$router.push("./signup")' size='small'>点击填写报名资料</mt-button>
         </div>
       </div>
     </div>
-    <div v-if='userInfo.code==200&&!userInfo.courseCount' flex class="mb-20 user-info">
+    <div v-if='!courseCount' flex class="mb-20 user-info">
       <div flex-box="0" style='margin-right:1rem;'>
         <i style='color:#FF5900;font-size:2rem;' class="iconfont icon-course"></i>
       </div>
@@ -40,9 +40,9 @@
       </div>
     </div>
     <div class="mb-20">
-      <mt-cell title="我的报考资料" @click.native='$router.push("./info")' is-link>
-        <span v-if='userInfo.code==201' class='t-gray'>未报名</span>
-        <span v-if='userInfo.code==200' style="color: green">已报名</span>
+      <mt-cell title="我的报考资料" v-if='userInfo.status==3' @click.native='$router.push("./signup")' is-link>
+        <!-- <span v-if='userInfo.status<3' class='t-gray'>未报名</span> -->
+        <span style="color: green">已报名</span>
       </mt-cell>
       <mt-cell @click.native='courseCount?$router.push("./live"):$toast("您还没有购买课程")' title="我的课程直播" is-link>
         <span>点击查看</span>
