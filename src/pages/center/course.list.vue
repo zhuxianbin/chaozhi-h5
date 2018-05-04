@@ -22,7 +22,7 @@
           </div>
           <div flex-box="1">
             <div class="mb-10">{{item.product_name}}</div>
-            <div class="t-xs mb-10">
+            <!-- <div class="t-xs mb-10">
               <div flex>
                 <div flex-box="0" class="t-right mb-10" style='width:2.5rem;'>直播课程：</div>
                 <div flex-box="1">{{item.products.live_name}}</div>
@@ -31,13 +31,13 @@
                 <div flex-box="0" class="t-right" style='width:2.5rem;'>总课时：</div>
                 <div flex-box="1">{{item.products.total_course}}节</div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
-        <div flex class="t-xs border-bottom" style='padding:0 .5rem .5rem;'>
+        <!-- <div flex class="t-xs border-bottom" style='padding:0 .5rem .5rem;'>
           <div flex-box="1">直播开始时间：<span class="t-orange">{{item.products.live_time}}</span></div>
           <div flex-box="0">当前课时：第{{item.products.current_course}}节</div>
-        </div>
+        </div> -->
         <div class="t-xs">
           <mt-navbar v-model="item.selected">
             <!-- <mt-tab-item id="1">
