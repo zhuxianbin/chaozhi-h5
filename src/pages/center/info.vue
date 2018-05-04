@@ -139,7 +139,7 @@ export default {
         period: "",
         degree: "",
         degree_file: "",
-        sex: "",
+        sex: "M",
         cn_name: "",
         en_name: "",
         avatar: "",
