@@ -203,7 +203,6 @@ export default {
   mounted() {
     this.getUserInfo().then(res => {
       this.progress = res.status;
-      return;
       if (res.status == 0) {
         this.$messagebox.alert("您还未支付报名费,请立即前往").then(() => {
           this.$router.push("./signup");
