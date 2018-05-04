@@ -111,6 +111,12 @@ export default {
         product_id: this.productId,
         channel: "ums"
       }).then(data => {
+        if (data.code == 202) {
+          return this.$messagebox.alert("您已经购买该商品").then(() => {
+            this.$router.back();
+          });
+        }
+
         this.payResult = data;
       });
     },
@@ -151,7 +157,7 @@ export default {
         //this.getQRcode();
       }
     );
-    
+
     product_id && this.getQRcode();
   }
 };
