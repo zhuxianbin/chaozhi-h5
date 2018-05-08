@@ -1,7 +1,24 @@
+import {
+  baseUrl
+} from "./config.js";
 // import axios from 'axios';
+// var $axios = axios.create({
+//   baseURL: 'baseUrl',
+//   timeout: 30000,
+//   headers: {
+//     "Content-Type": "application/x-www-form-urlencoded"
+//   }
+// });
+
+
+// $axios.post(url, querystring.stringify({
+//   ...data,
+//   token
+// }));
+
 //import MD5 from 'md5.js';
 // import qs from 'querystring';
-import { baseUrl } from "./config.js";
+
 import storage from "./storage.js";
 export default {
   baseUrl,
@@ -33,7 +50,10 @@ export default {
     });
 
     ret
-      .then(({ code, msg }) => {
+      .then(({
+        code,
+        msg
+      }) => {
         if (code >= 600 && code < 700) {
           storage.remove("userToken");
           window.location.href = `./#/login`;
@@ -43,21 +63,27 @@ export default {
     return ret;
   },
   get(url, data, token) {
-    let headers = {};
+    //let headers = {};
 
-    if (token) {
-      headers.token = token;
-    }
+    // if (token) {
+    //   headers.token = token;
+    // }
 
-    let params = this.formatParams(data);
+    let params = this.formatParams({
+      ...data,
+      token
+    });
     let ret = fetch(`${baseUrl}${url}?${params}`, {
       method: "GET",
-      headers
-    }).then(function(requst) {
+      //headers
+    }).then(function (requst) {
       return requst.json();
     });
     ret
-      .then(({ code, msg }) => {
+      .then(({
+        code,
+        msg
+      }) => {
         if (code >= 600 && code < 700) {
           storage.remove("userToken");
           window.location.href = `./#/login`;
@@ -74,17 +100,19 @@ export default {
       formData.append(key, element);
     }
     let reter = fetch(requstUrl, {
-      method: "POST",
-      headers: {
-        //signature: this.getSign(this.formatParams(data)),
-        token
-      },
-      body: formData
-    })
-      .then(function(requst) {
+        method: "POST",
+        headers: {
+          //signature: this.getSign(this.formatParams(data)),
+          token
+        },
+        body: formData
+      })
+      .then(function (requst) {
         return requst.json();
       })
-      .catch(({ message }) => {
+      .catch(({
+        message
+      }) => {
         return new Promise((res, rej) => {
           rej(requst);
         });
@@ -92,16 +120,24 @@ export default {
 
     return reter;
   },
-  ajax({ url, data, token, method = "POST" }) {
-    let params = this.formatParams(data);
+  ajax({
+    url,
+    data,
+    token,
+    method = "POST"
+  }) {
+    
+    let params = this.formatParams({ ...data,
+      token
+    });
     let headers = {
       "Content-Type": "application/x-www-form-urlencoded"
       //signature: this.getSign(params)
     };
 
-    if (token) {
-      headers.token = token;
-    }
+    // if (token) {
+    //   headers.token = token;
+    // }
 
     let requst = {};
     let requstUrl =
@@ -110,7 +146,7 @@ export default {
       method,
       headers,
       body: params
-    }).then(function(requst) {
+    }).then(function (requst) {
       //requst = requst;
       return requst.json();
     });
