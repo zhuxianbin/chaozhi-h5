@@ -95,7 +95,7 @@ export default {
       getPayInfo: "getPayInfo",
       refreshPrice: "refreshPrice",
       pay: "pay",
-      umsH5: "umsH5"
+      //umsH5: "umsH5"
     }),
     doRefreshPrice() {
       this.refreshPrice(this.orderId).then(({ code, data, msg }) => {
@@ -120,25 +120,25 @@ export default {
         this.payResult = data;
       });
     },
-    doPay(payType) {
-      if (this.isAlipayOrWechat) {
-        window.location.href = this.payResult.url;
-      } else {
-        window.location.href = `http://aci-api.chaozhiedu.com/api/pay/umsH5/${
-          this.orderId
-        }/${payType}`;
-        // this.umsH5({ orderId: this.orderId, type: payType }).then(res => {
-        //   console.log(res);
-        // });
-      }
+    // doPay(payType) {
+    //   if (this.isAlipayOrWechat) {
+    //     window.location.href = this.payResult.url;
+    //   } else {
+    //     window.location.href = `http://aci-api.chaozhiedu.com/api/pay/umsH5/${
+    //       this.orderId
+    //     }/${payType}`;
+    //     // this.umsH5({ orderId: this.orderId, type: payType }).then(res => {
+    //     //   console.log(res);
+    //     // });
+    //   }
 
-      //能进入此处,说明用户不是双端访问者
-      //       与子偕老:
-      // aci-api.chaozhiedu.com/api/pay/umsH5/{token}/{type}
-      // 与子偕老:
+    //   //能进入此处,说明用户不是双端访问者
+    //   //       与子偕老:
+    //   // aci-api.chaozhiedu.com/api/pay/umsH5/{token}/{type}
+    //   // 与子偕老:
 
-      // type 的取值 alipay wechat
-    }
+    //   // type 的取值 alipay wechat
+    // }
   },
   mounted() {
     //console.log(this.$TOOLS);

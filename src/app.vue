@@ -82,12 +82,12 @@ export default {
   },
   watch: {
     tabActive(val) {
-      this.$router.push(`/${val}`);
+      this.$router.push({path:`/${val}`,query:this.$route.query});
     },
 
     $route: {
       handler({ name }) {
-        console.log(name);
+        //console.log(name);
         let [has] = this.tabList.filter(item => {
           return item.id == name;
         });
