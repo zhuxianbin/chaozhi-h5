@@ -24,7 +24,7 @@
       <mt-tab-item id="wechat">微信</mt-tab-item>
       <mt-tab-item id="alipay">支付宝</mt-tab-item>
     </mt-navbar>
-    <div style='padding:1rem;background:#fff;'>
+    <div v-if="!!qrcode" style='padding:1rem;background:#fff;'>
       <div class="mb-20 t-center">
         <div class="t-xs mb-10">请扫二维码进行支付</div>
         <img :src='qrcode' style='width:50vw;height:50vw;max-width:300px;max-height:300px;' /> 
@@ -99,7 +99,7 @@ export default {
         this.orderId = data.token;
         this.payResult = data;
         this.getPayResult(data.token);
-
+        this.qrcode = "";
         data.qrtext &&
           QRCode.toDataURL(data.qrtext, { errorCorrectionLevel: "H" }).then(
             url => {
