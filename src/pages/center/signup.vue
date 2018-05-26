@@ -9,7 +9,7 @@
         <div class='ui-list-item' flex>
           <div class='ui-list-label' flex-box="0">订单价格</div>
           <div flex-box="1">
-            <span class="t-orange">800.00</span>元
+            <span class="t-orange">{{price}}</span>元
           </div>
         </div>
         <!-- <div class='ui-list-item' flex>
@@ -78,7 +78,8 @@ export default {
   name: "paySiginUp",
   data() {
     return {
-      qrcode: ""
+      qrcode: "",
+      price: ""
     };
   },
   methods: {
@@ -88,9 +89,10 @@ export default {
     }),
     paySingup() {
       //获取支付报名费订单
-      this.vuex_paySingup({}).then(({ code, msg, qrcode }) => {
+      this.vuex_paySingup({}).then(({ code, msg, qrcode, price }) => {
         console.log(code, msg);
         this.qrcode = qrcode;
+        this.price = price.toFixed(2);
       });
     },
     getPayInfo() {

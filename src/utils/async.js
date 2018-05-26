@@ -1,6 +1,5 @@
-import {
-  baseUrl
-} from "./config.js";
+import { baseUrl } from "./config.js";
+
 // import axios from 'axios';
 // var $axios = axios.create({
 //   baseURL: 'baseUrl',
@@ -10,14 +9,13 @@ import {
 //   }
 // });
 
-
 // $axios.post(url, querystring.stringify({
 //   ...data,
 //   token
 // }));
 
 //import MD5 from 'md5.js';
-// import qs from 'querystring';
+import querystring from "querystring";
 
 import storage from "./storage.js";
 export default {
@@ -29,31 +27,31 @@ export default {
   //   });
   // },
   post(url, data, token) {
-    // if (!token) {
-    //   window.location.href = `./#/login`;
-    //   return new Promise((res, rej) => {
-    //     window.$message({
-    //       type: "error",
-    //       message: "未登录"
-    //     });
-    //     res({
-    //       code: 900,
-    //       message: "未登录"
-    //     });
-    //   });
-    // }
+    let headers = { "Content-Type": "application/x-www-form-urlencoded" };
+    if (!token) {
+      token = storage.get("userToken").token;
+    }
 
-    let ret = this.ajax({
-      url,
-      data,
+    //let keys = Object.keys.call(this, data);
+    for (let key in { ...data }) {
+      if (data[key] === "") {
+        delete data[key];
+      }
+    }
+
+    let params = querystring.stringify({
+      ...data,
       token
     });
-
+    let ret = fetch(`${baseUrl}${url}`, {
+      method: "POST",
+      headers,
+      body: params
+    }).then(function(requst) {
+      return requst.json();
+    });
     ret
-      .then(({
-        code,
-        msg
-      }) => {
+      .then(({ code, msg }) => {
         if (code >= 600 && code < 700) {
           storage.remove("userToken");
           window.location.href = `./#/login`;
@@ -64,26 +62,28 @@ export default {
   },
   get(url, data, token) {
     //let headers = {};
+    if (!token) {
+      token = storage.get("userToken").token;
+    }
 
-    // if (token) {
-    //   headers.token = token;
-    // }
+    for (let key in { ...data }) {
+      if (data[key] === "") {
+        delete data[key];
+      }
+    }
 
-    let params = this.formatParams({
+    let params = querystring.stringify({
       ...data,
       token
     });
     let ret = fetch(`${baseUrl}${url}?${params}`, {
-      method: "GET",
+      method: "GET"
       //headers
-    }).then(function (requst) {
+    }).then(function(requst) {
       return requst.json();
     });
     ret
-      .then(({
-        code,
-        msg
-      }) => {
+      .then(({ code, msg }) => {
         if (code >= 600 && code < 700) {
           storage.remove("userToken");
           window.location.href = `./#/login`;
@@ -100,19 +100,17 @@ export default {
       formData.append(key, element);
     }
     let reter = fetch(requstUrl, {
-        method: "POST",
-        headers: {
-          //signature: this.getSign(this.formatParams(data)),
-          token
-        },
-        body: formData
-      })
-      .then(function (requst) {
+      method: "POST",
+      headers: {
+        //signature: this.getSign(this.formatParams(data)),
+        token
+      },
+      body: formData
+    })
+      .then(function(requst) {
         return requst.json();
       })
-      .catch(({
-        message
-      }) => {
+      .catch(({ message }) => {
         return new Promise((res, rej) => {
           rej(requst);
         });
@@ -120,20 +118,17 @@ export default {
 
     return reter;
   },
-  ajax({
-    url,
-    data,
-    token,
-    method = "POST"
-  }) {
-    
-    let params = this.formatParams({ ...data,
+  ajax({ url, data, token, method = "POST" }) {
+    if (!token) {
+      token = storage.get("userToken").token;
+    }
+    let params = querystring.stringify({
+      ...data,
       token
     });
-    let headers = {
-      "Content-Type": "application/x-www-form-urlencoded"
-      //signature: this.getSign(params)
-    };
+    // let headers = {
+    //   "Content-Type": "application/x-www-form-urlencoded"
+    // };
 
     // if (token) {
     //   headers.token = token;
@@ -144,9 +139,9 @@ export default {
       method == "POST" ? `${baseUrl}${url}` : `${baseUrl}${url}?${params}`;
     let res = fetch(requstUrl, {
       method,
-      headers,
+      //headers,
       body: params
-    }).then(function (requst) {
+    }).then(function(requst) {
       //requst = requst;
       return requst.json();
     });

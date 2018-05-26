@@ -159,8 +159,9 @@ export default {
    * 接收参数 无
    * */
   getPayResult: function(param) {
-    return async.post(`/api/pay/result/${param.token}`, param, "get");
+    return async.get(`/api/pay/result/${param.token}`, param);
   },
+
   getCourseCount: function(param) {
     let { token } = storage.get("userToken");
     return async.post(`/api/course/count`, param, token);
@@ -192,7 +193,22 @@ export default {
    * 接收参数 无
    * */
   getSingupPayInfo: function(param) {
-    let { token } = storage.get("userToken");
-    return async.get(`/api/user/getpayinfo`, param, token);
+    return async.get(`/api/user/getpayinfo`, param);
+  },
+
+  getUserSign: function(param) {
+    return async.get(`/api/usersign`, param);
+  },
+  saveUserSign: function(param) {
+    return async.post(`/api/usersign`, param);
+  },
+  submitUserSign: function(param) {
+    return async.post(`/api/usersign/submit`, param);
+  },
+  getUserSignPayinfo: function(param) {
+    return async.get(`/api/usersign/getpayinfo`, param);
+  },
+  toPaySingUp: function(param) {
+    return async.get(`/api/usersign/paysingup`, param);
   }
 };

@@ -10,6 +10,7 @@ const getCategory = "getCategory";
 const getProductList = "getProductList";
 const getPayInfo = "getPayInfo";
 const refreshPrice = "refreshPrice";
+const getPayResult = "getPayResult";
 const pay = "pay";
 const umsH5 = "umsH5";
 
@@ -27,10 +28,10 @@ const fileUpload = "fileUpload";
 const getCourseCount = "getCourseCount";
 const getLiveList = "getLiveList";
 
-
 const paySingup = "paySingup";
 const getSingupPayInfo = "getSingupPayInfo";
-
+const getUserSign = "getUserSign";
+const getUserSignPayinfo = "getUserSignPayinfo";
 
 export default new Vuex.Store({
   state: {
@@ -92,10 +93,10 @@ export default new Vuex.Store({
       return ret;
     },
     [submitUserInfo]({ commit }, params) {
-      return api.submitUserInfo(params);
+      return api.submitUserSign(params);
     },
     [addUserInfo]({ commit }, params) {
-      return api.addUserInfo(params);
+      return api.saveUserSign(params);
     },
     [fileUpload]({ commit }, params) {
       return api.fileUpload(params);
@@ -109,11 +110,17 @@ export default new Vuex.Store({
       return api.getLiveList(params);
     },
     [paySingup]({ commit }, params) {
-      return api.paySingup(params);
+      return api.toPaySingUp(params);
     },
     [getSingupPayInfo]({ commit }, params) {
-      return api.getSingupPayInfo(params);
+      return api.getUserSignPayinfo(params);
     },
+    [getUserSign]({ commit }, params) {
+      return api.getUserSign(params);
+    },
+    [getPayResult]({ commit }, params) {
+      return api.getPayResult(params);
+    }
   },
   mutations: {
     [getCategory](state, { data, code }) {
