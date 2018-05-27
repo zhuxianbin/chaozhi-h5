@@ -30,6 +30,11 @@
         <img :src='qrcode' style='width:50vw;height:50vw;max-width:300px;max-height:300px;' /> 
       </div>
     </div>
+    <div v-if='payType=="alipay"' class="t-center" style='padding:30px;'>
+      <div v-html='payResult.form'></div>
+      <mt-button class="mb-10" @click.native='jumpAliPage' size="large" type="primary">去支付</mt-button>
+      <div class='t-xs t-gray'>*如果您在微信内打开此页面,请从浏览器打开</div>
+    </div>
   </div>
 </template>
 
@@ -123,6 +128,11 @@ export default {
           this.$router.push("/courseList");
         });
       });
+    },
+    jumpAliPage() {
+      //console.log(document.getElementById("alipaysubmit"));
+      document.getElementById("alipaysubmit").target = "_blank";
+      document.forms["alipaysubmit"].submit();
     }
   },
   mounted() {
@@ -137,6 +147,9 @@ export default {
     );
 
     product_id && this.getQRcode();
+  },
+  beforeDestroy() {
+    clearTimeout(timer);
   }
 };
 </script>
