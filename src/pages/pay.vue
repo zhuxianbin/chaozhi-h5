@@ -145,7 +145,14 @@ export default {
         orderId: this.payResult.token
       }).then(res => {
         if (res.code == 200) {
-          window.location.href = res.MWEB_URL;
+          wx.chooseWXPay({
+            timestamp: 1414723227,
+            nonceStr: "noncestr",
+            package:
+              "addition=action_id%3dgaby1234%26limit_pay%3d&bank_type=WX&body=innertest&fee_type=1&input_charset=GBK&notify_url=http%3A%2F%2F120.204.206.246%2Fcgi-bin%2Fmmsupport-bin%2Fnotifypay&out_trade_no=1414723227818375338&partner=1900000109&spbill_create_ip=127.0.0.1&total_fee=1&sign=432B647FE95C7BF73BCD177CEECBEF8D",
+            signType: "SHA1", // 注意：新版支付接口使用 MD5 加密
+            paySign: "bd5b1933cda6e9548862944836a9b52e8c9a2b69"
+          });
         }
       });
     }
