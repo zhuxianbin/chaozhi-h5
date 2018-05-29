@@ -144,7 +144,9 @@ export default {
       this._getUnifiedOrder({
         orderId: this.payResult.token
       }).then(res => {
-        
+        if (res.code == 200) {
+          window.location.href = res.MWEB_URL;
+        }
       });
     }
   },

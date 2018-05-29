@@ -215,6 +215,6 @@ export default {
 
   /*H5支付*/
   getUnifiedOrder(param) {
-    return async.post(`/api/pay/getUnifiedOrder`, param);
+    return async.get(`/api/pay/getUnifiedOrder`, param);
   }
 };
