@@ -33,6 +33,8 @@ const getSingupPayInfo = "getSingupPayInfo";
 const getUserSign = "getUserSign";
 const getUserSignPayinfo = "getUserSignPayinfo";
 
+const getUnifiedOrder = "getUnifiedOrder";
+
 export default new Vuex.Store({
   state: {
     category: [],
@@ -120,7 +122,10 @@ export default new Vuex.Store({
     },
     [getPayResult]({ commit }, params) {
       return api.getPayResult(params);
-    }
+    },
+    [getUnifiedOrder]({ commit }, params) {
+      return api.getUnifiedOrder(params);
+    },
   },
   mutations: {
     [getCategory](state, { data, code }) {

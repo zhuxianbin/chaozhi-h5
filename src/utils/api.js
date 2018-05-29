@@ -6,7 +6,7 @@ export default {
    * URL (/api/phone-captcha) METHOD POST
    * @param phone
    * */
-  getPhoneCaptcha: function(param) {
+  getPhoneCaptcha: function (param) {
     return async.post("/api/phone-captcha", param);
   },
 
@@ -16,7 +16,7 @@ export default {
    * @param phone
    * @param captcha 手机验证码 在测试环境中 先调用 phone-captcha 可以使用 1111 做为验证码
    * */
-  doLogin: function(param) {
+  doLogin: function (param) {
     return async.post("/api/login", param);
   },
 
@@ -25,7 +25,7 @@ export default {
    * URL (/api/user) METHOD get
    * 无需参数，直接获取 ，注意要带上token
    * */
-  getUserInfo: function(param) {
+  getUserInfo: function (param) {
     let { token } = storage.get("userToken");
     return async.get("/api/user", param || {}, token);
   },
@@ -37,7 +37,7 @@ export default {
    * cn_name en_name sex birthday college edu_num idcard
    * email contacts_phone addr period idcard_front idcard_reverse edu degree entry_form avatar
    * */
-  addUserInfo: function(param) {
+  addUserInfo: function (param) {
     let { token } = storage.get("userToken");
     return async.post("/api/user", param, token);
   },
@@ -49,7 +49,7 @@ export default {
    * cn_name en_name sex birthday college edu_num idcard
    * email contacts_phone addr period idcard_front idcard_reverse edu degree entry_form avatar
    * */
-  submitUserInfo: function(param) {
+  submitUserInfo: function (param) {
     let { token } = storage.get("userToken");
     return async.post("/api/user/submit", param, token);
   },
@@ -59,7 +59,7 @@ export default {
    * URL (/api/course/list) METHOD post
    * 无需参数，直接获取 ，注意要带上token
    * */
-  getCourseList: function(param) {
+  getCourseList: function (param) {
     let { token } = storage.get("userToken");
     return async.post("/api/course/list", param, token);
   },
@@ -70,7 +70,7 @@ export default {
    * 接收参数
    * pid 产品ID 必传 p 分页 必传 offset 每页显示的数量 默认为10
    * */
-  getCourseInfo: function(param) {
+  getCourseInfo: function (param) {
     let { token } = storage.get("userToken");
     return async.post("/api/course/information", param, token);
   },
@@ -81,7 +81,7 @@ export default {
    * 接收参数
    * pid 产品ID 必传 p 分页 必传 offset 每页显示的数量 默认为10
    * */
-  getCoursePlan: function(param) {
+  getCoursePlan: function (param) {
     let { token } = storage.get("userToken");
     return async.post("/api/course/plan", param, token);
   },
@@ -92,7 +92,7 @@ export default {
    * 接收参数
    * 上传名称为 file
    * */
-  fileUpload: function(param) {
+  fileUpload: function (param) {
     let { token } = storage.get("userToken");
     return async.upload("/api/file/upload", param, token);
   },
@@ -103,7 +103,7 @@ export default {
    * 接收参数
    * p 分页 必传 offset 每页显示的数量 默认为10
    * */
-  getProductList: function(param) {
+  getProductList: function (param) {
     return async.post("/api/product/list", param);
   },
 
@@ -113,7 +113,7 @@ export default {
    * 接收参数
    * product_id 产品列表的ID字段
    * */
-  getPayInfo: function(param) {
+  getPayInfo: function (param) {
     let { token } = storage.get("userToken");
     return async.post("/api/get-pay-info", param, token);
   },
@@ -125,7 +125,7 @@ export default {
    * token 直接拼在url后
    * 示例: /api/pay/refresh-price/1802055004745729
    * */
-  refreshPrice: function(orderToken) {
+  refreshPrice: function (orderToken) {
     let { token } = storage.get("userToken");
     return async.get(`/api/pay/refresh-price/${orderToken}`, {}, token);
   },
@@ -136,7 +136,7 @@ export default {
    * 接收参数
    * product_id 产品列表的ID字段 channel 支付渠道 wechat,alipay
    * */
-  pay: function(param) {
+  pay: function (param) {
     let { token } = storage.get("userToken");
     return async.post("/api/pay", param, token);
   },
@@ -149,7 +149,7 @@ export default {
    * URL (/api/course/cateogry) METHOD GET
    * 接收参数 无
    * */
-  getCategory: function(param) {
+  getCategory: function (param) {
     return async.get("/api/course/category", param);
   },
 
@@ -158,11 +158,11 @@ export default {
    * URL (/api/course/cateogry) METHOD GET
    * 接收参数 无
    * */
-  getPayResult: function(param) {
+  getPayResult: function (param) {
     return async.get(`/api/pay/result/${param.token}`, param);
   },
 
-  getCourseCount: function(param) {
+  getCourseCount: function (param) {
     let { token } = storage.get("userToken");
     return async.post(`/api/course/count`, param, token);
   },
@@ -172,7 +172,7 @@ export default {
    * URL (/api/user/paysingup) METHOD GET
    * 接收参数 无
    * */
-  paySingup: function(param) {
+  paySingup: function (param) {
     let { token } = storage.get("userToken");
     return async.get(`/api/user/paysingup`, param, token);
   },
@@ -182,7 +182,7 @@ export default {
    * URL (/api/userlive/list) METHOD POST
    * 接收参数 无
    * */
-  getLiveList: function(param) {
+  getLiveList: function (param) {
     let { token } = storage.get("userToken");
     return async.post(`/api/userlive/list`, param, token);
   },
@@ -192,23 +192,29 @@ export default {
    * URL (/api/user/getpayinfo) METHOD GET
    * 接收参数 无
    * */
-  getSingupPayInfo: function(param) {
+  getSingupPayInfo: function (param) {
     return async.get(`/api/user/getpayinfo`, param);
   },
 
-  getUserSign: function(param) {
+  getUserSign: function (param) {
     return async.get(`/api/usersign`, param);
   },
-  saveUserSign: function(param) {
+  saveUserSign: function (param) {
     return async.post(`/api/usersign`, param);
   },
-  submitUserSign: function(param) {
+  submitUserSign: function (param) {
     return async.post(`/api/usersign/submit`, param);
   },
-  getUserSignPayinfo: function(param) {
+  getUserSignPayinfo: function (param) {
     return async.get(`/api/usersign/getpayinfo`, param);
   },
-  toPaySingUp: function(param) {
+  toPaySingUp: function (param) {
     return async.get(`/api/usersign/paysingup`, param);
+  },
+
+
+  /*H5支付*/
+  getUnifiedOrder(param) {
+    return async.post(`/api/pay/getUnifiedOrder`, param);
   }
 };

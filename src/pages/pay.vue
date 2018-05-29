@@ -24,13 +24,13 @@
       <mt-tab-item id="wechat">微信</mt-tab-item>
       <mt-tab-item id="alipay">支付宝</mt-tab-item>
     </mt-navbar>
-    <div v-if="!!qrcode" style='padding:1rem 2rem;background:#fff;'>
+    <div v-if="payType=='wechat'" style='padding:1rem 2rem;background:#fff;'>
       <div class="mb-20 t-center">
-        <div class="t-xs mb-10">请扫二维码进行支付</div>
+        <!-- <div class="t-xs mb-10">请扫二维码进行支付</div>
         <img :src='qrcode' style='width:50vw;height:50vw;max-width:300px;max-height:300px;' />
-        <div class="t-xs">*如遇到支付问题,请截屏此页面,从微信扫一扫界面,打开相册选择截屏图片进行支付</div>
-        <!-- <div class="mb-20">或</div>
-        <mt-button @click.native='jumpWechatPay' size="large" type="primary">{{qrtext}}</mt-button> -->
+        <div class="t-xs">*如遇到支付问题,请截屏此页面,从微信扫一扫界面,打开相册选择截屏图片进行支付</div> -->
+        <!-- <div class="mb-20">或</div> -->
+        <mt-button @click.native='jumpWechatPay' size="large" type="primary">去支付</mt-button>
       </div>
     </div>
     <div v-if='payType=="alipay"' class="t-center" style='padding:30px;'>
@@ -82,7 +82,8 @@ export default {
       getPayInfo: "getPayInfo",
       refreshPrice: "refreshPrice",
       _getPayResult: "getPayResult",
-      pay: "pay"
+      pay: "pay",
+      _getUnifiedOrder: "getUnifiedOrder"
       //umsH5: "umsH5"
     }),
     doRefreshPrice() {
@@ -109,13 +110,13 @@ export default {
         this.payResult = data;
         this.getPayResult(data.token);
         this.qrcode = "";
-        this.qrtext = data.qrtext;
-        data.qrtext &&
-          QRCode.toDataURL(data.qrtext, { errorCorrectionLevel: "H" }).then(
-            url => {
-              this.qrcode = url;
-            }
-          );
+        // this.qrtext = data.qrtext;
+        // data.qrtext &&
+        //   QRCode.toDataURL(data.qrtext, { errorCorrectionLevel: "H" }).then(
+        //     url => {
+        //       this.qrcode = url;
+        //     }
+        //   );
       });
     },
     getPayResult(token) {
@@ -138,10 +139,14 @@ export default {
       //console.log(document.getElementById("alipaysubmit"));
       document.getElementById("alipaysubmit").target = "_blank";
       document.forms["alipaysubmit"].submit();
+    },
+    jumpWechatPay() {
+      this._getUnifiedOrder({
+        orderId: this.payResult.token
+      }).then(res => {
+        
+      });
     }
-    // jumpWechatPay() {
-    //   window.location.href = this.qrtext;
-    // }
   },
   mounted() {
     let { id: product_id } = this.$route.query;
