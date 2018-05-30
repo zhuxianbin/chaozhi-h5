@@ -171,18 +171,16 @@ export default {
     getOpenId() {
       //let token = storage.get("userToken").token;
       if (!this.userInfo.user.openid) {
-        this.bindWeiXinOpenId(window.location.href);
-        // window.location.href = `${weixinAuth}/api/weixinauth?token=${token}&url=${encodeURIComponent(
-        //   window.location.href
-        // )}`;
+        //this.bindWeiXinOpenId(window.location.href);
+        window.location.href = `${weixinAuth}/api/weixinauth?token=${token}&url=${encodeURIComponent(
+          window.location.href
+        )}`;
       }
       // api.getweixinAuth({
       //   url: `${encodeURIComponent(window.location.href)}`
       // });
     },
-    getWeiXinCode(){
-
-    }
+    getWeiXinCode() {}
   },
   mounted() {
     let { id: product_id } = this.$route.query;
