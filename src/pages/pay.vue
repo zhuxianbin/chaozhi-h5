@@ -142,7 +142,8 @@ export default {
     },
     jumpWechatPay() {
       this._getUnifiedOrder({
-        orderId: this.payResult.token
+        orderId: this.payResult.token,
+        trade_type:"JSAPI"
       }).then(res => {
         if (res.code == 200) {
           wx.chooseWXPay({
