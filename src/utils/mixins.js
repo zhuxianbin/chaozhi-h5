@@ -81,9 +81,9 @@ export default {
         },
         bindWeiXinOpenId(url) {
           let { token } = storage.get("userToken");
-          let redirect_uri = encodeURIComponent(`http://test.chaozhiedu.com/#/getcode`);
+          let redirect_uri = encodeURIComponent(`http://test-aci-api.chaozhiedu.com/api/weixinauth`);
           let href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8a6bd664607d3e4b&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
-          alert(href);
+          
           window.location.href = href;
         }
       }
