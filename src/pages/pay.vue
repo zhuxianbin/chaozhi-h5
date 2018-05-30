@@ -169,7 +169,7 @@ export default {
       });
     },
     getOpenId() {
-      //let token = storage.get("userToken").token;
+      let { token } = storage.get("userToken");
       if (!this.userInfo.user.openid) {
         //this.bindWeiXinOpenId(window.location.href);
         window.location.href = `${weixinAuth}/api/weixinauth?token=${token}&url=${encodeURIComponent(
