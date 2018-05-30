@@ -45,7 +45,7 @@
 import { mapActions, mapState } from "vuex";
 import QRCode from "qrcode";
 import storage from "@/utils/storage";
-import { baseUrl } from "@/utils/config";
+import { weixinAuth } from "@/utils/config";
 let timer = 0;
 export default {
   data() {
@@ -167,7 +167,7 @@ export default {
     getOpenId() {
       let token = storage.get("userToken").token;
       if (!this.userInfo.user.openid) {
-        window.location.href = `${baseUrl}/api/weixinauth?token=${token}&url=${encodeURIComponent(
+        window.location.href = `${weixinAuth}/api/weixinauth?token=${token}&url=${encodeURIComponent(
           window.location.href
         )}`;
       }
