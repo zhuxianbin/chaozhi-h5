@@ -1,5 +1,6 @@
 import async from "./async";
 import storage from "./storage";
+import { weixinAuth } from "./config";
 export default {
   /**
    * 取得登陆验证码
@@ -216,5 +217,12 @@ export default {
   /*H5支付*/
   getUnifiedOrder(param) {
     return async.post(`/api/pay/getUnifiedOrder`, param);
+  },
+
+  // getweixinAuth(param) {
+  //   return async.get(`${weixinAuth}/api/weixinauth`, param);
+  // }
+  getWeiXinConfig(param){
+    return async.post(`/api/getWeiXinConfig`, param);
   }
 };

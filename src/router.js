@@ -77,10 +77,10 @@ export default new Router({
       path:"/signup",
       name: "signup",
       component: () => import("./pages/center/signup.vue")
-    }
+    },
     // {
-    //   path: "/me",
-    //   name: "me",
+    //   path: "/getcode",
+    //   name: "getcode",
     //   component: info
     // }
   ]

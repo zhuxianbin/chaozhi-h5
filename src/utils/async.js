@@ -43,11 +43,13 @@ export default {
       ...data,
       token
     });
-    let ret = fetch(`${baseUrl}${url}`, {
+
+    let base = url.indexOf("http") >= 0 ? "" : baseUrl;
+    let ret = fetch(`${base}${url}`, {
       method: "POST",
       headers,
       body: params
-    }).then(function(requst) {
+    }).then(function (requst) {
       return requst.json();
     });
     ret
@@ -57,7 +59,7 @@ export default {
           window.location.href = `./#/login`;
         }
       })
-      .catch(res => {});
+      .catch(res => { });
     return ret;
   },
   get(url, data, token) {
@@ -76,10 +78,13 @@ export default {
       ...data,
       token
     });
-    let ret = fetch(`${baseUrl}${url}?${params}`, {
+
+    let base = url.indexOf("http") >= 0 ? "" : baseUrl;
+
+    let ret = fetch(`${base}${url}?${params}`, {
       method: "GET"
       //headers
-    }).then(function(requst) {
+    }).then(function (requst) {
       return requst.json();
     });
     ret
@@ -89,7 +94,7 @@ export default {
           window.location.href = `./#/login`;
         }
       })
-      .catch(res => {});
+      .catch(res => { });
     return ret;
   },
   upload(url, data, token) {
@@ -107,7 +112,7 @@ export default {
       },
       body: formData
     })
-      .then(function(requst) {
+      .then(function (requst) {
         return requst.json();
       })
       .catch(({ message }) => {
@@ -141,7 +146,7 @@ export default {
       method,
       //headers,
       body: params
-    }).then(function(requst) {
+    }).then(function (requst) {
       //requst = requst;
       return requst.json();
     });
