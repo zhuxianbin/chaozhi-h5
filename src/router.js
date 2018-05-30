@@ -78,10 +78,10 @@ export default new Router({
       name: "signup",
       component: () => import("./pages/center/signup.vue")
     },
-    // {
-    //   path: "/getcode",
-    //   name: "getcode",
-    //   component: info
-    // }
+    {
+      path: "/getcode",
+      name: "getcode",
+      component: () => import("./pages/center/getcode.vue")
+    }
   ]
 });
