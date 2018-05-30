@@ -42,8 +42,10 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import QRCode from "qrcode";
+import storage from "@/utils/storage";
+import { baseUrl } from "@/utils/config";
 let timer = 0;
 export default {
   data() {
@@ -76,6 +78,11 @@ export default {
     payType() {
       this.getQRcode();
     }
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.userInfo
+    })
   },
   methods: {
     ...mapActions({
@@ -143,7 +150,7 @@ export default {
     jumpWechatPay() {
       this._getUnifiedOrder({
         orderId: this.payResult.token,
-        trade_type:"JSAPI"
+        trade_type: "JSAPI"
       }).then(res => {
         if (res.code == 200) {
           wx.chooseWXPay({
@@ -156,6 +163,14 @@ export default {
           });
         }
       });
+    },
+    getOpenId() {
+      let token = storage.get("userToken").token;
+      if (!this.userInfo.user.openid) {
+        window.location.href = `${baseUrl}/api/weixinauth?token=${token}&url=${encodeURIComponent(
+          window.location.href
+        )}`;
+      }
     }
   },
   mounted() {
@@ -170,6 +185,7 @@ export default {
     );
 
     product_id && this.getQRcode();
+    this.getOpenId();
   },
   beforeDestroy() {
     clearTimeout(timer);

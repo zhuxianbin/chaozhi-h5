@@ -43,6 +43,7 @@ export default new Vuex.Store({
         avatar_file: ""
       }
     },
+    
     courseCount: 0
   },
   getters: {
@@ -136,6 +137,6 @@ export default new Vuex.Store({
     },
     [getCourseCount](state, res) {
       state.courseCount = res.count;
-    }
+    },
   }
 });
