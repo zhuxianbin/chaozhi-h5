@@ -33,10 +33,12 @@
         <mt-button @click.native='payOrder("wechat")' size="large" type="primary">去支付</mt-button>
       </div>
     </div>
-    <div v-if='payType=="alipay"' class="t-center" style='padding:30px;'>
+    <div v-if='payType=="alipay"' style='padding:1rem 2rem;background:#fff;'>
+      <div class="mb-20 t-center">
       <div v-html='payResult.form'></div>
-      <mt-button class="mb-10" @click.native='jumpAliPage' size="large" type="primary">去支付</mt-button>
-      <div class='t-xs t-gray'>*如果您在微信内打开此页面,请从浏览器打开</div>
+      <mt-button class="mb-10" @click.native='payOrder("alipay")' size="large" type="primary">去支付</mt-button>
+      <!-- <div class='t-xs t-gray'>*如果您在微信内打开此页面,请从浏览器打开</div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -126,7 +128,7 @@ export default {
             .then(data => {
               this.weixinPay(data.config, () => {
                 return this.$messagebox.alert("购买成功").then(() => {
-                  this.$router.back();
+                  this.$router.push("/male");
                 });
               });
             });
@@ -142,6 +144,19 @@ export default {
               }
             });
         }
+      } else if (type == "alipay") {
+        api
+          .pay({
+            product_id: this.productId,
+            channel: "alipay"
+          })
+          .then(data => {
+            console.log(data);
+            this.payResult = data;
+            this.$nextTick(() => {
+              document.forms["alipaysubmit"].submit();
+            });
+          });
       }
     },
     getPayResult(token) {
