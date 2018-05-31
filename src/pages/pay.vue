@@ -111,7 +111,7 @@ export default {
       api.getOrder({ product_id: this.productId }).then(data => {
         if (data.code == 202) {
           return this.$messagebox.alert("您已经购买该商品").then(() => {
-            this.$router.back();
+            this.$router.push("/male");
           });
         }
         this.orderId = data.token;
