@@ -209,11 +209,12 @@ export default {
     this.productId = product_id;
     this.getPayInfo({ product_id }).then(
       ({ code, msg, price, token, product }) => {
-        this.price = price;
-        // this.orderId = token;
-        this.product = product;
-
-        this.bindOpenId(isGet);
+        if (code == 200) {
+          this.price = price;
+          // this.orderId = token;
+          this.product = product;
+          this.bindOpenId(isGet);
+        }
       }
     );
 
