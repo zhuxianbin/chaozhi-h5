@@ -119,6 +119,6 @@ export default {
 
     Vue.prototype.$cookie = $cookie;
 
-    Vue.prototype.$TOOLS = tools;
+    Vue.prototype.$tools = tools;
   }
 };
