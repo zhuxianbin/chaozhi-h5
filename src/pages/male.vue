@@ -31,7 +31,7 @@
               </div>
               <div flex class="t-left">
                 <div flex-box='1'>
-                  <mt-button type="danger" @click.native='$router.push({path:"./pay",query:{id:item.id}})' size="small">立即购买</mt-button></div>
+                  <mt-button type="danger" @click.native='$router.push("./pay/"+item.id)' size="small">立即购买</mt-button></div>
                 <div flex-box='1'>
                   <mt-button @click.native='showDesc(item)' size="small">课程介绍</mt-button>
                 </div>

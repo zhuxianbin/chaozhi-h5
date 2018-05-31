@@ -61,11 +61,11 @@ export default {
       price: 0,
       productId: "",
       payResult: {},
-      payType: "wechat",
+      payType: "wechat_jsapi",
       options: [
         {
           label: "微信",
-          value: "wechat"
+          value: "wechat_jsapi"
         },
         {
           label: "支付宝",
@@ -105,7 +105,7 @@ export default {
         }
       });
     },
-    getQRcode() {
+    getPay(callback) {
       this.pay({
         product_id: this.productId,
         channel: this.payType
@@ -114,12 +114,13 @@ export default {
           return this.$messagebox.alert("您已经购买该商品").then(() => {
             this.$router.back();
           });
+          callback && callback(data);
         }
 
         this.orderId = data.token;
-        this.payResult = data;
-        this.getPayResult(data.token);
-        this.qrcode = "";
+        //this.payResult = data;
+        //this.getPayResult(data.token);
+        //this.qrcode = "";
         // this.qrtext = data.qrtext;
         // data.qrtext &&
         //   QRCode.toDataURL(data.qrtext, { errorCorrectionLevel: "H" }).then(
@@ -151,48 +152,18 @@ export default {
       document.forms["alipaysubmit"].submit();
     },
     jumpWechatPay() {
-      this.pay({
-        product_id: this.productId,
-        channel: this.payType
-      }).then(data => {
-        if (data.code == 202) {
-          return this.$messagebox.alert("您已经购买该商品").then(() => {
-            this.$router.back();
-          });
-        }
-
+      this.getPay(data => {
         this.weixinPay(data.config, () => {
           return this.$messagebox.alert("购买成功").then(() => {
             this.$router.back();
           });
         });
-        // this.orderId = data.token;
-        // this.payResult = data;
-        // this.getPayResult(data.token);
-        // this.qrcode = "";
-      });
-
-      this.initWeiXin([], wx => {
-        this._getUnifiedOrder({
-          orderId: this.payResult.token,
-          trade_type: "JSAPI"
-        }).then(res => {
-          if (res.code == 200) {
-            wx.chooseWXPay({
-              timestamp: 1414723227,
-              nonceStr: "noncestr",
-              package:
-                "addition=action_id%3dgaby1234%26limit_pay%3d&bank_type=WX&body=innertest&fee_type=1&input_charset=GBK&notify_url=http%3A%2F%2F120.204.206.246%2Fcgi-bin%2Fmmsupport-bin%2Fnotifypay&out_trade_no=1414723227818375338&partner=1900000109&spbill_create_ip=127.0.0.1&total_fee=1&sign=432B647FE95C7BF73BCD177CEECBEF8D",
-              signType: "SHA1", // 注意：新版支付接口使用 MD5 加密
-              paySign: "bd5b1933cda6e9548862944836a9b52e8c9a2b69"
-            });
-          }
-        });
       });
     }
   },
   mounted() {
-    let { id: product_id } = this.$route.query;
+    let { id: product_id } = this.$route.params;
+
     this.productId = product_id;
     this.getPayInfo({ product_id }).then(
       ({ code, msg, price, token, product }) => {
@@ -202,7 +173,7 @@ export default {
       }
     );
 
-    product_id && this.getQRcode();
+    product_id && this.getPay();
   },
   beforeDestroy() {
     clearTimeout(timer);
