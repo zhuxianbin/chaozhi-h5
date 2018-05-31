@@ -150,7 +150,7 @@ export default {
       //console.log(document.getElementById("alipaysubmit"));
       document.getElementById("alipaysubmit").target = "_blank";
       document.forms["alipaysubmit"].submit();
-    },
+    }
     // jumpWechatPay() {
     //   this.getPay(data => {
     //     this.weixinPay(data.config, () => {
@@ -162,8 +162,8 @@ export default {
     // }
   },
   mounted() {
-    let { id: product_id } = this.$route.params;
-
+    let { id: product_id, isGet = 0 } = this.$route.params;
+    console.log(isGet);
     this.productId = product_id;
     this.getPayInfo({ product_id }).then(
       ({ code, msg, price, token, product }) => {
@@ -174,6 +174,18 @@ export default {
     );
 
     product_id && this.getOrder();
+
+    if (tools.isWechat && isGet <= 0) {
+      //if (!res.user.openid) {
+      let { token } = storage.get("userToken");
+      let redirect_uri = encodeURIComponent(
+        window.location.href + `/${+isGet + 1}`
+      );
+      let href = `http://test-aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
+      window.location.href = href;
+      //return false;
+      //}
+    }
   },
   beforeDestroy() {
     clearTimeout(timer);

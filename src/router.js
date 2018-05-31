@@ -43,7 +43,7 @@ export default new Router({
       component: male
     },
     {
-      path: "/pay/:id?",
+      path: "/pay/:id?/:isGet?",
       name: "pay",
       component: pay
     },

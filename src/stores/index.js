@@ -135,15 +135,6 @@ export default new Vuex.Store({
       state.category = data;
     },
     [getUserInfo](state, res) {
-      if (tools.isWechat) {
-        if (!res.user.openid) {
-          let { token } = storage.get("userToken");
-          let redirect_uri = encodeURIComponent(window.location.href);
-          let href = `http://test-aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
-          window.location.href = href;
-          //return false;
-        }
-      }
       state.userInfo = res;
     },
     [getCourseCount](state, res) {
