@@ -213,7 +213,6 @@ export default {
     return async.get(`/api/usersign/paysingup`, param);
   },
 
-
   /*H5支付*/
   getUnifiedOrder(param) {
     return async.post(`/api/pay/getUnifiedOrder`, param);
