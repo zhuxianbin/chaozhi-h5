@@ -30,7 +30,7 @@
         <img :src='qrcode' style='width:50vw;height:50vw;max-width:300px;max-height:300px;' />
         <div class="t-xs">*如遇到支付问题,请截屏此页面,从微信扫一扫界面,打开相册选择截屏图片进行支付</div> -->
         <!-- <div class="mb-20">或</div> -->
-        <mt-button @click.native='payOrder' size="large" type="primary">去支付</mt-button>
+        <mt-button @click.native='payOrder("wechat")' size="large" type="primary">去支付</mt-button>
       </div>
     </div>
     <div v-if='payType=="alipay"' class="t-center" style='padding:30px;'>
@@ -115,20 +115,34 @@ export default {
         this.orderId = data.token;
       });
     },
-    payOrder() {
-      // /api/pay/orderpay
-      api
-        .payOrder({
-          orderId: this.orderId,
-          channel: this.payType
-        })
-        .then(data => {
-          this.weixinPay(data.config, () => {
-            return this.$messagebox.alert("购买成功").then(() => {
-              this.$router.back();
+    payOrder(type) {
+      if (type == "wechat") {
+        if (this.$tools.isWechat()) {
+          api
+            .payOrder({
+              orderId: this.orderId,
+              channel: "wechat_jsapi"
+            })
+            .then(data => {
+              this.weixinPay(data.config, () => {
+                return this.$messagebox.alert("购买成功").then(() => {
+                  this.$router.back();
+                });
+              });
             });
-          });
-        });
+        } else {
+          api
+            .payOrder({
+              orderId: this.orderId,
+              channel: "wechat_h5"
+            })
+            .then(res => {
+              if (res.code == 200) {
+                window.location.href = res.mweb_url;
+              }
+            });
+        }
+      }
     },
     getPayResult(token) {
       this._getPayResult({
@@ -163,7 +177,7 @@ export default {
   },
   mounted() {
     let { id: product_id, isGet = 0 } = this.$route.params;
-    console.log(isGet);
+    //console.log(isGet);
     this.productId = product_id;
     this.getPayInfo({ product_id }).then(
       ({ code, msg, price, token, product }) => {
@@ -175,16 +189,16 @@ export default {
 
     product_id && this.getOrder();
 
-    if (this.$tools.isWechat && isGet <= 0) {
-      //if (!res.user.openid) {
-      let { token } = storage.get("userToken");
-      let redirect_uri = encodeURIComponent(
-        window.location.href + `/${+isGet + 1}`
-      );
-      let href = `http://test-aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
-      window.location.href = href;
-      //return false;
-      //}
+    if (this.$tools.isWechat()) {
+      if (isGet <= 0) {
+        //console.log(1111111);
+        let { token } = storage.get("userToken");
+        let redirect_uri = encodeURIComponent(
+          window.location.href + `/${+isGet + 1}`
+        );
+        let href = `http://test-aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
+        window.location.href = href;
+      }
     }
   },
   beforeDestroy() {
