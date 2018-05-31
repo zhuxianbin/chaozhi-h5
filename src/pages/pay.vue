@@ -92,7 +92,8 @@ export default {
       refreshPrice: "refreshPrice",
       _getPayResult: "getPayResult",
       pay: "pay",
-      _getUnifiedOrder: "getUnifiedOrder"
+      _getUnifiedOrder: "getUnifiedOrder",
+      _getUserInfo: "getUserInfo"
       //umsH5: "umsH5"
     }),
     doRefreshPrice() {
@@ -170,19 +171,11 @@ export default {
     },
     getOpenId() {
       let { token } = storage.get("userToken");
-      if (!this.userInfo.user.openid) {
-        this.bindWeiXinOpenId(window.location.href);
-        // window.location.href = `${weixinAuth}/api/weixinauth/${token}/${encodeURIComponent(
-        //   window.location.href
-        // )}`;
-
-        // api.getweixinAuth({
-        //   url: `${encodeURIComponent(window.location.href)}`
-        // });
-      }
-      // api.getweixinAuth({
-      //   url: `${encodeURIComponent(window.location.href)}`
-      // });
+      this._getUserInfo().then(res => {
+        if (!res.user.openid) {
+          this.bindWeiXinOpenId(window.location.href);
+        }
+      });
     },
     getWeiXinCode() {}
   },
