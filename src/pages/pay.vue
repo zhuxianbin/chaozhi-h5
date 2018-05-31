@@ -211,7 +211,7 @@ export default {
         let redirect_uri = encodeURIComponent(
           window.location.href + `/${+isGet + 1}`
         );
-        let href = `http://test-aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
+        let href = `${weixinAuth}/api/weixinauth?token=${token}&url=${redirect_uri}`;
         window.location.href = href;
       }
     }
