@@ -30,7 +30,7 @@
         <img :src='qrcode' style='width:50vw;height:50vw;max-width:300px;max-height:300px;' />
         <div class="t-xs">*如遇到支付问题,请截屏此页面,从微信扫一扫界面,打开相册选择截屏图片进行支付</div> -->
         <!-- <div class="mb-20">或</div> -->
-        <mt-button @click.native='jumpWechatPay' size="large" type="primary">去支付</mt-button>
+        <mt-button @click.native='payOrder' size="large" type="primary">去支付</mt-button>
       </div>
     </div>
     <div v-if='payType=="alipay"' class="t-center" style='padding:30px;'>
@@ -76,11 +76,11 @@ export default {
       qrtext: ""
     };
   },
-  watch: {
-    payType(val) {
-      //this.getQRcode();
-    }
-  },
+  // watch: {
+  //   payType(val) {
+  //     //this.getQRcode();
+  //   }
+  // },
   computed: {
     ...mapState({
       userInfo: state => state.userInfo
@@ -101,34 +101,34 @@ export default {
         this.$toast(msg);
         if (code == 200) {
           this.price = data;
-          this.getQRcode();
+          //this.getQRcode();
         }
       });
     },
-    getPay(callback) {
-      this.pay({
-        product_id: this.productId,
-        channel: this.payType
-      }).then(data => {
+    getOrder() {
+      api.getOrder({ product_id: this.productId }).then(data => {
         if (data.code == 202) {
           return this.$messagebox.alert("您已经购买该商品").then(() => {
             this.$router.back();
           });
-          callback && callback(data);
         }
-
         this.orderId = data.token;
-        //this.payResult = data;
-        //this.getPayResult(data.token);
-        //this.qrcode = "";
-        // this.qrtext = data.qrtext;
-        // data.qrtext &&
-        //   QRCode.toDataURL(data.qrtext, { errorCorrectionLevel: "H" }).then(
-        //     url => {
-        //       this.qrcode = url;
-        //     }
-        //   );
       });
+    },
+    payOrder() {
+      // /api/pay/orderpay
+      api
+        .payOrder({
+          orderId: this.orderId,
+          channel: this.payType
+        })
+        .then(data => {
+          this.weixinPay(data.config, () => {
+            return this.$messagebox.alert("购买成功").then(() => {
+              this.$router.back();
+            });
+          });
+        });
     },
     getPayResult(token) {
       this._getPayResult({
@@ -151,15 +151,15 @@ export default {
       document.getElementById("alipaysubmit").target = "_blank";
       document.forms["alipaysubmit"].submit();
     },
-    jumpWechatPay() {
-      this.getPay(data => {
-        this.weixinPay(data.config, () => {
-          return this.$messagebox.alert("购买成功").then(() => {
-            this.$router.back();
-          });
-        });
-      });
-    }
+    // jumpWechatPay() {
+    //   this.getPay(data => {
+    //     this.weixinPay(data.config, () => {
+    //       return this.$messagebox.alert("购买成功").then(() => {
+    //         this.$router.back();
+    //       });
+    //     });
+    //   });
+    // }
   },
   mounted() {
     let { id: product_id } = this.$route.params;
@@ -173,7 +173,7 @@ export default {
       }
     );
 
-    product_id && this.getPay();
+    product_id && this.getOrder();
   },
   beforeDestroy() {
     clearTimeout(timer);

@@ -212,8 +212,18 @@ export default {
   toPaySingUp: function (param) {
     return async.get(`/api/usersign/paysingup`, param);
   },
+  
 
   /*H5支付*/
+
+  getOrder(param){
+    return async.post(`/api/pay/get-order`, param);
+  },
+
+  payOrder(param){
+    return async.post(`/api/pay/order-pay`, param);
+  },
+
   getUnifiedOrder(param) {
     return async.post(`/api/pay/getUnifiedOrder`, param);
   },
