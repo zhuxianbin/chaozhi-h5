@@ -179,6 +179,19 @@ export default {
       //console.log(document.getElementById("alipaysubmit"));
       document.getElementById("alipaysubmit").target = "_blank";
       document.forms["alipaysubmit"].submit();
+    },
+    bindOpenId(isGet) {
+      if (this.$tools.isWechat()) {
+        if (isGet <= 0) {
+          //console.log(1111111);
+          let { token } = storage.get("userToken");
+          let redirect_uri = encodeURIComponent(
+            window.location.href + `/${+isGet + 1}`
+          );
+          let href = `${weixinAuth}/api/weixinauth?token=${token}&url=${redirect_uri}`;
+          window.location.href = href;
+        }
+      }
     }
     // jumpWechatPay() {
     //   this.getPay(data => {
@@ -199,22 +212,12 @@ export default {
         this.price = price;
         // this.orderId = token;
         this.product = product;
+
+        this.bindOpenId(isGet);
       }
     );
 
     product_id && this.getOrder();
-
-    if (this.$tools.isWechat()) {
-      if (isGet <= 0) {
-        //console.log(1111111);
-        let { token } = storage.get("userToken");
-        let redirect_uri = encodeURIComponent(
-          window.location.href + `/${+isGet + 1}`
-        );
-        let href = `${weixinAuth}/api/weixinauth?token=${token}&url=${redirect_uri}`;
-        window.location.href = href;
-      }
-    }
   },
   beforeDestroy() {
     clearTimeout(timer);
