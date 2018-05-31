@@ -2,6 +2,8 @@
 //import $ from 'jquery';
 import storage from "./storage";
 import api from "./api";
+import tools from "./tools";
+
 const $cookie = {
   //设置cookie
   setCookie(cname, cvalue, exdays) {
@@ -83,8 +85,6 @@ export default {
           let { token } = storage.get("userToken");
           let redirect_uri = encodeURIComponent(url);
           let href = `http://test-aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
-          alert(redirect_uri);
-          alert(href);
           window.location.href = href;
         }
       }
@@ -97,18 +97,6 @@ export default {
 
     Vue.prototype.$cookie = $cookie;
 
-    Vue.prototype.$TOOLS = {
-      isWechat() {
-        var userAgent = navigator.userAgent.toLowerCase();
-        return userAgent.match(/MicroMessenger/i) == "micromessenger";
-      },
-      isAlipay() {
-        var userAgent = navigator.userAgent.toLowerCase();
-        return userAgent.match(/Alipay/i) == "alipay";
-      },
-      isAlipayOrWechat() {
-        return this.isWechat() || this.isAlipay();
-      }
-    };
+    Vue.prototype.$TOOLS = tools;
   }
 };

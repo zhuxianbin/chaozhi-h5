@@ -168,16 +168,7 @@ export default {
           }
         });
       });
-    },
-    getOpenId() {
-      let { token } = storage.get("userToken");
-      this._getUserInfo().then(res => {
-        if (!res.user.openid) {
-          this.bindWeiXinOpenId(window.location.href);
-        }
-      });
-    },
-    getWeiXinCode() {}
+    }
   },
   mounted() {
     let { id: product_id } = this.$route.query;
@@ -191,7 +182,6 @@ export default {
     );
 
     product_id && this.getQRcode();
-    this.getOpenId();
   },
   beforeDestroy() {
     clearTimeout(timer);
