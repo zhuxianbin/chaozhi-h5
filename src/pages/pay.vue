@@ -175,7 +175,7 @@ export default {
 
     product_id && this.getOrder();
 
-    if (tools.isWechat && isGet <= 0) {
+    if (this.$tools.isWechat && isGet <= 0) {
       //if (!res.user.openid) {
       let { token } = storage.get("userToken");
       let redirect_uri = encodeURIComponent(
