@@ -82,8 +82,9 @@ export default {
         bindWeiXinOpenId(url) {
           let { token } = storage.get("userToken");
           let redirect_uri = encodeURIComponent(url);
-          let href = `http://test-aci-api.chaozhiedu.com/api/weixinauth?token=${token}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`;
-
+          let href = `http://test-aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
+          alert(redirect_uri);
+          alert(href);
           window.location.href = href;
         }
       }
