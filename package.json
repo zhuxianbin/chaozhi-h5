@@ -1,15 +1,13 @@
 {
-  "name": "element-starter",
+  "name": "aci-h5",
   "description": "A Vue.js project",
   "author": "yi.shyang@ele.me",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --env.dev",
     "build": "rimraf dist && webpack -p --progress --hide-modules",
-    "push-test":
-      "git push https://zhuxianbin:zhuxian124@github.com/zhuxianbin/chaozhi-h5.git master",
-    "push-prod":
-      "git push http://zhuxianbin:zhuxian124@git.izhzx.com/project/aci/frontend/aci_mobile.git master"
+    "push-test":"git push https://zhuxianbin:zhuxian124@github.com/zhuxianbin/chaozhi-h5.git master",
+    "push-prod":"git push http://zhuxianbin:zhuxian124@git.izhzx.com/project/aci/frontend/aci_mobile.git master"
   },
   "dependencies": {
     "axios": "^0.18.0",

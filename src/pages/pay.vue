@@ -21,10 +21,10 @@
     </div>
 
     <mt-navbar v-model="payType">
-      <mt-tab-item id="wechat">微信</mt-tab-item>
+      <mt-tab-item id="wechat_jsapi">微信</mt-tab-item>
       <mt-tab-item id="alipay">支付宝</mt-tab-item>
     </mt-navbar>
-    <div v-if="payType=='wechat'" style='padding:1rem 2rem;background:#fff;'>
+    <div v-if="payType=='wechat_jsapi'" style='padding:1rem 2rem;background:#fff;'>
       <div class="mb-20 t-center">
         <!-- <div class="t-xs mb-10">请扫二维码进行支付</div>
         <img :src='qrcode' style='width:50vw;height:50vw;max-width:300px;max-height:300px;' />
@@ -77,8 +77,8 @@ export default {
     };
   },
   watch: {
-    payType() {
-      this.getQRcode();
+    payType(val) {
+      //this.getQRcode();
     }
   },
   computed: {
@@ -151,6 +151,27 @@ export default {
       document.forms["alipaysubmit"].submit();
     },
     jumpWechatPay() {
+      this.pay({
+        product_id: this.productId,
+        channel: this.payType
+      }).then(data => {
+        if (data.code == 202) {
+          return this.$messagebox.alert("您已经购买该商品").then(() => {
+            this.$router.back();
+          });
+        }
+
+        this.weixinPay(data.config, () => {
+          return this.$messagebox.alert("购买成功").then(() => {
+            this.$router.back();
+          });
+        });
+        // this.orderId = data.token;
+        // this.payResult = data;
+        // this.getPayResult(data.token);
+        // this.qrcode = "";
+      });
+
       this.initWeiXin([], wx => {
         this._getUnifiedOrder({
           orderId: this.payResult.token,
