@@ -1,5 +1,5 @@
 import { baseUrl } from "./config.js";
-
+import { Toast } from "mint-ui";
 // import axios from 'axios';
 // var $axios = axios.create({
 //   baseURL: 'baseUrl',
@@ -58,6 +58,9 @@ export default {
           storage.remove("userToken");
           window.location.href = `./#/login`;
         }
+        else if (code != 200) {
+          Toast(msg)
+        }
       })
       .catch(res => { });
     return ret;
@@ -92,6 +95,9 @@ export default {
         if (code >= 600 && code < 700) {
           storage.remove("userToken");
           window.location.href = `./#/login`;
+        }
+        else if (code != 200) {
+          Toast(msg)
         }
       })
       .catch(res => { });
