@@ -26,7 +26,7 @@ export default {
   //     data
   //   });
   // },
-  post(url, data, token) {
+  post(url, data, token = "") {
     let headers = { "Content-Type": "application/x-www-form-urlencoded" };
     if (!token) {
       token = storage.get("userToken").token;
@@ -62,7 +62,7 @@ export default {
       .catch(res => { });
     return ret;
   },
-  get(url, data, token) {
+  get(url, data, tokenn = "") {
     //let headers = {};
     if (!token) {
       token = storage.get("userToken").token;
