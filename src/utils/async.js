@@ -33,16 +33,13 @@ export default {
     }
 
     //let keys = Object.keys.call(this, data);
-    for (let key in { ...data }) {
+    for (let key in { ...data, token }) {
       if (data[key] === "") {
         delete data[key];
       }
     }
 
-    let params = querystring.stringify({
-      ...data,
-      token
-    });
+    let params = querystring.stringify(data);
 
     let base = url.indexOf("http") >= 0 ? "" : baseUrl;
     let ret = fetch(`${base}${url}`, {
@@ -71,16 +68,13 @@ export default {
       token = storage.get("userToken").token;
     }
 
-    for (let key in { ...data }) {
+    for (let key in { ...data, token }) {
       if (data[key] === "") {
         delete data[key];
       }
     }
 
-    let params = querystring.stringify({
-      ...data,
-      token
-    });
+    let params = querystring.stringify(data);
 
     let base = url.indexOf("http") >= 0 ? "" : baseUrl;
 
