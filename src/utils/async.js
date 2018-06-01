@@ -32,8 +32,8 @@ export default {
       token = storage.get("userToken").token;
     }
 
-    //let keys = Object.keys.call(this, data);
-    for (let key in { ...data, token }) {
+    data = { ...data, token };
+    for (let key in data) {
       if (data[key] === "") {
         delete data[key];
       }
@@ -62,13 +62,13 @@ export default {
       .catch(res => { });
     return ret;
   },
-  get(url, data, tokenn = "") {
+  get(url, data, token = "") {
     //let headers = {};
     if (!token) {
       token = storage.get("userToken").token;
     }
-
-    for (let key in { ...data, token }) {
+    data = { ...data, token };
+    for (let key in data) {
       if (data[key] === "") {
         delete data[key];
       }
