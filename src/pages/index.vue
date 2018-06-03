@@ -258,7 +258,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    let { env } = this.$router.query;
+    if(env){
+      
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 .page {

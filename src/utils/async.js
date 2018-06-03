@@ -1,4 +1,4 @@
-import { baseUrl } from "./config.js";
+import config from "./config.js";
 import { Toast } from "mint-ui";
 // import axios from 'axios';
 // var $axios = axios.create({
@@ -13,6 +13,8 @@ import { Toast } from "mint-ui";
 //   ...data,
 //   token
 // }));
+
+const { baseUrl } = config.getConfig("test");
 
 //import MD5 from 'md5.js';
 import querystring from "querystring";
