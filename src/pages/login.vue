@@ -5,27 +5,23 @@
     </div>
     <div class="t-lg t-center mb-10">登录您的账号</div>
     <div class="t-xs t-gray t-center mb-20">开启您的学习之旅</div>
+
+
+    <van-cell-group class="mb-10">
+      <van-field
+        v-model="params.phone"
+        placeholder="请输入用户名"
+      />
+      <van-field
+        v-model="params.captcha"
+        placeholder="请输入手机号"
+      >
+      <van-button slot="button" size="small" :disabled="outTime>0" @click='doSend' type="primary">{{outTime>0?outTime+"s":"获取验证码"}}</van-button>
+      </van-field>
+    </van-cell-group>
+
     <div class="ui-form">
-      <div class="ui-form-item">
-        <div class="ui-input">
-          <div class="ui-input-icon">
-            <i class="iconfont icon-shoujihao"></i>
-          </div>
-          <input type='text' v-model='params.phone' placeholder="使用的手机号码">
-        </div>
-      </div>
-      <div class="ui-form-item" flex>
-        <div class="ui-input" flex-box="1">
-          <div class="ui-input-icon">
-            <i class="iconfont icon-unie615"></i>
-          </div>
-          <input type='text' v-model='params.captcha' placeholder="短信验证码">
-        </div>
-        <div class="ui-input-after" flex-box="0">
-          <button class='btn-link' :disabled="outTime>0" @click='doSend'>{{outTime>0?outTime+"s":"获取验证码"}}</button>
-        </div>
-      </div>
-      <div class="ui-form-item">
+      <div class="ui-form-item t-sm">
         <label>
           <input type='checkbox' v-model='isChecked' />
           <span>登录即表示您同意</span>
@@ -93,8 +89,14 @@
 </template>
 
 <script>
+import { Field, CellGroup, Button } from "vant";
 import { mapActions } from "vuex";
 export default {
+  components: {
+    [Field.name]: Field,
+    [CellGroup.name]: CellGroup,
+    [Button.name]: Button
+  },
   data() {
     return {
       params: {
@@ -162,13 +164,14 @@ export default {
   padding: 1rem;
 }
 .ui-form {
+  @inputHeight: 1.8rem;
   .ui-form-item {
     padding-bottom: 1rem;
   }
 
   .ui-input-after {
-    height: 2rem;
-    line-height: 2rem;
+    height: @inputHeight;
+    line-height: @inputHeight;
     width: 40vw;
     text-align: center;
   }
@@ -178,8 +181,10 @@ export default {
     .ui-input-icon {
       position: absolute;
       left: 0.5rem;
-      top: 0.2rem;
-      font-size: 1.2rem;
+      top: 0;
+      height: @inputHeight;
+      line-height: @inputHeight;
+      vertical-align: middle;
     }
     .ui-input-icon + input {
       padding-left: 1.5rem;
@@ -191,8 +196,8 @@ export default {
       border-radius: 0.2rem;
       padding: 0.2rem 0.5rem;
       box-sizing: border-box;
-      height: 2rem;
-      font-size: 0.7rem;
+      height: @inputHeight;
+      font-size: 0.6rem;
       &:focus {
         border: 1px solid #f40;
       }

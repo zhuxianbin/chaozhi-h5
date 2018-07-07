@@ -260,10 +260,9 @@
 <script>
 export default {
   mounted() {
-    let { env } = this.$router.query;
-    if(env){
-      
-    }
+    // let { env } = this.$router.query;
+    // if(env){
+    // }
   }
 };
 </script>

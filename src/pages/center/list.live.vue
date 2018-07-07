@@ -16,56 +16,28 @@
     </div>
     <div>
       <div class="mb-10" style='background:#fff;box-shadow:0 1px 2px 0 #eee;' v-for='item in rows' :key='item.id'>
-        <div flex style='padding:.5rem;'>
-          <div flex-box="0" style='margin-right:.5rem;'>
-            <img :src='item.products.img' style='width:5rem;' >
-          </div>
-          <div flex-box="1">
-            <div class="mb-10">{{item.product_name}}</div>
-            <div class="t-xs mb-10">
-              <!-- <div flex>
-                <div flex-box="0" class="t-right mb-10" style='width:2.5rem;'>直播课程：</div>
-                <div flex-box="1">{{item.products.live_name}}</div>
-              </div> -->
-              <!-- <div flex>
-                <div flex-box="0" class="t-right" style='width:2.5rem;'>总课时：</div>
-                <div flex-box="1">{{item.products.total_course}}节</div>
-              </div> -->
-            </div>
-          </div>
-        </div>
-        <!-- <div flex class="t-xs border-bottom" style='padding:0 .5rem .5rem;'>
-          <div flex-box="1">直播开始时间：<span class="t-orange">{{item.products.live_time}}</span></div>
-          <div flex-box="0">当前课时：第{{item.products.current_course}}节</div>
-        </div> -->
-        <div class="t-xs">
-          <div style='background:#f9f9f9;margin-top:.5rem;'>
-            <div style='padding:.5rem;background:#fff' class="mb-10">
-              <div flex v-for='plan in item.products.live_more' :key='plan.live_name' class="mb-10">
-                <div flex-box="1">
-                  <div>
-                    <span class="t-bold t-sm">{{plan.live_name}}</span><br>
-                    <span class="t-gray">{{plan.live_time}}</span>
-                  </div>
-                </div>
-                <div flex-box="0">
-                  <mt-button v-if='plan.live_days > 0' size='small' disabled>
-                      <i class="iconfont icon-zhibodating"></i>
-                      <span>直播还没开始</span>
-                  </mt-button>
-                  <a target="_blank" style='line-height:33px;text-decoration: none;' v-if='plan.live_days == 0' :href="plan.live_url" class="mint-button mint-button--danger mint-button--small">
-                      <i class="iconfont icon-bofang1"></i>
-                      <span>进入直播课堂</span>
-                  </a>
-                  <a target="_blank" style='line-height:33px;text-decoration: none;' v-if='plan.live_days<0' :href="plan.live_url" class="mint-button mint-button--primary mint-button--small">
-                      <i class="iconfont icon-kechenghuifang"></i>
-                      <span>回访直播视频</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        
+        <van-card
+          :title="item.product_name"
+          :thumb="item.product_img"
+        />
+        
+        <van-cell-group>
+          <van-cell v-for='plan in item.products' :key='plan.id' :title="plan.live_name" :label="plan.live_st" value="内容">
+            <van-button size="small" type="default" disabled v-if='plan.status > 0'>
+              <i class="iconfont icon-zhibodating"></i>
+              <span>直播还没开始</span>
+            </van-button>
+            <van-button size="small" type="primary" v-if='plan.status===0' tag="a" :href="plan.live_url">
+              <i class="iconfont icon-bofang1"></i>
+              <span>进入直播课堂</span>
+            </van-button>
+            <van-button size="small" type="danger" v-if='plan.status<0' tag="a" :href="plan.live_url">
+              <i class="iconfont icon-kechenghuifang"></i>
+              <span>回放直播视频</span>
+            </van-button>
+          </van-cell>
+        </van-cell-group>
       </div>
     </div>
     <mt-popup
@@ -82,8 +54,15 @@
 </template>
 
 <script>
+import { Button, Card, Cell, CellGroup } from "vant";
 import { mapActions, mapState } from "vuex";
 export default {
+  components: {
+    [Button.name]: Button,
+    [Card.name]: Card,
+    [Cell.name]: Cell,
+    [CellGroup.name]: CellGroup
+  },
   data() {
     return {
       rows: [],
@@ -145,9 +124,14 @@ export default {
 
 <style lang="less" scoped>
 .page {
+  min-height: 100vh;
+  box-sizing: border-box;
   padding: 40px 0 50px;
 }
 .mint-tab-item {
   padding: 5px 0;
+}
+.van-card {
+  background: #fff;
 }
 </style>

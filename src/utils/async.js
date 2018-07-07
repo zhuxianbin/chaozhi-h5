@@ -14,12 +14,12 @@ import { Toast } from "mint-ui";
 //   token
 // }));
 
-const { baseUrl } = config.getConfig("test");
+const { baseUrl } = config.getConfig("prod");
 
 //import MD5 from 'md5.js';
 import querystring from "querystring";
 
-import storage from "./storage.js";
+import storage from "./storage";
 export default {
   baseUrl,
   // getToken(url, data) {

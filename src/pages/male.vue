@@ -18,7 +18,23 @@
       v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="10">
-      <div class="product-list-item" v-for="item in rows" :key='item.id'>
+      <template v-for="item in rows">
+        <van-card :key='item.id'
+          :title="item.name"
+          :thumb="item.product_img"
+          class="mb-10"
+        >
+          <div slot="desc">
+            <span class="t-orange t-bold">{{item.price}}</span>元
+            <s class="t-xs t-gray">{{item.original_price}}元</s>
+          </div>
+          <div slot="footer">
+            <van-button type="danger" size="small" @click='$router.push("./pay/"+item.id)'>立即购买</van-button>
+            <van-button type="default" size="small" @click='showDesc(item)'>课程介绍</van-button>
+          </div>
+        </van-card>
+      </template>
+      <!-- <div class="product-list-item" v-for="item in rows" :key='item.id'>
           <div flex class="mb-10">
             <div flex-box="0">
               <img :src='item.img' style='width:6rem;margin-right:.5rem;'>
@@ -38,11 +54,7 @@
               </div>
             </div>
           </div>
-          <!-- <div class="t-gray t-xs">
-            <div>课程介绍：</div>
-            <div class="t-ell-2" style='height:1.4rem;'>{{item.description|htmlfilter}}</div>
-          </div> -->
-      </div>
+      </div> -->
     </div>
     <mt-popup
       v-model="popups.show"
@@ -59,8 +71,13 @@
 </template>
 
 <script>
+import { Button, Card } from "vant";
 import { mapActions, mapState } from "vuex";
 export default {
+  components: {
+    [Button.name]: Button,
+    [Card.name]: Card
+  },
   data() {
     return {
       cateActive: 0,
@@ -126,6 +143,10 @@ export default {
 <style lang='less' scoped>
 .page {
   padding: 40px 0 50px;
+}
+
+.van-card {
+  background: #ffffff;
 }
 .cate-list {
   background: #fff;

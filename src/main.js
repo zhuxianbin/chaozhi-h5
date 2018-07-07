@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Mint from "mint-ui";
+import "normalize.css/normalize.css";
 import "mint-ui/lib/style.css";
 import "flex.css/dist/flex.css";
 import "./assets/index.less";

@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --env.dev",
     "build": "rimraf dist && webpack -p --progress --hide-modules",
-    "push-test":"git push https://zhuxianbin:zhuxian124@github.com/zhuxianbin/chaozhi-h5.git master",
-    "push-prod":"git push http://zhuxianbin:zhuxian124@git.izhzx.com/project/aci/frontend/aci_mobile.git master"
+    "push-test": "git push https://zhuxianbin:zhuxian124@github.com/zhuxianbin/chaozhi-h5.git master",
+    "push-prod": "git push http://zhuxianbin:zhuxian124@git.izhzx.com/project/aci/frontend/aci_mobile.git master"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -15,8 +15,12 @@
     "es6-promise": "^4.2.4",
     "fetch-ie8": "^1.5.0",
     "flex.css": "^1.1.7",
+    "js-cookie": "^2.2.0",
     "mint-ui": "^2.2.13",
+    "normalize.css": "^8.0.0",
+    "nprogress": "^0.2.0",
     "qrcode": "^1.2.0",
+    "vant": "^1.1.12",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
@@ -28,6 +32,7 @@
     "autoprefixer": "^6.6.0",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.0",
+    "babel-plugin-import": "^1.8.0",
     "babel-preset-vue-app": "^1.2.0",
     "css-loader": "^0.27.0",
     "file-loader": "^0.10.1",

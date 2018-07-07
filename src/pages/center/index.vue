@@ -40,18 +40,16 @@
       </div>
     </div>
     <div class="mb-20">
+      <van-cell-group>
+        <van-cell @click='courseCount?$router.push("./live"):$toast("您还没有购买课程")' title="我的直播课程" is-link value="点击查看" />
+        <van-cell @click='courseCount?$router.push("./courseList"):$toast("您还没有购买课程")' title="我的预习课程" is-link>
+          已购{{courseCount}}个课程
+        </van-cell>
+        <van-cell title="客服热线" :url='"tel:"+tel' is-link :value="tel" />
+      </van-cell-group>
       <!-- <mt-cell title="我的报考资料" v-if='userInfo.status==3' @click.native='$router.push("./signup")' is-link>
         <span style="color: green">已报名</span>
       </mt-cell> -->
-      <mt-cell @click.native='courseCount?$router.push("./live"):$toast("您还没有购买课程")' title="我的直播课程" is-link>
-        <span>点击查看</span>
-      </mt-cell>
-      <mt-cell @click.native='courseCount?$router.push("./courseList"):$toast("您还没有购买课程")' title="我的预习课程" is-link>
-        <span>已购{{courseCount}}个课程</span>
-      </mt-cell>
-      <mt-cell title="客服热线" :to='"tel:"+tel' is-link>
-        <span>{{tel}}</span>
-      </mt-cell>
     </div>
     <div class="t-center user-logout">
       <mt-button @click.native='doLogout' style="width:60vw;">退出登录</mt-button>
@@ -60,8 +58,13 @@
 </template>
 
 <script>
+import { Cell, CellGroup } from 'vant';
 import { mapActions, mapState } from "vuex";
 export default {
+  components:{
+    [Cell.name]: Cell,
+    [CellGroup.name]: CellGroup
+  },
   data() {
     return {
       tel: "010-51657777",
@@ -93,8 +96,8 @@ export default {
 <style lang="less" scoped>
 .page {
   padding: 40px 0 50px;
-  //height: 100vh;
-  //box-sizing: border-box;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 .user-info {
   padding: 1rem;
