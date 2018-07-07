@@ -21,7 +21,7 @@
       <template v-for="item in rows">
         <van-card :key='item.id'
           :title="item.name"
-          :thumb="item.product_img"
+          :thumb="item.img"
           class="mb-10"
         >
           <div slot="desc">
