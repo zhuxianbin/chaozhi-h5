@@ -4,7 +4,7 @@ export const baseUrl =
   "http://aci-api.chaozhiedu.com";
 
 export const weixinAuth =
-  "http://dev-aci-api.chaozhiedu.com" ||
+  //"http://dev-aci-api.chaozhiedu.com" ||
   "http://aci-api.chaozhiedu.com";
 
 
