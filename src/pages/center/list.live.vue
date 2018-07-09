@@ -24,11 +24,11 @@
         
         <van-cell-group>
           <van-cell v-for='plan in item.products' :key='plan.id' :title="plan.live_name" :label="plan.live_st" value="内容">
-            <van-button size="small" type="default" disabled v-if='plan.status > 0'>
+            <van-button size="small" type="default" disabled v-if='plan.status === 0'>
               <i class="iconfont icon-zhibodating"></i>
               <span>直播还没开始</span>
             </van-button>
-            <van-button size="small" type="primary" v-if='plan.status===0' tag="a" :href="plan.live_url">
+            <van-button size="small" type="primary" v-if='plan.status>0' tag="a" :href="plan.live_url">
               <i class="iconfont icon-bofang1"></i>
               <span>进入直播课堂</span>
             </van-button>
