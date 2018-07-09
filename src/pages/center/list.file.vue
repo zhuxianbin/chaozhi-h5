@@ -18,7 +18,7 @@
       <div class="mb-10" style='background:#fff;box-shadow:0 1px 2px 0 #eee;' v-for='item in rows' :key='item.id'>
         <div flex style='padding:.5rem;'>
           <div flex-box="0" style='margin-right:.5rem;'>
-            <img :src='item.products.img' style='width:5rem;' >
+            <img :src='item.product_img' style='width:5rem;' >
           </div>
           <div flex-box="1">
             <div class="mb-10">{{item.product_name}}</div>
