@@ -10,11 +10,11 @@
     <van-cell-group class="mb-10">
       <van-field
         v-model="params.phone"
-        placeholder="请输入用户名"
+        placeholder="请输入手机号"
       />
       <van-field
         v-model="params.captcha"
-        placeholder="请输入手机号"
+        placeholder="请输入验证码"
       >
       <van-button slot="button" size="small" :disabled="outTime>0" @click='doSend' type="primary">{{outTime>0?outTime+"s":"获取验证码"}}</van-button>
       </van-field>
