@@ -165,12 +165,7 @@ export default {
           this.payData = data.order_info;
           this.alipay_form = data.form;
           this.mweb_url = data.mweb_url;
-          // data.qrtext &&
-          //   QRCode.toDataURL(data.qrtext, { errorCorrectionLevel: "H" }).then(
-          //     url => {
-          //       this.qrcode = url;
-          //     }
-          //   );
+          
         });
     },
     getOrderByProductId() {
