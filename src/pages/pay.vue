@@ -27,9 +27,9 @@
     
     <div v-if='payType=="alipay"' style='padding:1rem 2rem;background:#fff;'>
       <div class="mb-20 t-center">
-      <div v-html='payResult.form'></div>
-      <mt-button class="mb-10" @click.native='payOrder("alipay")' size="large" type="primary">去支付</mt-button>
-      <!-- <div class='t-xs t-gray'>*如果您在微信内打开此页面,请从浏览器打开</div> -->
+        <div v-html='alipay_form'></div>
+        <mt-button class="mb-10" @click.native='payOrder("alipay")' size="large" type="primary">去支付</mt-button>
+        <div class='t-xs t-gray'>*请从浏览器打开此页面</div>
       </div>
     </div>
     <div v-if='wechatType==payType' style='padding:1rem 2rem;background:#fff;'>
@@ -77,14 +77,15 @@ export default {
       qrcode: "",
       qrtext: "",
       wxconfig: {},
-      mweb_url: ""
+      mweb_url: "",
+      alipay_form: ""
     };
   },
-  // watch: {
-  //   payType(val) {
-  //     //this.getQRcode();
-  //   }
-  // },
+  watch: {
+    payType(val) {
+      this.getOrderPay();
+    }
+  },
   computed: {
     ...mapState({
       userInfo: state => state.userInfo
@@ -106,18 +107,7 @@ export default {
           window.location.href = this.mweb_url;
         }
       } else if (type == "alipay") {
-        api
-          .pay({
-            product_id: this.product_id,
-            channel: "alipay"
-          })
-          .then(data => {
-            console.log(data);
-            this.payResult = data;
-            this.$nextTick(() => {
-              document.forms["alipaysubmit"].submit();
-            });
-          });
+        document.forms["alipaysubmit"].submit();
       }
     },
     getPayResult(token) {
@@ -136,11 +126,6 @@ export default {
         });
       });
     },
-    jumpAliPage() {
-      //console.log(document.getElementById("alipaysubmit"));
-      document.getElementById("alipaysubmit").target = "_blank";
-      document.forms["alipaysubmit"].submit();
-    },
     bindOpenId(isGet) {
       if (this.$tools.isWechat()) {
         if (isGet <= 0) {
@@ -155,11 +140,10 @@ export default {
       }
     },
     getOrderPay() {
-
       console.log({
-          order_id: this.order_id,
-          channel: this.payType
-        });
+        order_id: this.order_id,
+        channel: this.payType
+      });
 
       this.order_id &&
         orderPay({
@@ -169,16 +153,17 @@ export default {
           if (data.code == 210) {
             return Dialog.alert({
               title: "温馨提示",
-              message: "您的订单已经被分期，请到【个人中心】的【我的课程订单】中进行付款。"
+              message:
+                "您的订单已经被分期，请到【个人中心】的【我的课程订单】中进行付款。"
             }).then(() => {
               this.$router.push({
-                  path: "/orders"
-                });
+                path: "/orders"
+              });
             });
           }
           this.wxconfig = data.config;
           this.payData = data.order_info;
-          this.alipay = data.form;
+          this.alipay_form = data.form;
           // data.qrtext &&
           //   QRCode.toDataURL(data.qrtext, { errorCorrectionLevel: "H" }).then(
           //     url => {
@@ -196,18 +181,19 @@ export default {
               message: "您已经购买过该课程,请勿重复购买"
             }).then(() => {
               this.$router.push({
-                  path: "/male"
-                });
+                path: "/male"
+              });
             });
           }
           if (data.code == 210) {
             return Dialog.alert({
               title: "温馨提示",
-              message: "您的订单已经被分期，请到【个人中心】的【我的课程订单】中进行付款。"
+              message:
+                "您的订单已经被分期，请到【个人中心】的【我的课程订单】中进行付款。"
             }).then(() => {
               this.$router.push({
-                  path: "/orders"
-                });
+                path: "/orders"
+              });
             });
           }
           this.order_id = data.order_id;
