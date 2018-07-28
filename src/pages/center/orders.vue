@@ -54,8 +54,8 @@
                 <!-- <van-button size="small">按钮</van-button> -->
                 <template v-if="!item.is_split">
                   <van-button @click="doPay(item)" v-if="item.status == 0" size="small" type="danger">支付</van-button>
+                  <van-button @click="doOption(scope.row)" v-if="item.status<0&&!item.old" size="small" type="danger" plain>重新下单</van-button>
                 </template>
-                <van-button v-if="item.status<0&&!item.old" size="small" type="danger" plain>重新下单</van-button>
               </van-col>
             </van-row>
             
@@ -113,6 +113,12 @@ export default {
       return this.$router.push({
         name: "pay",
         params: { id: item.order_id }
+      });
+    },
+    doOption(item){
+      return this.$router.push({
+        name: "pay",
+        params: { id: item.product_id }
       });
     }
   },
