@@ -2,8 +2,9 @@ import Vue from "vue";
 import Router from "vue-router";
 
 import index from "./pages/index.vue";
-import login from "./pages/login.vue";
-
+import login from "./pages/login/index.vue";
+const register = ()=>import("@/pages/login/register")
+const forget = ()=>import("@/pages/login/forget")
 // import index from "./pages/center/index.vue";
 import courseList from "./pages/center/course.list.vue";
 import course from "./pages/center/course.vue";
@@ -14,6 +15,7 @@ import info from "./pages/center/info.vue";
 
 import center from "./pages/center/layout.vue";
 import centerIndex from "./pages/center/index.vue";
+const orders = ()=>import("@/pages/center/orders")
 
 Vue.use(Router);
 
@@ -36,6 +38,16 @@ export default new Router({
       path: "/login",
       name: "login",
       component: login
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: register
+    },
+    {
+      path: "/forget",
+      name: "forget",
+      component: forget
     },
     {
       path: "/male",
@@ -82,6 +94,11 @@ export default new Router({
       path: "/getcode",
       name: "getcode",
       component: () => import("./pages/center/getcode.vue")
+    },
+    {
+      path: "/orders",
+      name: "orders",
+      component: () => import("./pages/center/orders.vue")
     }
   ]
 });

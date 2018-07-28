@@ -1,13 +1,13 @@
 <template>
   <div>
-    <mt-header v-if='currentRouter!="login"' class='layout-header' fixed title="">
+    <!-- <mt-header v-if='currentRouter!="login"' class='layout-header' fixed title="">
       <mt-button v-if="showBack" slot="left" @click.native='$router.back()' icon="back"></mt-button>
-      <!-- <div slot="right">
+      <div slot="right">
         <mt-button style='width:100%;' @click.native='doCallServer' plain size="small">立即咨询</mt-button>
-      </div> -->
-    </mt-header>
+      </div>
+    </mt-header> -->
     <router-view></router-view>
-    <mt-tabbar v-if='currentRouter!="login"' :fixed="true" v-model="tabActive">
+    <mt-tabbar v-if='!["login","register","forget"].includes(currentRouter)' :fixed="true" v-model="tabActive">
       <mt-tab-item @click.native="changeTab(item)" v-for='item in tabList' :key='item.id' :id="item.id">
         <i class='iconfont' :class='item.icon'></i>
         {{item.name}}

@@ -1,15 +1,10 @@
-import async from "./async";
+import async from "./request";
 import storage from "./storage";
-import { weixinAuth } from "./config";
-export default {
-  /**
-   * 取得登陆验证码
-   * URL (/api/phone-captcha) METHOD POST
-   * @param phone
-   * */
-  getPhoneCaptcha: function (param) {
-    return async.post("/api/phone-captcha", param);
-  },
+import {
+  weixinAuth
+} from "./config";
+const api = {
+
 
   /**
    * 登陆
@@ -27,7 +22,9 @@ export default {
    * 无需参数，直接获取 ，注意要带上token
    * */
   getUserInfo: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.get("/api/user", param || {}, token);
   },
 
@@ -39,7 +36,9 @@ export default {
    * email contacts_phone addr period idcard_front idcard_reverse edu degree entry_form avatar
    * */
   addUserInfo: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.post("/api/user", param, token);
   },
 
@@ -51,7 +50,9 @@ export default {
    * email contacts_phone addr period idcard_front idcard_reverse edu degree entry_form avatar
    * */
   submitUserInfo: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.post("/api/user/submit", param, token);
   },
 
@@ -61,7 +62,9 @@ export default {
    * 无需参数，直接获取 ，注意要带上token
    * */
   getCourseList: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.post("/api/course/list", param, token);
   },
 
@@ -72,7 +75,9 @@ export default {
    * pid 产品ID 必传 p 分页 必传 offset 每页显示的数量 默认为10
    * */
   getCourseInfo: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.post("/api/course/information", param, token);
   },
 
@@ -83,7 +88,9 @@ export default {
    * pid 产品ID 必传 p 分页 必传 offset 每页显示的数量 默认为10
    * */
   getCoursePlan: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.post("/api/course/plan", param, token);
   },
 
@@ -94,19 +101,13 @@ export default {
    * 上传名称为 file
    * */
   fileUpload: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.upload("/api/file/upload", param, token);
   },
 
-  /**
-   * 产品列表
-   * URL (/api/product/list) METHOD POST
-   * 接收参数
-   * p 分页 必传 offset 每页显示的数量 默认为10
-   * */
-  getProductList: function (param) {
-    return async.post("/api/product/list", param);
-  },
+
 
   /**
    * 获取订单状态
@@ -115,7 +116,9 @@ export default {
    * product_id 产品列表的ID字段
    * */
   getPayInfo: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.post("/api/get-pay-info", param, token);
   },
 
@@ -127,7 +130,9 @@ export default {
    * 示例: /api/pay/refresh-price/1802055004745729
    * */
   refreshPrice: function (orderToken) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.get(`/api/pay/refresh-price/${orderToken}`, {}, token);
   },
 
@@ -138,11 +143,18 @@ export default {
    * product_id 产品列表的ID字段 channel 支付渠道 wechat,alipay
    * */
   pay: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.post("/api/pay", param, token);
   },
-  umsH5({ orderId, type }) {
-    let { token } = storage.get("userToken");
+  umsH5({
+    orderId,
+    type
+  }) {
+    let {
+      token
+    } = storage.get("userToken");
     return async.get(`/api/pay/umsH5/${orderId}/${type}`, {}, token);
   },
   /**
@@ -164,7 +176,9 @@ export default {
   },
 
   getCourseCount: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.post(`/api/course/count`, param, token);
   },
 
@@ -174,7 +188,9 @@ export default {
    * 接收参数 无
    * */
   paySingup: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.get(`/api/user/paysingup`, param, token);
   },
 
@@ -184,7 +200,9 @@ export default {
    * 接收参数 无
    * */
   getLiveList: function (param) {
-    let { token } = storage.get("userToken");
+    let {
+      token
+    } = storage.get("userToken");
     return async.post(`/api/userlive/list`, param, token);
   },
 
@@ -212,15 +230,15 @@ export default {
   toPaySingUp: function (param) {
     return async.get(`/api/usersign/paysingup`, param);
   },
-  
+
 
   /*H5支付*/
 
-  getOrder(param){
+  getOrder(param) {
     return async.post(`/api/pay/get-order`, param);
   },
 
-  payOrder(param){
+  payOrder(param) {
     return async.post(`/api/pay/order-pay`, param);
   },
 
@@ -231,7 +249,53 @@ export default {
   // getweixinAuth(param) {
   //   return async.get(`${weixinAuth}/api/weixinauth`, param);
   // }
-  getWeiXinConfig(param){
+  getWeiXinConfig(param) {
     return async.post(`/api/getWeiXinConfig`, param);
   }
 };
+
+export function userLogin(params) {
+  return async.post(`/api/user/login`, params);
+}
+
+export function userReset(params) {
+  return async.post(`/api/user/reset`, params);
+}
+
+export function userRegister(params) {
+  return async.post(`/api/user/reg`, params);
+}
+
+export function orderPay(params) {
+  return async.post(`/api/pay/order-pay`, params);
+}
+
+export function getOrder(params) {
+  return async.post(`/api/pay/get-order`, params);
+}
+
+/**
+ * 取得登陆验证码
+ * URL (/api/phone-captcha) METHOD POST
+ * @param phone
+ * */
+export function getPhoneCaptcha(param) {
+  return async.post("/api/phone-captcha", param);
+}
+
+/**
+ * 产品列表
+ * URL (/api/product/list) METHOD POST
+ * 接收参数
+ * p 分页 必传 offset 每页显示的数量 默认为10
+ * */
+export function getProductList(param) {
+  return async.post("/api/product/list", param);
+}
+
+export function getOrderList(param) {
+  return async.post(`/api/user/order-list`, param);
+}
+
+
+export default api;

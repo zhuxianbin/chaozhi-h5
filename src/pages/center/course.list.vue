@@ -172,7 +172,7 @@ export default {
 
 <style lang="less" scoped>
 .page {
-  padding: 40px 0 50px;
+  padding: 0 0 50px;
   min-height: 100vh;
   box-sizing: border-box;
 }

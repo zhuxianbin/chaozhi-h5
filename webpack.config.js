@@ -56,14 +56,20 @@ module.exports = (options = {}) => ({
     })
   ],
   resolve: {
+    extensions: ['.js', '.vue', '.json'],
     alias: {
-      "@": resolve(__dirname, "src")
+        'vue$': 'vue/dist/vue.esm.js',
+        '@': resolve(__dirname,'src'),
+        '~': resolve(__dirname,'static'),
+        'jquery': 'jquery',
+        '$': 'jquery'
     }
-  },
+},
   devServer: {
-    host: "0.0.0.0",
+    host: "127.0.0.1",
     port: 8008,
     compress: true,
+    open:true,
     disableHostCheck: true,
     // proxy: {
     //   '/api/': {

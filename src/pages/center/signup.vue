@@ -118,7 +118,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .page {
-  padding: 40px 0 50px;
+  padding: 0 0 50px;
 }
 .order-info {
   background: #fff;

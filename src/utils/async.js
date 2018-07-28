@@ -1,5 +1,8 @@
 import config from "./config.js";
-import { Toast } from "mint-ui";
+import request from "./request";
+import {
+  Toast
+} from "mint-ui";
 // import axios from 'axios';
 // var $axios = axios.create({
 //   baseURL: 'baseUrl',
@@ -14,13 +17,16 @@ import { Toast } from "mint-ui";
 //   token
 // }));
 
-const { baseUrl } = config.getConfig("prod");
+const {
+  baseUrl
+} = config.getConfig("prod");
 
 //import MD5 from 'md5.js';
 import querystring from "querystring";
 
 import storage from "./storage";
 export default {
+  ...request,
   baseUrl,
   // getToken(url, data) {
   //   return this.ajax({
@@ -28,77 +34,91 @@ export default {
   //     data
   //   });
   // },
-  post(url, data, token = "") {
-    let headers = { "Content-Type": "application/x-www-form-urlencoded" };
-    if (!token) {
-      token = storage.get("userToken").token;
-    }
+  // post(url, data, token = "") {
+  //   let headers = {
+  //     "Content-Type": "application/x-www-form-urlencoded"
+  //   };
+  //   if (!token) {
+  //     token = storage.get("userToken").token;
+  //   }
 
-    data = { ...data, token };
-    for (let key in data) {
-      if (data[key] === "") {
-        delete data[key];
-      }
-    }
+  //   if (token) {
+  //     data = { ...data,
+  //       token
+  //     };
+  //   }
 
-    let params = querystring.stringify(data);
+    // let newData = {};
+    // for (let key in data) {
+    //   if (data[key] === "") {
+    //     delete data[key];
+    //   }
+    // }
 
-    let base = url.indexOf("http") >= 0 ? "" : baseUrl;
-    let ret = fetch(`${base}${url}`, {
-      method: "POST",
-      headers,
-      body: params
-    }).then(function (requst) {
-      return requst.json();
-    });
-    ret
-      .then(({ code, msg }) => {
-        if (code >= 600 && code < 700) {
-          storage.remove("userToken");
-          window.location.href = `./#/login`;
-        }
-        else if (code != 200) {
-          Toast(msg)
-        }
-      })
-      .catch(res => { });
-    return ret;
-  },
-  get(url, data, token = "") {
-    //let headers = {};
-    if (!token) {
-      token = storage.get("userToken").token;
-    }
-    data = { ...data, token };
-    for (let key in data) {
-      if (data[key] === "") {
-        delete data[key];
-      }
-    }
+  //   let params = querystring.stringify(data);
+  //   console.log(params);
+  //   let base = url.indexOf("http") >= 0 ? "" : baseUrl;
+  //   let ret = fetch(`${base}${url}`, {
+  //     method: "POST",
+  //     headers,
+  //     body: params
+  //   }).then(function (requst) {
+  //     return requst.json();
+  //   });
+  //   ret
+  //     .then(({
+  //       code,
+  //       msg
+  //     }) => {
+  //       if (code >= 600 && code < 700) {
+  //         storage.remove("userToken");
+  //         window.location.href = `./#/login`;
+  //       } else if (code != 200) {
+  //         Toast(msg)
+  //       }
+  //     })
+  //     .catch(res => {});
+  //   return ret;
+  // },
+  // get(url, data, token = "") {
+  //   //let headers = {};
+  //   if (!token) {
+  //     token = storage.get("userToken").token;
+  //   }
+  //   data = { ...data,
+  //     token
+  //   };
+  //   for (let key in data) {
+  //     if (data[key] === "") {
+  //       delete data[key];
+  //     }
+  //   }
 
-    let params = querystring.stringify(data);
+  //   let params = querystring.stringify(data);
 
-    let base = url.indexOf("http") >= 0 ? "" : baseUrl;
+  //   let base = url.indexOf("http") >= 0 ? "" : baseUrl;
 
-    let ret = fetch(`${base}${url}?${params}`, {
-      method: "GET"
-      //headers
-    }).then(function (requst) {
-      return requst.json();
-    });
-    ret
-      .then(({ code, msg }) => {
-        if (code >= 600 && code < 700) {
-          storage.remove("userToken");
-          window.location.href = `./#/login`;
-        }
-        else if (code != 200) {
-          Toast(msg)
-        }
-      })
-      .catch(res => { });
-    return ret;
-  },
+  //   let ret = fetch(`${base}${url}?${params}`, {
+  //     method: "GET"
+  //     //headers
+  //   }).then(function (requst) {
+  //     return requst.json();
+  //   });
+  //   ret
+  //     .then(({
+  //       code,
+  //       msg
+  //     }) => {
+  //       if (code >= 600 && code < 700) {
+  //         storage.remove("userToken");
+  //         window.location.href = `./#/login`;
+  //       } else if (code != 200) {
+  //         Toast(msg)
+  //       }
+  //     })
+  //     .catch(res => {});
+  //   return ret;
+  // },
   upload(url, data, token) {
     let [requstUrl, formData] = [`${baseUrl}${url}`, new FormData()];
 
@@ -107,17 +127,19 @@ export default {
       formData.append(key, element);
     }
     let reter = fetch(requstUrl, {
-      method: "POST",
-      headers: {
-        //signature: this.getSign(this.formatParams(data)),
-        token
-      },
-      body: formData
-    })
+        method: "POST",
+        headers: {
+          //signature: this.getSign(this.formatParams(data)),
+          token
+        },
+        body: formData
+      })
       .then(function (requst) {
         return requst.json();
       })
-      .catch(({ message }) => {
+      .catch(({
+        message
+      }) => {
         return new Promise((res, rej) => {
           rej(requst);
         });
@@ -125,50 +147,55 @@ export default {
 
     return reter;
   },
-  ajax({ url, data, token, method = "POST" }) {
-    if (!token) {
-      token = storage.get("userToken").token;
-    }
-    let params = querystring.stringify({
-      ...data,
-      token
-    });
-    // let headers = {
-    //   "Content-Type": "application/x-www-form-urlencoded"
-    // };
+  // ajax({
+  //   url,
+  //   data,
+  //   token,
+  //   method = "POST"
+  // }) {
+  //   if (!token) {
+  //     token = storage.get("userToken").token;
+  //   }
+  //   let params = querystring.stringify({
+  //     ...data,
+  //     token
+  //   });
+  //   // let headers = {
+  //   //   "Content-Type": "application/x-www-form-urlencoded"
+  //   // };
 
-    // if (token) {
-    //   headers.token = token;
-    // }
+  //   // if (token) {
+  //   //   headers.token = token;
+  //   // }
 
-    let requst = {};
-    let requstUrl =
-      method == "POST" ? `${baseUrl}${url}` : `${baseUrl}${url}?${params}`;
-    let res = fetch(requstUrl, {
-      method,
-      //headers,
-      body: params
-    }).then(function (requst) {
-      //requst = requst;
-      return requst.json();
-    });
+  //   let requst = {};
+  //   let requstUrl =
+  //     method == "POST" ? `${baseUrl}${url}` : `${baseUrl}${url}?${params}`;
+  //   let res = fetch(requstUrl, {
+  //     method,
+  //     //headers,
+  //     body: params
+  //   }).then(function (requst) {
+  //     //requst = requst;
+  //     return requst.json();
+  //   });
 
-    return res;
-  },
-  formatParams(object) {
-    let ret = [];
-    for (const key in object) {
-      if (object.hasOwnProperty(key)) {
-        const element = object[key];
-        if (element !== "" && element !== undefined && element !== null) {
-          ret.push(`${key}=${element}`);
-        }
-      }
-    }
-    //console.log(ret);
-    return ret.join("&");
-  },
-  getSign(data) {
-    return ""; //new MD5().update(data).digest("hex");
-  }
+  //   return res;
+  // },
+  // formatParams(object) {
+  //   let ret = [];
+  //   for (const key in object) {
+  //     if (object.hasOwnProperty(key)) {
+  //       const element = object[key];
+  //       if (element !== "" && element !== undefined && element !== null) {
+  //         ret.push(`${key}=${element}`);
+  //       }
+  //     }
+  //   }
+  //   //console.log(ret);
+  //   return ret.join("&");
+  // },
+  // getSign(data) {
+  //   return ""; //new MD5().update(data).digest("hex");
+  // }
 };

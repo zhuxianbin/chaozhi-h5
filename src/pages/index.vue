@@ -268,7 +268,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .page {
-  margin: 40px 0 50px;
+  margin: 0 0 50px;
 }
 .teachers {
   overflow: auto;

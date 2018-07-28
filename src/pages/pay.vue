@@ -4,12 +4,12 @@
     <div class="order-info ui-list">
         <div class='ui-list-item' flex>
           <div class='ui-list-label' flex-box="0">订单内容</div>
-          <div flex-box="1">购买{{product.name}}</div>
+          <div flex-box="1" v-if="payData">购买{{payData.product_name}}</div>
         </div>
         <div class='ui-list-item' flex>
           <div class='ui-list-label' flex-box="0">订单价格</div>
           <div flex-box="1">
-            <span class="t-orange">{{price}}</span>元
+            <span class="t-orange" v-if="payData">{{(payData.price/100).toFixed(2)}}</span>元
           </div>
         </div>
         <div class='ui-list-item' flex>
@@ -21,23 +21,20 @@
     </div>
 
     <mt-navbar v-model="payType">
-      <mt-tab-item id="wechat_jsapi">微信</mt-tab-item>
+      <mt-tab-item :id="wechatType">微信</mt-tab-item>
       <mt-tab-item id="alipay">支付宝</mt-tab-item>
     </mt-navbar>
-    <div v-if="payType=='wechat_jsapi'" style='padding:1rem 2rem;background:#fff;'>
-      <div class="mb-20 t-center">
-        <!-- <div class="t-xs mb-10">请扫二维码进行支付</div>
-        <img :src='qrcode' style='width:50vw;height:50vw;max-width:300px;max-height:300px;' />
-        <div class="t-xs">*如遇到支付问题,请截屏此页面,从微信扫一扫界面,打开相册选择截屏图片进行支付</div> -->
-        <!-- <div class="mb-20">或</div> -->
-        <mt-button @click.native='payOrder("wechat")' size="large" type="primary">去支付</mt-button>
-      </div>
-    </div>
+    
     <div v-if='payType=="alipay"' style='padding:1rem 2rem;background:#fff;'>
       <div class="mb-20 t-center">
       <div v-html='payResult.form'></div>
       <mt-button class="mb-10" @click.native='payOrder("alipay")' size="large" type="primary">去支付</mt-button>
       <!-- <div class='t-xs t-gray'>*如果您在微信内打开此页面,请从浏览器打开</div> -->
+      </div>
+    </div>
+    <div v-if='wechatType==payType' style='padding:1rem 2rem;background:#fff;'>
+      <div class="mb-20 t-center">
+        <mt-button @click.native='payOrder("wechat")' size="large" type="primary">去支付</mt-button>
       </div>
     </div>
   </div>
@@ -48,26 +45,29 @@ import { mapActions, mapState } from "vuex";
 import QRCode from "qrcode";
 import storage from "@/utils/storage";
 import { weixinAuth } from "@/utils/config";
-import api from "@/utils/api";
+import { orderPay, getOrder } from "@/utils/api";
+import { Dialog } from "vant";
 
 let timer = 0;
 export default {
   data() {
+    const wechatType = this.$tools.isWechat() ? "wechat_jsapi" : "wechat_h5";
     return {
+      wechatType,
       isAlipayOrWechat: "",
       popupFail: false,
       popupSuccess: true,
       popupPaying: true,
       product: {},
-      orderId: "",
-      price: 0,
-      productId: "",
+      order_id: "",
+      product_id: "",
       payResult: {},
-      payType: "wechat_jsapi",
+      payData: null,
+      payType: wechatType,
       options: [
         {
           label: "微信",
-          value: "wechat_jsapi"
+          value: wechatType
         },
         {
           label: "支付宝",
@@ -75,7 +75,9 @@ export default {
         }
       ],
       qrcode: "",
-      qrtext: ""
+      qrtext: "",
+      wxconfig: {},
+      mweb_url: ""
     };
   },
   // watch: {
@@ -89,65 +91,24 @@ export default {
     })
   },
   methods: {
-    ...mapActions({
-      getPayInfo: "getPayInfo",
-      refreshPrice: "refreshPrice",
-      _getPayResult: "getPayResult",
-      pay: "pay",
-      _getUnifiedOrder: "getUnifiedOrder",
-      _getUserInfo: "getUserInfo"
-      //umsH5: "umsH5"
-    }),
     doRefreshPrice() {
-      this.refreshPrice(this.orderId).then(({ code, data, msg }) => {
-        this.$toast(msg);
-        if (code == 200) {
-          this.price = data;
-          //this.getQRcode();
-        }
-      });
-    },
-    getOrder() {
-      api.getOrder({ product_id: this.productId }).then(data => {
-        if (data.code == 202) {
-          return this.$messagebox.alert("您已经购买该商品").then(() => {
-            this.$router.push("/male");
-          });
-        }
-        this.orderId = data.token;
-      });
+      this.getOrderPay();
     },
     payOrder(type) {
       if (type == "wechat") {
         if (this.$tools.isWechat()) {
-          api
-            .payOrder({
-              orderId: this.orderId,
-              channel: "wechat_jsapi"
-            })
-            .then(data => {
-              this.weixinPay(data.config, () => {
-                return this.$messagebox.alert("购买成功").then(() => {
-                  this.$router.push("/male");
-                });
-              });
+          this.weixinPay(this.wxconfig, () => {
+            return this.$messagebox.alert("购买成功").then(() => {
+              this.$router.push("/male");
             });
+          });
         } else {
-          api
-            .payOrder({
-              orderId: this.orderId,
-              channel: "wechat_h5"
-            })
-            .then(res => {
-              if (res.code == 200) {
-                window.location.href = res.mweb_url;
-              }
-            });
+          window.location.href = this.mweb_url;
         }
       } else if (type == "alipay") {
         api
           .pay({
-            product_id: this.productId,
+            product_id: this.product_id,
             channel: "alipay"
           })
           .then(data => {
@@ -192,33 +153,93 @@ export default {
           window.location.href = href;
         }
       }
-    }
-    // jumpWechatPay() {
-    //   this.getPay(data => {
-    //     this.weixinPay(data.config, () => {
-    //       return this.$messagebox.alert("购买成功").then(() => {
-    //         this.$router.back();
-    //       });
-    //     });
-    //   });
-    // }
-  },
-  mounted() {
-    let { id: product_id, isGet = 0 } = this.$route.params;
-    //console.log(isGet);
-    this.productId = product_id;
-    this.getPayInfo({ product_id }).then(
-      ({ code, msg, price, token, product }) => {
-        if (code == 200) {
-          this.price = price;
-          // this.orderId = token;
-          this.product = product;
-          this.bindOpenId(isGet);
-        }
-      }
-    );
+    },
+    getOrderPay() {
 
-    product_id && this.getOrder();
+      console.log({
+          order_id: this.order_id,
+          channel: this.payType
+        });
+
+      this.order_id &&
+        orderPay({
+          order_id: this.order_id,
+          channel: this.payType
+        }).then(data => {
+          if (data.code == 210) {
+            return Dialog.alert({
+              title: "温馨提示",
+              message: "您的订单已经被分期，请到【个人中心】的【我的课程订单】中进行付款。"
+            }).then(() => {
+              this.$router.push({
+                  path: "/orders"
+                });
+            });
+          }
+          this.wxconfig = data.config;
+          this.payData = data.order_info;
+          this.alipay = data.form;
+          // data.qrtext &&
+          //   QRCode.toDataURL(data.qrtext, { errorCorrectionLevel: "H" }).then(
+          //     url => {
+          //       this.qrcode = url;
+          //     }
+          //   );
+        });
+    },
+    getOrderByProductId() {
+      this.product_id &&
+        getOrder({ product_id: this.product_id }).then(data => {
+          if (data.code == 202) {
+            return Dialog.alert({
+              title: "温馨提示",
+              message: "您已经购买过该课程,请勿重复购买"
+            }).then(() => {
+              this.$router.push({
+                  path: "/male"
+                });
+            });
+          }
+          if (data.code == 210) {
+            return Dialog.alert({
+              title: "温馨提示",
+              message: "您的订单已经被分期，请到【个人中心】的【我的课程订单】中进行付款。"
+            }).then(() => {
+              this.$router.push({
+                  path: "/orders"
+                });
+            });
+          }
+          this.order_id = data.order_id;
+          this.getOrderPay();
+        });
+    }
+  },
+  created() {
+    let { id, isGet = 0 } = this.$route.params;
+    id = "" + id;
+    if (id.length > 0 && id.length < 17) {
+      this.product_id = id;
+      //console.log(id);
+      return this.getOrderByProductId();
+    }
+    if (id.length >= 17) {
+      this.order_id = id;
+      return this.getOrderPay();
+    }
+
+    // this.productId = product_id;
+    // this.getPayInfo({ product_id }).then(
+    //   ({ code, msg, price, token, product }) => {
+    //     if (code == 200) {
+    //       this.price = price;
+    //       // this.orderId = token;
+    //       this.product = product;
+    //     }
+    //   }
+    // );
+
+    // product_id && this.getOrder();
   },
   beforeDestroy() {
     clearTimeout(timer);
@@ -227,7 +248,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .page {
-  padding: 40px 0 50px;
+  padding: 0 0 50px;
 }
 .order-info {
   background: #fff;

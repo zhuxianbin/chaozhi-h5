@@ -29,7 +29,7 @@
             <s class="t-xs t-gray">{{item.original_price}}元</s>
           </div>
           <div slot="footer">
-            <van-button type="danger" size="small" @click='$router.push("./pay/"+item.id)'>立即购买</van-button>
+            <van-button type="danger" size="small" @click='$router.push({name:"pay",params:{id:item.id}})'>立即购买</van-button>
             <van-button type="default" size="small" @click='showDesc(item)'>课程介绍</van-button>
           </div>
         </van-card>
@@ -73,6 +73,7 @@
 <script>
 import { Button, Card } from "vant";
 import { mapActions, mapState } from "vuex";
+import { getProductList } from "@/utils/api";
 export default {
   components: {
     [Button.name]: Button,
@@ -102,8 +103,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCategory: "getCategory",
-      getProductList: "getProductList"
+      getCategory: "getCategory"
     }),
     changeCate(cateId) {
       //console.log(cateId);
@@ -115,8 +115,8 @@ export default {
     },
     getRows(page) {
       this.isloading = true;
-      this.params.p = page ? page : this.params.p;
-      this.getProductList(this.params).then(({ code, data, msg }) => {
+      this.params.p = page || this.params.p;
+      getProductList(this.params).then(({ code, data, msg }) => {
         this.total = data.total;
         this.rows = [...this.rows, ...data.rows];
         this.$nextTick(() => {
@@ -142,7 +142,7 @@ export default {
 
 <style lang='less' scoped>
 .page {
-  padding: 40px 0 50px;
+  padding: 0 0 50px;
 }
 
 .van-card {
