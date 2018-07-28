@@ -140,10 +140,10 @@ export default {
       }
     },
     getOrderPay() {
-      console.log({
-        order_id: this.order_id,
-        channel: this.payType
-      });
+      // console.log({
+      //   order_id: this.order_id,
+      //   channel: this.payType
+      // });
 
       this.order_id &&
         orderPay({
@@ -164,6 +164,7 @@ export default {
           this.wxconfig = data.config;
           this.payData = data.order_info;
           this.alipay_form = data.form;
+          this.mweb_url = data.mweb_url;
           // data.qrtext &&
           //   QRCode.toDataURL(data.qrtext, { errorCorrectionLevel: "H" }).then(
           //     url => {
