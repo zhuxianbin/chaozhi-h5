@@ -3,9 +3,12 @@ import Mint from "mint-ui";
 import "normalize.css/normalize.css";
 import "mint-ui/lib/style.css";
 import "flex.css/dist/flex.css";
+import "nprogress/nprogress.css";
 import "./assets/index.less";
 import app from "./app.vue";
-import router from "./router";
+import {
+  router
+} from "@/router";
 
 import mixins from "./utils/mixins";
 import store from "./stores/index";
