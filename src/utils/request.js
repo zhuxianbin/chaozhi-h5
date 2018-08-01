@@ -85,7 +85,7 @@ service.interceptors.response.use(
     }
     if (data.code >= 600 && data.code < 700) {
       removeToken()
-      window.location.href = `./#/login`;
+      window.location.href = `/#/login`;
     } else if (data.code != 200) {
       Toast(data.msg)
     }
