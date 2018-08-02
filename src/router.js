@@ -129,7 +129,7 @@ const router = new Router({
 NProgress.configure({
   showSpinner: false
 }) // NProgress Configuration
-const whiteList = ["/login"] // no redirect whitelist
+const whiteList = ["/login", "/index", "/male", "/register", "/forget"] // no redirect whitelist
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
   const token = getToken();
