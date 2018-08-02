@@ -21,7 +21,7 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      showBack: false,
+      // showBack: false,
       tabList: [
         {
           id: "index",
@@ -49,23 +49,23 @@ export default {
       //popupASK:false,
     };
   },
-  watch: {
-    // tabActive(val) {
-    //   this.$router.push({path:`/${val}`});
-    // },
+  // watch: {
+  //   // tabActive(val) {
+  //   //   this.$router.push({path:`/${val}`});
+  //   // },
 
-    $route: {
-      handler({ name }) {
-        //console.log(name);
-        let [has] = this.tabList.filter(item => {
-          return item.id == name;
-        });
-        this.showBack = !has;
-        this.currentRouter = name;
-      },
-      immediate: true
-    }
-  },
+  //   $route: {
+  //     handler({ name }) {
+  //       //console.log(name);
+  //       let [has] = this.tabList.filter(item => {
+  //         return item.id == name;
+  //       });
+  //       // this.showBack = !has;
+  //       this.currentRouter = name;
+  //     },
+  //     immediate: true
+  //   }
+  // },
   methods: {
     changeTab(item) {
       this.$router.push({path:`/${item.id}`});
