@@ -47,7 +47,10 @@ import storage from "@/utils/storage";
 import { weixinAuth } from "@/utils/config";
 import { orderPay, getOrder } from "@/utils/api";
 import { Dialog } from "vant";
-
+import {
+  getToken,
+  removeToken
+} from "@/utils/auth"
 let timer = 0;
 export default {
   data() {
@@ -130,7 +133,7 @@ export default {
       if (this.$tools.isWechat()) {
         if (isGet <= 0) {
           //console.log(1111111);
-          let { token } = storage.get("userToken");
+          let token = getToken();// storage.get("userToken");
           let redirect_uri = encodeURIComponent(
             window.location.href + `/${+isGet + 1}`
           );
@@ -200,6 +203,7 @@ export default {
   created() {
     let { id, isGet = 0 } = this.$route.params;
     id = "" + id;
+    this.bindOpenId(isGet);
     if (id.length > 0 && id.length < 17) {
       this.product_id = id;
       //console.log(id);
