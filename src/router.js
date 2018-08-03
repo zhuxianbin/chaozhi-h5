@@ -110,11 +110,7 @@ const routes = [{
     name: "orders",
     component: () =>
       import ("./pages/center/orders.vue")
-  },
-  {
-    path: '*',
-    redirect: '/index'
-  },
+  }
 ];
 
 // add route path
@@ -131,6 +127,7 @@ NProgress.configure({
 }) // NProgress Configuration
 const whiteList = ["/login", "/index", "/male", "/register", "/forget"] // no redirect whitelist
 router.beforeEach((to, from, next) => {
+  console.log(to, from);
   NProgress.start() // start progress bar
   // const token = getToken();
 

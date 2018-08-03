@@ -68,6 +68,7 @@
 
 <script>
 import { Cell, CellGroup } from "vant";
+import { removeToken } from "@/utils/auth";
 import { mapActions, mapState } from "vuex";
 export default {
   components: {
@@ -86,7 +87,7 @@ export default {
       getCourseCount: "getCourseCount"
     }),
     doLogout() {
-      this.$storage.remove("userToken");
+      removeToken();
       this.$router.push("/login");
     }
   },
@@ -96,7 +97,7 @@ export default {
       courseCount: state => state.courseCount
     })
   },
-  mounted() {
+  created() {
     this.getUserInfo();
     this.getCourseCount();
   }
