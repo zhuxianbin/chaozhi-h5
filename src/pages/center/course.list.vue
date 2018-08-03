@@ -74,11 +74,13 @@
                 </div>
               </div>
             </mt-tab-container-item>
-            <van-cell-group>
-              <template v-for="dl in item.downList" >
-                <van-cell :key='dl.id' :title="dl.file_name" :to="dl.file" is-link value="查看" />
-              </template>
-            </van-cell-group>
+            <mt-tab-container-item id="3">
+              <van-cell-group>
+                <template v-for="dl in item.downList" >
+                  <van-cell :key='dl.id' :title="dl.file_name" :url="dl.file" is-link value="查看" />
+                </template>
+              </van-cell-group>
+            </mt-tab-container-item>
           </mt-tab-container>
         </div>
       </div>
