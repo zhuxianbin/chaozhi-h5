@@ -1,5 +1,7 @@
 import async from "./request";
-import storage from "./storage";
+import {
+  getToken
+} from "./auth";
 import {
   weixinAuth
 } from "./config";
@@ -19,13 +21,10 @@ const api = {
   /**
    * 用户基本信息
    * URL (/api/user) METHOD get
-   * 无需参数，直接获取 ，注意要带上token
+   * 无需参数，直接获取 ，注意要带上
    * */
   getUserInfo: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.get("/api/user", param || {}, token);
+    return async.get("/api/user", param || {});
   },
 
   /**
@@ -36,10 +35,7 @@ const api = {
    * email contacts_phone addr period idcard_front idcard_reverse edu degree entry_form avatar
    * */
   addUserInfo: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.post("/api/user", param, token);
+    return async.post("/api/user", param);
   },
 
   /**
@@ -50,22 +46,16 @@ const api = {
    * email contacts_phone addr period idcard_front idcard_reverse edu degree entry_form avatar
    * */
   submitUserInfo: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.post("/api/user/submit", param, token);
+    return async.post("/api/user/submit", param);
   },
 
   /**
    * 取得已购课程
    * URL (/api/course/list) METHOD post
-   * 无需参数，直接获取 ，注意要带上token
+   * 无需参数，直接获取 ，注意要带上
    * */
   getCourseList: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.post("/api/course/list", param, token);
+    return async.post("/api/course/list", param);
   },
 
   /**
@@ -75,10 +65,7 @@ const api = {
    * pid 产品ID 必传 p 分页 必传 offset 每页显示的数量 默认为10
    * */
   getCourseInfo: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.post("/api/course/information", param, token);
+    return async.post("/api/course/information", param);
   },
 
   /**
@@ -88,10 +75,7 @@ const api = {
    * pid 产品ID 必传 p 分页 必传 offset 每页显示的数量 默认为10
    * */
   getCoursePlan: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.post("/api/course/plan", param, token);
+    return async.post("/api/course/plan", param);
   },
 
   /**
@@ -101,10 +85,7 @@ const api = {
    * 上传名称为 file
    * */
   fileUpload: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.upload("/api/file/upload", param, token);
+    return async.upload("/api/file/upload", param);
   },
 
 
@@ -116,24 +97,18 @@ const api = {
    * product_id 产品列表的ID字段
    * */
   getPayInfo: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.post("/api/get-pay-info", param, token);
+    return async.post("/api/get-pay-info", param);
   },
 
   /**
    * 刷新订单金额
-   * URL (/api/pay/refresh-price/{TOKEN} ) METHOD GET
+   * URL (/api/pay/refresh-price/{} ) METHOD GET
    * 接收参数
-   * token 直接拼在url后
+   *  直接拼在url后
    * 示例: /api/pay/refresh-price/1802055004745729
    * */
-  refreshPrice: function (orderToken) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.get(`/api/pay/refresh-price/${orderToken}`, {}, token);
+  refreshPrice: function (order) {
+    return async.get(`/api/pay/refresh-price/${order}`, {});
   },
 
   /**
@@ -143,19 +118,13 @@ const api = {
    * product_id 产品列表的ID字段 channel 支付渠道 wechat,alipay
    * */
   pay: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.post("/api/pay", param, token);
+    return async.post("/api/pay", param);
   },
   umsH5({
     orderId,
     type
   }) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.get(`/api/pay/umsH5/${orderId}/${type}`, {}, token);
+    return async.get(`/api/pay/umsH5/${orderId}/${type}`, {});
   },
   /**
    * 取得课程分类
@@ -172,14 +141,11 @@ const api = {
    * 接收参数 无
    * */
   getPayResult: function (param) {
-    return async.get(`/api/pay/result/${param.token}`, param);
+    return async.get(`/api/pay/result/${getToken()}`, param);
   },
 
   getCourseCount: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.post(`/api/course/count`, param, token);
+    return async.post(`/api/course/count`, param);
   },
 
   /**
@@ -188,10 +154,7 @@ const api = {
    * 接收参数 无
    * */
   paySingup: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.get(`/api/user/paysingup`, param, token);
+    return async.get(`/api/user/paysingup`, param);
   },
 
   /**
@@ -200,10 +163,7 @@ const api = {
    * 接收参数 无
    * */
   getLiveList: function (param) {
-    let {
-      token
-    } = storage.get("userToken");
-    return async.post(`/api/userlive/list`, param, token);
+    return async.post(`/api/userlive/list`, param);
   },
 
   /**
