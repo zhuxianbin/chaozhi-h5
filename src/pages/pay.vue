@@ -134,6 +134,9 @@ export default {
         if (isGet <= 0) {
           //console.log(1111111);
           let token = getToken();// storage.get("userToken");
+          if(!token){
+            return this.$router.push("/login");
+          }
           let redirect_uri = encodeURIComponent(
             window.location.href + `/${+isGet + 1}`
           );

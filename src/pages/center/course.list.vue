@@ -50,7 +50,7 @@
             </mt-tab-item>
             <mt-tab-item id="3">
               <i class="v-center t-lg iconfont icon-xiazai-xue"></i>
-              <span>下载资料</span>
+              <span>查看资料</span>
             </mt-tab-item>
           </mt-navbar>
           <!-- tab-container -->
@@ -74,14 +74,11 @@
                 </div>
               </div>
             </mt-tab-container-item>
-            <mt-tab-container-item id="3">
-              <mt-cell v-for="dl in item.downList" :key='dl.id'
-                :title="dl.file_name"
-                :to="dl.file"
-                is-link
-                value="下载">
-              </mt-cell>
-            </mt-tab-container-item>
+            <van-cell-group>
+              <template v-for="dl in item.downList" >
+                <van-cell :key='dl.id' :title="dl.file_name" :to="dl.file" is-link value="查看" />
+              </template>
+            </van-cell-group>
           </mt-tab-container>
         </div>
       </div>
@@ -101,7 +98,12 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import { Cell, CellGroup } from "vant";
 export default {
+  components: {
+    [Cell.name]: Cell,
+    [CellGroup.name]: CellGroup
+  },
   data() {
     return {
       rows: [],
