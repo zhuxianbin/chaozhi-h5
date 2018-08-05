@@ -90,7 +90,7 @@
                     <span>全国通用“求职绿卡”</span>
                 </li>
                 <li>
-                    <span>985/211毕业院校</span>
+                    <span>985/211院校毕业</span>
                 </li>
                 <li>
                     <span>发展专业水平，贴切职业要求</span>
@@ -124,7 +124,7 @@
     </div>
     <div style='background:#fff;padding:.5rem 0;'>
         <div class="t-center t-lg">
-          ACI国际心理咨询师名师介绍
+          超职金牌讲师介绍
         </div>
         <div class='teachers'>
           <div class='teacher-item'>
@@ -173,7 +173,7 @@
                 <img style='width:36vw;' src='/static/images/teachers/h1.png'>
                 <p style='color:#029EFF' class="t-md">李丛蔚</p>
                 <p class="t-sm" style='white-space: normal;'>
-                  981消防名校矿业大学博士，某国企工程项目负责人； 国家注册一级消防师、国家注册一二级建造师、中国消防协会会员，是最早进入消防培训的著名讲师之一，长期主讲消防、一二建、工程管理等建筑类课程。</p>
+                  985消防名校矿业大学博士，某国企工程项目负责人； 国家注册一级消防师、国家注册一二级建造师、中国消防协会会员，是最早进入消防培训的著名讲师之一，长期主讲消防、一二建、工程管理等建筑类课程。</p>
             </div>
           </div>
 
@@ -415,7 +415,7 @@ export default {
 }
 
 .advantage-title {
-  background: url(/static/images/title.png) no-repeat center;
+  background: url('/static/images/title.png') no-repeat center;
   color: #fff;
   font-size: 20px;
   margin-bottom: 17px;
