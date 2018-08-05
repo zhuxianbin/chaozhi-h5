@@ -75,7 +75,7 @@
     <div class="t-center t-xs floor-3">
       <div class="floor-body">
         <div class="advantage">
-            <div class="advantage-title">学历的优势</div>
+            <div class="advantage-title">学历提升的优势</div>
             <ul class="advantage-list">
                 <li>
                     <span>晋升加薪、职称评定</span>
