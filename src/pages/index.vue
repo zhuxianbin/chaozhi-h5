@@ -84,7 +84,7 @@
                     <span>考资格证、考公务员、出国留学</span>
                 </li>
                 <li>
-                    <span>拓展、优化朋友圈</span>
+                    <span>学信网终身可查、一年半拿证</span>
                 </li>
                 <li>
                     <span>全国通用“求职绿卡”</span>
@@ -93,7 +93,7 @@
                     <span>985/211院校毕业</span>
                 </li>
                 <li>
-                    <span>发展专业水平，贴切职业要求</span>
+                    <span>知名教师授课、发展专业水平</span>
                 </li>
             </ul>
         </div>
@@ -383,7 +383,7 @@ export default {
   padding: 0.5rem;
   border-radius: 10px;
   height: 50vh;
-  overflow:auto;
+  overflow: auto;
 }
 
 .swipe-box {
@@ -411,11 +411,11 @@ export default {
 .advantage {
   width: 300px;
   margin: 0 auto;
-  margin-bottom:20px;
+  margin-bottom: 20px;
 }
 
 .advantage-title {
-  background: url('/static/images/title.png') no-repeat center;
+  background: url("/static/images/title.png") no-repeat center;
   color: #fff;
   font-size: 20px;
   margin-bottom: 17px;
@@ -431,10 +431,12 @@ export default {
   width: 300px;
   height: 50px;
   line-height: 50px;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 0.6);
   margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
   font-size: 16px;
+  color: #333;
+  border: 1px solid #ccc;
 }
 </style>
