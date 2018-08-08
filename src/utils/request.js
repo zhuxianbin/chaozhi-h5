@@ -16,7 +16,7 @@ import {
 
 
 const errors = {
-  "timeout of 100ms exceeded":"请求超时了."
+  "timeout of 15000ms exceeded":"请求超时了."
 }
 
 // create an axios instance
