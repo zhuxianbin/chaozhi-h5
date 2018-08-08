@@ -13,10 +13,16 @@ import {
 import {
   Toast
 } from "vant"
+
+
+const errors = {
+  "timeout of 100ms exceeded":"请求超时了."
+}
+
 // create an axios instance
 const service = axios.create({
   baseURL: baseUrl, // api的base_url
-  timeout: 10000,
+  timeout: 15000,
   // withCredentials:true
   // headers: {
   //   "Content-Type": "application/x-www-form-urlencoded"
@@ -68,7 +74,8 @@ service.interceptors.request.use(config => {
 }, error => {
   NProgress.done();
   // Do something with request error
-  console.log(error) // for debug
+  // console.log(error) // for debug
+  Toast(errors[error.message]||error.message)
   Promise.reject(error)
 })
 
@@ -91,8 +98,8 @@ service.interceptors.response.use(
     return Promise.reject(data);
   },
   error => {
-    console.log("err" + error) // for debug
-    Toast(error.message)
+    // console.log("err" + error,123) // for debug
+    Toast(errors[error.message]||error.message)
     return Promise.reject(error)
   })
 
