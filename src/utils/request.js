@@ -8,21 +8,22 @@ import {
   removeToken
 } from "./auth"
 import {
-  baseUrl
+  baseUrl,
+  timeout
 } from "./config"
 import {
   Toast
 } from "vant"
 
-
+const timeouterror = `timeout of ${timeout}ms exceeded`;
 const errors = {
-  "timeout of 15000ms exceeded":"请求超时了."
+  [timeouterror]: "请求超时了."
 }
 
 // create an axios instance
 const service = axios.create({
   baseURL: baseUrl, // api的base_url
-  timeout: 15000,
+  timeout: timeout,
   // withCredentials:true
   // headers: {
   //   "Content-Type": "application/x-www-form-urlencoded"
@@ -75,7 +76,7 @@ service.interceptors.request.use(config => {
   NProgress.done();
   // Do something with request error
   // console.log(error) // for debug
-  Toast(errors[error.message]||error.message)
+  Toast(errors[error.message] || error.message)
   Promise.reject(error)
 })
 
@@ -99,7 +100,7 @@ service.interceptors.response.use(
   },
   error => {
     // console.log("err" + error,123) // for debug
-    Toast(errors[error.message]||error.message)
+    Toast(errors[error.message] || error.message)
     return Promise.reject(error)
   })
 
