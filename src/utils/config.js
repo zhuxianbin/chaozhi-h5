@@ -1,29 +1,21 @@
-export const baseUrl =
-  // "http://101.201.222.8:8081" ||
-  // "http://dev-aci-api.chaozhiedu.com" ||
-  "http://aci-api.chaozhiedu.com";
+import Cookie from "js-cookie";
+export const serverKey = "chaozhi-server";
 
-export const weixinAuth =
-  //"http://dev-aci-api.chaozhiedu.com" ||
-  "http://aci-api.chaozhiedu.com";
+export const weixinAuth = "http://aci-api.chaozhiedu.com";
 
 export const timeout = 15000;
 
-
-const config = {
-  test: {
-    baseUrl: "http://101.201.222.8:8081"
+export const servers = [{
+    label: "正式环境",
+    value: "http://aci-api.chaozhiedu.com"
   },
-  dev: {
-    baseUrl: "http://dev-aci-api.chaozhiedu.com"
-  },
-  prod: {
-    baseUrl: "http://aci-api.chaozhiedu.com"
+  {
+    label: "测试环境",
+    value: "http://101.201.222.8:8081"
   }
-}
+]
 
-export default {
-  getConfig(env = "prod") {
-    return config[env];
-  }
+export const baseUrl = Cookie.get(serverKey) || servers[0].value;
+export function setServer(value) {
+  return Cookie.set(serverKey, value);
 }

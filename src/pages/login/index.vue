@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="t-center mb-20">
-      <img src="@/assets/logo.png"/>
+      <img src="@/assets/logo.png" @click="doDevTools"/>
     </div>
     <div class="t-lg t-center mb-10">登录您的账号</div>
     <div class="t-xs t-gray t-center mb-20">开启您的学习之旅</div>
@@ -25,17 +25,18 @@
     <div class="t-center">
       <a class="link" @click="$router.push('./forget')">忘记密码?</a>
     </div>
+    <van-actionsheet v-model="devtool.show" :actions="devtool.actions" />
   </div>
 </template>
 
 <script>
-import { Field, CellGroup, Button, Row, Col } from "vant";
+import { Field, CellGroup, Button, Row, Col, Actionsheet } from "vant";
 import { mapActions } from "vuex";
 import { getToken, setToken } from "@/utils/auth";
 import register from "./register";
-// import forget from "./forget.vue";
 import { userLogin } from "@/utils/api";
-
+import { servers, setServer } from "@/utils/config";
+console.log(servers);
 export default {
   components: {
     [Field.name]: Field,
@@ -43,8 +44,8 @@ export default {
     [Button.name]: Button,
     [Row.name]: Row,
     [Col.name]: Col,
+    [Actionsheet.name]: Actionsheet,
     register
-    // forget
   },
   data() {
     return {
@@ -58,6 +59,17 @@ export default {
         show: false,
         component: "register",
         title: "注册账号"
+      },
+      devtool: {
+        click: 0,
+        show: false,
+        actions: servers.map(item => {
+          return {
+            name: item.label,
+            subname: item.value,
+            callback: this.doChangeServer
+          };
+        })
       }
     };
   },
@@ -92,10 +104,17 @@ export default {
 
         // action="./#/center/index"
       });
+    },
+    doDevTools() {
+      this.devtool.click++;
+      if (this.devtool.click > 5) {
+        this.devtool.show = true;
+      }
+    },
+    doChangeServer(item) {
+      setServer(item.subname);
+      window.location.reload();
     }
-    // toBack() {
-    //   window.location.href = "./";
-    // }
   },
   created() {
     let { token } = this.$storage.get("userToken");
