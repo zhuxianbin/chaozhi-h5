@@ -89,7 +89,7 @@ export default {
         bindWeiXinOpenId(url) {
           const token = getToken();
           let redirect_uri = encodeURIComponent(url);
-          let href = `http://aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
+          let href = `//aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
           window.location.href = href;
         },
         weixinPay(config, callback) {
