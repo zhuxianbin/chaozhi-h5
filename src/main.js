@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Mint from "mint-ui";
+// import Vant from "vant";
 import "normalize.css/normalize.css";
 import "mint-ui/lib/style.css";
 import "flex.css/dist/flex.css";
@@ -14,6 +15,7 @@ import mixins from "./utils/mixins";
 import store from "./stores/index";
 
 Vue.use(Mint);
+// Vue.use(Vant);
 Vue.use(mixins);
 new Vue({
   router,
