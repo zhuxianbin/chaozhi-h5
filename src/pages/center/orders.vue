@@ -29,7 +29,7 @@
                 <van-step v-for="sub in item.sub_orders" :key="sub.id">
                   <van-row>
                     <van-col span="18">【{{sub.instalment_num}}/{{item.sub_orders.length}}】金额:¥{{sub.price/100}}</van-col>
-                    <van-col span="6" class="t-right"><van-button @click="doPay(sub)" v-if="item.status == 0" size="small" type="danger">支付</van-button></van-col>
+                    <van-col span="6" class="t-right"><van-button @click="doPay(sub)" v-if="sub.can_pay == 1" size="small" type="danger">支付</van-button></van-col>
                   </van-row>
                   <div class='t-12' v-if='sub.due_time'>最后付款日:{{sub.due_time}}</div>
                 </van-step>
