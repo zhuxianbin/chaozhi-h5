@@ -1,3 +1,11 @@
+if (
+  window.location.protocol === "http:" &&
+  window.location.hostname !== "localhost" &&
+  window.location.hostname !== "test.chaozhiedu.com"
+) {
+  window.location.href = window.location.href.replace("http:", "https:");
+}
+
 import Vue from "vue";
 import Mint from "mint-ui";
 // import Vant from "vant";
@@ -7,9 +15,7 @@ import "flex.css/dist/flex.css";
 import "nprogress/nprogress.css";
 import "./assets/index.less";
 import app from "./app.vue";
-import {
-  router
-} from "@/router";
+import { router } from "@/router";
 
 import mixins from "./utils/mixins";
 import store from "./stores/index";
@@ -23,7 +29,6 @@ new Vue({
   el: "#app",
   ...app
 });
-
 
 // wx.config({
 //   debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
