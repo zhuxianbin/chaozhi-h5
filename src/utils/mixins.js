@@ -62,8 +62,9 @@ export default {
           if (this.$tools.isWechat()) {
             const token = getToken();
             let redirect_uri = encodeURIComponent(url || window.location.href);
-            let href = `//aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
-            // window.location.href = href;
+            window.location.href = `//aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
+          } else {
+            window.location.href = url;
           }
         },
         weixinPay(config, callback) {
