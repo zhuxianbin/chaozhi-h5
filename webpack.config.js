@@ -1,7 +1,7 @@
 const resolve = require("path").resolve;
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const url = require("url");
 const publicPath = "";
 
@@ -17,7 +17,8 @@ module.exports = (options = {}) => ({
     publicPath: options.dev ? "/assets/" : publicPath
   },
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.vue$/,
         use: ["vue-loader"]
       },
@@ -36,12 +37,14 @@ module.exports = (options = {}) => ({
       },
       {
         test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)(\?.+)?$/,
-        use: [{
-          loader: "url-loader",
-          options: {
-            limit: 10000
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10000
+            }
           }
-        }]
+        ]
       }
     ]
   },
@@ -53,24 +56,26 @@ module.exports = (options = {}) => ({
       template: "src/index.html"
     }),
     // copy custom static assets
-    new CopyWebpackPlugin([{
-      from: resolve(__dirname, './static'),
-      to: 'static',
-      ignore: ['.*']
-    }])
+    new CopyWebpackPlugin([
+      {
+        from: resolve(__dirname, "./static"),
+        to: "static",
+        ignore: [".*"]
+      }
+    ])
   ],
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: [".js", ".vue", ".json"],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve(__dirname, 'src'),
-      '~': resolve(__dirname, 'static'),
-      'jquery': 'jquery',
-      '$': 'jquery'
+      vue$: "vue/dist/vue.esm.js",
+      "@": resolve(__dirname, "src"),
+      "~": resolve(__dirname, "static"),
+      jquery: "jquery",
+      $: "jquery"
     }
   },
   devServer: {
-    host: "0.0.0.0",
+    // host: "local",
     port: 8008,
     compress: true,
     open: true,

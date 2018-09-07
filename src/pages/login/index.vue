@@ -26,6 +26,7 @@
       <a class="link" @click="$router.push('./forget')">忘记密码?</a>
     </div>
     <van-actionsheet v-model="devtool.show" :actions="devtool.actions" />
+    <iframe ref='wxiframe' :hidden='true'></iframe>
   </div>
 </template>
 
@@ -35,8 +36,8 @@ import { mapActions } from "vuex";
 import { getToken, setToken } from "@/utils/auth";
 import register from "./register";
 import { userLogin } from "@/utils/api";
-import { servers, setServer } from "@/utils/config";
-console.log(servers);
+import { servers, setServer, weixinAuth } from "@/utils/config";
+// console.log(servers);
 export default {
   components: {
     [Field.name]: Field,
@@ -99,7 +100,17 @@ export default {
       userLogin(this.params).then(({ code, msg, token, expired }) => {
         if (code == 200) {
           setToken(token, expired);
-          this.$router.push("./index");
+
+          if (this.$tools.isWechat()) {
+            let redirect_uri = encodeURIComponent(window.location.href);
+            let href = `${weixinAuth}/api/weixinauth?token=${token}&url=${redirect_uri}`;
+            this.$refs.wxiframe.src = href;
+            this.$refs.wxiframe.onload = () => {
+              this.$router.push("./index");
+            };
+          } else {
+            this.$router.push("./index");
+          }
         }
 
         // action="./#/center/index"
