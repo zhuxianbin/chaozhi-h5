@@ -38,5 +38,5 @@ new Vue({
 //   signature: '',// 必填，签名，见附录1
 //   jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 // });
-window.access_token = "UjY0cjYyEGO5kzMjlDZwYGZ4UjNhFDZzE2Y5EGOjFDM8xHf9JyM1YzNzEzX5QDM5MzNiojIl1WYuJnIsAjOiEmIs01W6Iic0RXYiwCNzATN3EzNzUTM6ISZtlGdnVmciwiIyQDMycDM5MjI6ICZphnIskjM5ETM6ICZpBnIsAjOiQWanJCLzUjN3MTM6ICZp9VZzJXdvNmIsIiI6IichRXY2FmIsAjOiIXZk5WZnJCL0MDOzAjM3MTNxojIlJXawhXZiwSO0ATOzcjOiQWat92byJCLiATOxcjKqoiK2gTMiojIl1WYut2Yp5mIsIiclNXdiojIlx2byJCLicDMyATMiojIklWdiwSOykTMxojIkl2XyVmb0JXYwJye"
-var _HT = new MT.SDK.main(window.access_token);
+// window.access_token = "UjY0cjYyEGO5kzMjlDZwYGZ4UjNhFDZzE2Y5EGOjFDM8xHf9JyM1YzNzEzX5QDM5MzNiojIl1WYuJnIsAjOiEmIs01W6Iic0RXYiwCNzATN3EzNzUTM6ISZtlGdnVmciwiIyQDMycDM5MjI6ICZphnIskjM5ETM6ICZpBnIsAjOiQWanJCLzUjN3MTM6ICZp9VZzJXdvNmIsIiI6IichRXY2FmIsAjOiIXZk5WZnJCL0MDOzAjM3MTNxojIlJXawhXZiwSO0ATOzcjOiQWat92byJCLiATOxcjKqoiK2gTMiojIl1WYut2Yp5mIsIiclNXdiojIlx2byJCLicDMyATMiojIklWdiwSOykTMxojIkl2XyVmb0JXYwJye"
+// var _HT = new MT.SDK.main(window.access_token);
