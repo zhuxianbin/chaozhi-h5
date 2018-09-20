@@ -2,18 +2,13 @@ import Vue from "vue";
 import Router from "vue-router";
 import NProgress from "nprogress";
 
-import {
-  getToken
-} from "@/utils/auth";
-
+// import { getToken } from "@/utils/auth";
 
 import index from "./pages/index.vue";
 import login from "./pages/login/index.vue";
-const register = () =>
-  import ("@/pages/login/register")
-const forget = () =>
-  import ("@/pages/login/forget")
-// import index from "./pages/center/index.vue";
+const register = () => import("@/pages/login/register");
+const forget = () => import("@/pages/login/forget");
+import layout from "./pages/layout.vue";
 import courseList from "./pages/center/course.list.vue";
 import course from "./pages/center/course.vue";
 
@@ -23,23 +18,68 @@ import info from "./pages/center/info.vue";
 
 import center from "./pages/center/layout.vue";
 import centerIndex from "./pages/center/index.vue";
-const orders = () =>
-  import ("@/pages/center/orders")
+const orders = () => import("@/pages/center/orders");
 
 Vue.use(Router);
 
-const routes = [{
+const routes = [
+  {
     path: "/",
     name: "root",
-    redirect: "/index"
-    //component: home
-  },
-  {
-    path: "/index",
-    name: "index",
-    component: index
-    //redirect: "/index"
-    //component: home
+    redirect: "/index",
+    component: layout,
+    children: [
+      {
+        path: "/index",
+        name: "index",
+        component: index
+      },
+      {
+        path: "/male",
+        name: "male",
+        component: male
+      },
+      {
+        path: "/center",
+        name: "center",
+        component: centerIndex
+      },
+      {
+        path: "/courseList",
+        name: "courseList",
+        component: courseList
+      },
+      {
+        path: "/course",
+        name: "course",
+        component: course
+      },
+      {
+        path: "/info",
+        name: "info",
+        component: info
+      },
+      {
+        path: "/live",
+        name: "live",
+        component: () => import("./pages/center/list.live.vue")
+      },
+      {
+        path: "/signup",
+        name: "signup",
+        component: () => import("./pages/center/signup.vue")
+      },
+      {
+        path: "/getcode",
+        name: "getcode",
+        component: () => import("./pages/center/getcode.vue")
+      },
+      {
+        path: "/orders",
+        name: "orders",
+        component: () => import("./pages/center/orders.vue")
+      }
+    ]
   },
   {
     path: "/login",
@@ -56,11 +96,7 @@ const routes = [{
     name: "forget",
     component: forget
   },
-  {
-    path: "/male",
-    name: "male",
-    component: male
-  },
+
   {
     path: "/pay/:id?/:isGet?",
     name: "pay",
@@ -68,54 +104,44 @@ const routes = [{
   },
 
   {
-    path: "/center",
-    name: "center",
-    component: centerIndex
-  },
-  {
-    path: "/courseList",
-    name: "courseList",
-    component: courseList
-  },
-  {
-    path: "/course",
-    name: "course",
-    component: course
-  },
-  {
-    path: "/info",
-    name: "info",
-    component: info
-  },
-  {
-    path: "/live",
-    name: "live",
-    component: () =>
-      import ("./pages/center/list.live.vue")
-  },
-  {
-    path: "/signup",
-    name: "signup",
-    component: () =>
-      import ("./pages/center/signup.vue")
-  },
-  {
-    path: "/getcode",
-    name: "getcode",
-    component: () =>
-      import ("./pages/center/getcode.vue")
-  },
-  {
-    path: "/orders",
-    name: "orders",
-    component: () =>
-      import ("./pages/center/orders.vue")
+    path: "/hybrid",
+    name: "hybrid",
+    redirect: "/hybrid/index",
+    component: () => import("./hybrid/layout.vue"),
+    children: [
+      {
+        path: "index",
+        name: "hybrid-index",
+        component: () => import("./hybrid/index.vue")
+      },
+      {
+        path: "orders",
+        name: "hybrid-orders",
+        component: () => import("./hybrid/me/orders")
+      },
+      {
+        path: "message",
+        name: "hybrid-message",
+        component: () => import("./hybrid/me/message"),
+        meta:{
+          title:"消息管理"
+        }
+      },
+      {
+        path: "coupon",
+        name: "hybrid-coupon",
+        component: () => import("./hybrid/me/coupon"),
+        meta:{
+          title:"优惠券"
+        }
+      }
+    ]
   }
 ];
 
 // add route path
 routes.forEach(route => {
-  route.path = route.path || '/' + (route.name || '');
+  route.path = route.path || "/" + (route.name || "");
 });
 
 const router = new Router({
@@ -124,11 +150,11 @@ const router = new Router({
 
 NProgress.configure({
   showSpinner: false
-}) // NProgress Configuration
-const whiteList = ["/login", "/index", "/male", "/register", "/forget"] // no redirect whitelist
+}); // NProgress Configuration
+// const whiteList = ["/login", "/index", "/male", "/register", "/forget"]; // no redirect whitelist
 router.beforeEach((to, from, next) => {
   console.log(to, from);
-  NProgress.start() // start progress bar
+  NProgress.start(); // start progress bar
   // const token = getToken();
 
   // if (token) {
@@ -152,13 +178,10 @@ router.beforeEach((to, from, next) => {
   if (title) {
     document.title = title;
   }
-  next()
+  next();
 });
 router.afterEach(() => {
-  NProgress.done() // finish progress bar
-})
+  NProgress.done(); // finish progress bar
+});
 
-
-export {
-  router
-};
+export { router };

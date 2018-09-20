@@ -28,8 +28,8 @@
     <div v-if='payType=="alipay"' style='padding:1rem 2rem;background:#fff;'>
       <div class="mb-20 t-center">
         <div v-html='alipay_form'></div>
-        <mt-button class="mb-10" @click.native='payOrder("alipay")' size="large" type="primary">去支付</mt-button>
-        <div class='t-xs t-gray'>*请从浏览器打开此页面</div>
+        <mt-button class="mb-10" v-if='!isWeixin' @click.native='payOrder("alipay")' size="large" type="primary">去支付</mt-button>
+        <div class='t-xs t-gray'>*如需支付宝支付，请使用浏览器访问超职</div>
       </div>
     </div>
     <div v-if='wechatType==payType' style='padding:1rem 2rem;background:#fff;'>
@@ -48,11 +48,13 @@ import { weixinAuth } from "@/utils/config";
 import { orderPay, getOrder } from "@/utils/api";
 import { Dialog } from "vant";
 import { getToken, removeToken } from "@/utils/auth";
+import { isWeixin } from "@/utils/tools";
 let timer = 0;
 export default {
   data() {
-    const wechatType = this.$tools.isWechat() ? "wechat_jsapi" : "wechat_h5";
+    const wechatType = isWeixin ? "wechat_jsapi" : "wechat_h5";
     return {
+      isWeixin,
       wechatType,
       isAlipayOrWechat: "",
       popupFail: false,
@@ -97,7 +99,7 @@ export default {
     },
     payOrder(type) {
       if (type == "wechat") {
-        if (this.$tools.isWechat()) {
+        if (isWeixin) {
           this.weixinPay(this.wxconfig, () => {
             return this.$messagebox.alert("购买成功").then(() => {
               this.$router.push("/male");

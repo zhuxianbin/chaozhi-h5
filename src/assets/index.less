@@ -38,84 +38,134 @@ input {
   text-align: @position;
 }
 
-.t-center {
-  .text-align(center);
-}
-
-.t-left {
-  .text-align(left);
-}
-
-.t-right {
-  .text-align(right);
-}
-
 .font-size(@size: 16px) {
   font-size: @size;
 }
 
-.t-xs {
-  .font-size(0.5rem);
-}
-
-.t-sm {
-  .font-size(0.6rem);
-}
-
-.t-md {
-  .font-size(0.7rem);
-}
-
-.t-lg {
-  .font-size(1rem);
-}
-
-.t-bold {
-  font-weight: bold;
-}
-
-.t-gray {
-  color: #666;
-}
-
-.mb-10 {
-  margin-bottom: 0.5rem;
-}
-
-.mb-20 {
-  margin-bottom: 1rem;
-}
-
-.mr-10 {
-  margin-right: 0.5rem;
+.m {
+  &b {
+    &-5 {
+      margin-bottom: 5px;
+    }
+    &-10 {
+      margin-bottom: 10px;
+    }
+    &-20 {
+      margin-bottom: 20px;
+    }
+  }
+  &r {
+    &-5 {
+      margin-right: 5px;
+    }
+    &-10 {
+      margin-right: 10px;
+    }
+    &-20 {
+      margin-right: 20px;
+    }
+  }
+  &l {
+    &-5 {
+      margin-left: 5px;
+    }
+    &-10 {
+      margin-left: 10px;
+    }
+    &-20 {
+      margin-left: 20px;
+    }
+  }
 }
 
 .link {
   color: #08f;
 }
 
-.t-orange {
-  color: #f60;
-}
+.t {
+  &-center {
+    .text-align(center);
+  }
 
-.t-blue {
-  color: #4a90e2;
-}
+  &-left {
+    .text-align(left);
+  }
 
-.t-green {
-  color: #7d2;
-}
+  &-right {
+    .text-align(right);
+  }
 
-.t-red {
-  color: #f40;
-}
+  &-orange {
+    color: #f80;
+  }
 
-.t-gray {
-  color: #aaa;
-}
+  &-blue {
+    color: #4a90e2;
+  }
 
-.t-12 {
-  font-size: 12px;
+  &-green {
+    color: #7d2;
+  }
+
+  &-red {
+    color: #f40;
+  }
+
+  &-gray {
+    color: #aaa;
+  }
+
+  &-12 {
+    font-size: 12px;
+  }
+
+  &-14 {
+    font-size: 14px;
+  }
+
+  &-16 {
+    font-size: 16px;
+  }
+
+  &-ell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &-ell-2 {
+    display: -webkit-box;
+    overflow: hidden;
+    white-space: normal !important;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  &-xs {
+    .font-size(0.5rem);
+  }
+
+  &-sm {
+    .font-size(0.6rem);
+  }
+
+  &-md {
+    .font-size(0.7rem);
+  }
+
+  &-lg {
+    .font-size(1rem);
+  }
+
+  &-bold {
+    font-weight: bold;
+  }
+
+  &-gray {
+    color: #666;
+  }
 }
 
 .mint-button--danger {
@@ -127,7 +177,12 @@ input {
 }
 
 .border(@position: bottom) {
-  background-image: linear-gradient( 180deg, #d9d9d9, #d9d9d9 50%, transparent 50%);
+  background-image: linear-gradient(
+    180deg,
+    #d9d9d9,
+    #d9d9d9 50%,
+    transparent 50%
+  );
   background-size: 100% 1px;
   background-repeat: no-repeat;
   background-position: @position left;
@@ -173,22 +228,6 @@ input {
   font-size: 0.6rem;
 }
 
-.t-ell {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.t-ell-2 {
-  display: -webkit-box;
-  overflow: hidden;
-  white-space: normal !important;
-  text-overflow: ellipsis;
-  word-wrap: break-word;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
 .img-r {
   width: 100%;
   height: auto;
@@ -220,5 +259,5 @@ input {
 }
 
 .padding {
-  padding: .5rem;
+  padding: 0.5rem;
 }
