@@ -4,20 +4,20 @@ import NProgress from "nprogress";
 
 // import { getToken } from "@/utils/auth";
 
-import index from "./pages/index.vue";
-import login from "./pages/login/index.vue";
+import index from "@/pages/index.vue";
+import login from "@/pages/login/index.vue";
 const register = () => import("@/pages/login/register");
 const forget = () => import("@/pages/login/forget");
-import layout from "./pages/layout.vue";
-import courseList from "./pages/center/course.list.vue";
-import course from "./pages/center/course.vue";
+import layout from "@/pages/layout.vue";
+import courseList from "@/pages/center/course.list.vue";
+import course from "@/pages/center/course.vue";
 
-import male from "./pages/male.vue";
-import pay from "./pages/pay.vue";
-import info from "./pages/center/info.vue";
+import male from "@/pages/male.vue";
+import pay from "@/pages/pay.vue";
+import info from "@/pages/center/info.vue";
 
-import center from "./pages/center/layout.vue";
-import centerIndex from "./pages/center/index.vue";
+import center from "@/pages/center/layout.vue";
+import centerIndex from "@/pages/center/index.vue";
 const orders = () => import("@/pages/center/orders");
 
 Vue.use(Router);
@@ -62,22 +62,22 @@ const routes = [
       {
         path: "/live",
         name: "live",
-        component: () => import("./pages/center/list.live.vue")
+        component: () => import("@/pages/center/list.live.vue")
       },
       {
         path: "/signup",
         name: "signup",
-        component: () => import("./pages/center/signup.vue")
+        component: () => import("@/pages/center/signup.vue")
       },
       {
         path: "/getcode",
         name: "getcode",
-        component: () => import("./pages/center/getcode.vue")
+        component: () => import("@/pages/center/getcode.vue")
       },
       {
         path: "/orders",
         name: "orders",
-        component: () => import("./pages/center/orders.vue")
+        component: () => import("@/pages/center/orders.vue")
       }
     ]
   },
@@ -107,32 +107,32 @@ const routes = [
     path: "/hybrid",
     name: "hybrid",
     redirect: "/hybrid/index",
-    component: () => import("./hybrid/layout.vue"),
+    component: () => import("@/hybrid/layout.vue"),
     children: [
       {
         path: "index",
         name: "hybrid-index",
-        component: () => import("./hybrid/index.vue")
+        component: () => import("@/hybrid/index.vue")
       },
       {
         path: "orders",
         name: "hybrid-orders",
-        component: () => import("./hybrid/me/orders")
+        component: () => import("@/hybrid/me/orders")
       },
       {
         path: "message",
         name: "hybrid-message",
-        component: () => import("./hybrid/me/message"),
-        meta:{
-          title:"消息管理"
+        component: () => import("@/hybrid/me/message"),
+        meta: {
+          title: "消息管理"
         }
       },
       {
         path: "coupon",
         name: "hybrid-coupon",
-        component: () => import("./hybrid/me/coupon"),
-        meta:{
-          title:"优惠券"
+        component: () => import("@/hybrid/me/coupon"),
+        meta: {
+          title: "优惠券"
         }
       }
     ]

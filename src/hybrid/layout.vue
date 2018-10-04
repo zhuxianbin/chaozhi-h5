@@ -5,7 +5,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  created() {
+    const [x, native] = window.navigator.userAgent.split("&&");
+    const { token, wifi } = JSON.parse(native || "{}");
+  }
+};
 </script>
 
 
