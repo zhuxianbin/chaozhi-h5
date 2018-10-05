@@ -5,10 +5,16 @@
 </template>
 
 <script>
+import { setToken, Cookies } from "@/utils/auth";
 export default {
   created() {
     const [x, native] = window.navigator.userAgent.split("&&");
     const { token, wifi } = JSON.parse(native || "{}");
+    if (token) {
+      setToken(token);
+      Cookies.set("chaozhi-wifi", wifi);
+      Cookies.set("chaozhi-native", 1);
+    }
   }
 };
 </script>
