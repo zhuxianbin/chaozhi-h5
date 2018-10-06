@@ -69,6 +69,11 @@ export default [
             path: "course-list",
             name: "hybrid-study-course-list",
             component: () => import("@/hybrid/study/course-list.vue")
+          },
+          {
+            path: "doc/:id?",
+            name: "hybrid-study-doc",
+            component: () => import("@/hybrid/study/doc/index.vue")
           }
         ]
       }
