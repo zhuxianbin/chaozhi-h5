@@ -21,8 +21,9 @@
     </div>
 
     <mt-navbar v-model="payType">
-      <mt-tab-item :id="wechatType">微信</mt-tab-item>
-      <mt-tab-item id="alipay">支付宝</mt-tab-item>
+      <mt-tab-item v-if='pay_info.wechat.status' :id="wechatType">微信</mt-tab-item>
+      <mt-tab-item v-if='pay_info.alipay.status' id="alipay">支付宝</mt-tab-item>
+      <mt-tab-item v-if='pay_info.haimi.status' id="haimi">海米分期</mt-tab-item>
     </mt-navbar>
     
     <div v-if='payType=="alipay"' style='padding:1rem 2rem;background:#fff;'>
@@ -37,6 +38,30 @@
         <mt-button @click.native='payOrder("wechat")' size="large" type="primary">去支付</mt-button>
       </div>
     </div>
+    <div v-if='"haimi"==payType' style='padding:.2rem 0 1rem 0;background:#fff;'>
+      <van-notice-bar class='mb-10' :scrollable="false">
+        注:海米审核后，请在24个小时内完成首付的支付即可。
+      </van-notice-bar>
+      <div>
+        <van-tabs color='#26a2ff' type='card' v-model="haimiParams.term">
+          <van-tab title="3期"></van-tab>
+          <van-tab title="6期"></van-tab>
+          <van-tab title="9期"></van-tab>
+          <van-tab title="12期"></van-tab>
+        </van-tabs>
+      </div>
+      <div class='t-12 t-center mt-10 mb-10'>
+        首付金额为订单金额的10%，剩余金额进行分期。
+      </div>
+      <van-cell-group>
+        <van-field label='真实姓名' v-model="haimiParams.name" placeholder="请输入真实姓名" />
+        <van-field label='身份证号' v-model="haimiParams.identity" placeholder="请输入身份证号" />
+        <van-field label='居住地' v-model="haimiParams.address" placeholder="请输入居住地" />
+      </van-cell-group>
+      <div style='padding:0 20px;' class='mt-20'>
+        <van-button block type='primary'>立即申请</van-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,11 +71,19 @@ import QRCode from "qrcode";
 import storage from "@/utils/storage";
 import { weixinAuth } from "@/utils/config";
 import { orderPay, getOrder } from "@/utils/api";
-import { Dialog } from "vant";
+import { Dialog, Field, CellGroup, Tab, Tabs, Button, NoticeBar } from "vant";
 import { getToken, removeToken } from "@/utils/auth";
 import { isWeixin } from "@/utils/tools";
 let timer = 0;
 export default {
+  components: {
+    [Field.name]: Field,
+    [CellGroup.name]: CellGroup,
+    [Tab.name]: Tab,
+    [Tabs.name]: Tabs,
+    [Button.name]: Button,
+    [NoticeBar.name]: NoticeBar
+  },
   data() {
     const wechatType = isWeixin ? "wechat_jsapi" : "wechat_h5";
     return {
@@ -80,7 +113,17 @@ export default {
       qrtext: "",
       wxconfig: {},
       mweb_url: "",
-      alipay_form: ""
+      alipay_form: "",
+      pay_info: {},
+      haimiParams: {
+        term: 3,
+        order_id: "",
+        type: "h5",
+        name: "",
+        address: "",
+        // pcaArray: [],
+        identity: ""
+      }
     };
   },
   watch: {
@@ -95,7 +138,8 @@ export default {
   },
   methods: {
     doRefreshPrice() {
-      this.getOrderPay();
+      // this.getOrderPay();
+      window.location.reload();
     },
     payOrder(type) {
       if (type == "wechat") {
@@ -150,83 +194,81 @@ export default {
       //   channel: this.payType
       // });
 
-      this.order_id &&
-        orderPay({
-          order_id: this.order_id,
-          channel: this.payType
-        }).then(data => {
-          if (data.code == 210) {
-            return Dialog.alert({
-              title: "温馨提示",
-              message:
-                "您的订单已经被分期，请到【个人中心】的【我的课程订单】中进行付款。"
-            }).then(() => {
-              this.$router.push({
-                path: "/orders"
-              });
+      if (this.payType == "haimi") {
+        return;
+      }
+      // this.order_id &&
+      orderPay({
+        order_id: this.order_id,
+        channel: this.payType
+      }).then(data => {
+        if (data.code == 210) {
+          return Dialog.alert({
+            title: "温馨提示",
+            message:
+              "您的订单已经被分期，请到【个人中心】的【我的课程订单】中进行付款。"
+          }).then(() => {
+            this.$router.push({
+              path: "/orders"
             });
-          }
-          this.wxconfig = data.config;
-          this.payData = data.order_info;
-          this.alipay_form = data.form;
-          this.mweb_url = data.mweb_url;
-        });
+          });
+        }
+        this.wxconfig = data.config;
+        this.payData = data.order_info;
+        this.alipay_form = data.form;
+        this.mweb_url = data.mweb_url;
+      });
     },
-    getOrderByProductId() {
-      this.product_id &&
-        getOrder({ product_id: this.product_id }).then(data => {
-          if (data.code == 202) {
-            return Dialog.alert({
-              title: "温馨提示",
-              message: "您已经购买过该课程,请勿重复购买"
-            }).then(() => {
-              this.$router.push({
-                path: "/male"
-              });
+    getOrderInfo(params) {
+      // this.product_id &&
+      getOrder(params).then(data => {
+        if (data.code == 202) {
+          return Dialog.alert({
+            title: "温馨提示",
+            message: "您已经购买过该课程,请勿重复购买"
+          }).then(() => {
+            this.$router.push({
+              path: "/male"
             });
-          }
-          if (data.code == 210) {
-            return Dialog.alert({
-              title: "温馨提示",
-              message:
-                "您的订单已经被分期，请到【个人中心】的【我的课程订单】中进行付款。"
-            }).then(() => {
-              this.$router.push({
-                path: "/orders"
-              });
+          });
+        }
+        if (data.code == 210) {
+          return Dialog.alert({
+            title: "温馨提示",
+            message:
+              "您的订单已经被分期，请到【个人中心】的【我的课程订单】中进行付款。"
+          }).then(() => {
+            this.$router.push({
+              path: "/orders"
             });
-          }
-          this.order_id = data.order_id;
-          this.getOrderPay();
-        });
+          });
+        }
+        this.order_id = data.order_id;
+        this.pay_info = data.pay_info;
+        this.order_info = data.order_info;
+
+        this.getOrderPay();
+      });
     }
   },
   created() {
-    let { id, isGet = 0 } = this.$route.params;
+    let { id } = this.$route.params;
     id = "" + id;
     //this.bindOpenId(isGet);
     if (id.length > 0 && id.length < 17) {
       this.product_id = id;
       //console.log(id);
-      return this.getOrderByProductId();
+      // return this.getOrderByProductId();
     }
     if (id.length >= 17) {
       this.order_id = id;
-      return this.getOrderPay();
+      // return this.getOrderPay();
     }
 
-    // this.productId = product_id;
-    // this.getPayInfo({ product_id }).then(
-    //   ({ code, msg, price, token, product }) => {
-    //     if (code == 200) {
-    //       this.price = price;
-    //       // this.orderId = token;
-    //       this.product = product;
-    //     }
-    //   }
-    // );
-
-    // product_id && this.getOrder();
+    return this.getOrderInfo({
+      product_id: this.product_id,
+      order_id: this.order_id
+    });
   },
   beforeDestroy() {
     clearTimeout(timer);

@@ -25,11 +25,14 @@
               <div class="t-gray mb-10 t-12">
                 分期付款
               </div>
-              <van-steps direction="vertical" :active="0" active-color="#f60">
+              <van-steps direction="vertical"  active-color="#f60">
                 <van-step v-for="sub in item.sub_orders" :key="sub.id">
                   <van-row>
                     <van-col span="18">【{{sub.instalment_num}}/{{item.sub_orders.length}}】金额:¥{{sub.price/100}}</van-col>
-                    <van-col span="6" class="t-right"><van-button @click="doPay(sub)" v-if="sub.can_pay == 1" size="small" type="danger">支付</van-button></van-col>
+                    <van-col span="6" class="t-right">
+                      <van-button size="small" @click="doPay(sub)" v-if='sub.can_pay==2' type="primary">申请分期</van-button>
+                      <van-button @click="doPay(sub)" v-if="sub.can_pay == 1" size="small" type="danger">支付</van-button>
+                    </van-col>
                   </van-row>
                   <div class='t-12' v-if='sub.due_time'>最后付款日:{{sub.due_time}}</div>
                 </van-step>
@@ -69,6 +72,8 @@
 <script>
 import { List, Panel, Button, Row, Col, Step, Steps } from "vant";
 import { getOrderList } from "@/utils/api";
+import { baseUrl } from "@/utils/config";
+import { getToken } from "@/utils/auth";
 export default {
   components: {
     [List.name]: List,
@@ -110,6 +115,11 @@ export default {
       });
     },
     doPay(item) {
+      if (item.can_pay == 2) {
+        const order_id = item.order_id;
+        window.location.href = `${baseUrl}/api/pay/haimi/pc/${order_id}?token=${getToken()}`;
+        return;
+      }
       return this.$router.push({
         name: "pay",
         params: { id: item.order_id }
