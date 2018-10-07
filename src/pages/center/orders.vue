@@ -117,18 +117,18 @@ export default {
     doPay(item) {
       if (item.can_pay == 2) {
         const order_id = item.order_id;
-        window.location.href = `${baseUrl}/api/pay/haimi/pc/${order_id}?token=${getToken()}`;
+        window.location.href = `${baseUrl}/api/pay/haimi/h5/${order_id}?token=${getToken()}`;
         return;
       }
       return this.$router.push({
         name: "pay",
-        params: { id: item.order_id }
+        query: { order_id: item.order_id }
       });
     },
     doOption(item) {
       return this.$router.push({
         name: "pay",
-        params: { id: item.product_id }
+        query: { product_id: item.product_id }
       });
     }
   },

@@ -29,7 +29,7 @@
             <s class="t-xs t-gray">{{item.original_price}}元</s>
           </div>
           <div slot="footer">
-            <van-button type="danger" size="small" @click='$router.push({name:"pay",params:{id:item.id}})'>立即购买</van-button>
+            <van-button type="danger" size="small" @click='$router.push({name:"pay",query:{product_id:item.id}})'>立即购买</van-button>
             <van-button type="default" size="small" @click='showDesc(item)'>课程介绍</van-button>
           </div>
         </van-card>

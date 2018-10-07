@@ -4,62 +4,63 @@
     <div class="order-info ui-list">
         <div class='ui-list-item' flex>
           <div class='ui-list-label' flex-box="0">订单内容</div>
-          <div flex-box="1" v-if="payData">购买{{payData.product_name}}</div>
+          <div flex-box="1" v-if="order_info">购买{{order_info.product_name}}</div>
         </div>
         <div class='ui-list-item' flex>
           <div class='ui-list-label' flex-box="0">订单价格</div>
           <div flex-box="1">
-            <span class="t-orange" v-if="payData">{{(payData.price/100).toFixed(2)}}</span>元
+            <span class="t-orange" v-if="order_info">{{(order_info.price/100).toFixed(2)}}</span>元
           </div>
         </div>
         <div class='ui-list-item' flex>
           <div class='ui-list-label' flex-box="0"></div>
           <div flex-box="1">
-            <mt-button plain size="small" @click.native="doRefreshPrice">刷新价格</mt-button>
+            <van-button plain size="small" @click="doRefreshPrice">刷新价格</van-button>
           </div>
         </div>
     </div>
-
-    <mt-navbar v-model="payType">
+    <van-tabs color='#26a2ff' @change="getOrderPay" v-model="payType">
+      <van-tab v-if='pay_info.wechat.status' title="微信"></van-tab>
+      <van-tab v-if='pay_info.alipay.status' title="支付宝"></van-tab>
+      <van-tab v-if='pay_info.haimi.status' title="海米分期"></van-tab>
+    </van-tabs>
+    <!-- <mt-navbar v-model="payType">
       <mt-tab-item v-if='pay_info.wechat.status' :id="wechatType">微信</mt-tab-item>
       <mt-tab-item v-if='pay_info.alipay.status' id="alipay">支付宝</mt-tab-item>
       <mt-tab-item v-if='pay_info.haimi.status' id="haimi">海米分期</mt-tab-item>
-    </mt-navbar>
-    
-    <div v-if='payType=="alipay"' style='padding:1rem 2rem;background:#fff;'>
+    </mt-navbar> -->
+    <div v-if='0==payType' style='padding:1rem 2rem;background:#fff;'>
+      <div class="mb-20 t-center">
+        <mt-button @click.native='payOrder("wechat")' size="large" type="primary">去支付</mt-button>
+      </div>
+    </div>
+    <div v-if='1==payType' style='padding:1rem 2rem;background:#fff;'>
       <div class="mb-20 t-center">
         <div v-html='alipay_form'></div>
         <mt-button class="mb-10" v-if='!isWeixin' @click.native='payOrder("alipay")' size="large" type="primary">去支付</mt-button>
         <div class='t-xs t-gray'>*如需支付宝支付，请使用浏览器访问超职</div>
       </div>
     </div>
-    <div v-if='wechatType==payType' style='padding:1rem 2rem;background:#fff;'>
-      <div class="mb-20 t-center">
-        <mt-button @click.native='payOrder("wechat")' size="large" type="primary">去支付</mt-button>
-      </div>
-    </div>
-    <div v-if='"haimi"==payType' style='padding:.2rem 0 1rem 0;background:#fff;'>
+    <div v-if='2==payType' style='padding:.2rem 0 1rem 0;background:#fff;'>
       <van-notice-bar class='mb-10' :scrollable="false">
         注:海米审核后，请在24个小时内完成首付的支付即可。
       </van-notice-bar>
       <div>
         <van-tabs color='#26a2ff' type='card' v-model="haimiParams.term">
-          <van-tab title="3期"></van-tab>
-          <van-tab title="6期"></van-tab>
-          <van-tab title="9期"></van-tab>
-          <van-tab title="12期"></van-tab>
+          <van-tab v-for='item in pay_info.haimi.term' :key='"qi"+item' :title="item+'期'"></van-tab>
         </van-tabs>
       </div>
       <div class='t-12 t-center mt-10 mb-10'>
         首付金额为订单金额的10%，剩余金额进行分期。
       </div>
       <van-cell-group>
-        <van-field label='真实姓名' v-model="haimiParams.name" placeholder="请输入真实姓名" />
+        <van-field label='真实姓名'
+          v-model="haimiParams.name" placeholder="请输入真实姓名" />
         <van-field label='身份证号' v-model="haimiParams.identity" placeholder="请输入身份证号" />
         <van-field label='居住地' v-model="haimiParams.address" placeholder="请输入居住地" />
       </van-cell-group>
       <div style='padding:0 20px;' class='mt-20'>
-        <van-button block type='primary'>立即申请</van-button>
+        <van-button block @click='doHaimiPay' type='primary'>立即申请</van-button>
       </div>
     </div>
   </div>
@@ -70,8 +71,17 @@ import { mapActions, mapState } from "vuex";
 import QRCode from "qrcode";
 import storage from "@/utils/storage";
 import { weixinAuth } from "@/utils/config";
-import { orderPay, getOrder } from "@/utils/api";
-import { Dialog, Field, CellGroup, Tab, Tabs, Button, NoticeBar } from "vant";
+import { orderPay, getOrder, orderPaybyHaimi, getPayResult } from "@/utils/api";
+import {
+  Dialog,
+  Toast,
+  Field,
+  CellGroup,
+  Tab,
+  Tabs,
+  Button,
+  NoticeBar
+} from "vant";
 import { getToken, removeToken } from "@/utils/auth";
 import { isWeixin } from "@/utils/tools";
 let timer = 0;
@@ -93,22 +103,14 @@ export default {
       popupFail: false,
       popupSuccess: true,
       popupPaying: true,
-      product: {},
+      // product: {},
       order_id: "",
       product_id: "",
       payResult: {},
-      payData: null,
-      payType: wechatType,
-      options: [
-        {
-          label: "微信",
-          value: wechatType
-        },
-        {
-          label: "支付宝",
-          value: "alipay"
-        }
-      ],
+      // payData: null,
+      wechatType,
+      payType: 0,
+      payTypes: [wechatType, "alipay", "haimi"],
       qrcode: "",
       qrtext: "",
       wxconfig: {},
@@ -116,7 +118,7 @@ export default {
       alipay_form: "",
       pay_info: {},
       haimiParams: {
-        term: 3,
+        term: 0,
         order_id: "",
         type: "h5",
         name: "",
@@ -126,11 +128,11 @@ export default {
       }
     };
   },
-  watch: {
-    payType(val) {
-      this.getOrderPay();
-    }
-  },
+  // watch: {
+  //   payType(val) {
+  //     this.getOrderPay();
+  //   }
+  // },
   computed: {
     ...mapState({
       userInfo: state => state.userInfo
@@ -140,6 +142,48 @@ export default {
     doRefreshPrice() {
       // this.getOrderPay();
       window.location.reload();
+    },
+    doHaimiPay() {
+      //姓名
+      if (!this.haimiParams.name) {
+        return Toast.fail("请输入姓名");
+      }
+      //身份证
+      if (!this.haimiParams.identity) {
+        return Toast.fail("请输入身份证");
+      }
+      //地址
+      if (!this.haimiParams.address) {
+        return Toast.fail("请输入地址");
+      }
+
+      orderPaybyHaimi({
+        ...this.haimiParams,
+        order_id: this.order_id,
+        term: this.pay_info.haimi.term[this.haimiParams.term]
+        // address: `${this.forms.pcaArray.join("")}${this.forms.address}`
+      }).then(({ pay_url }) => {
+        // this.openNew(pay_url);
+        window.location.href = pay_url;
+        // window.open(pay_url);
+
+        // Dialog.confirm({
+        //   title: "温馨提示",
+        //   message: "您已经提交了海米分期，如果想要了解详情，请进入“订单管理”"
+        // })
+        //   .then(() => {
+        //     // this.$router.push("/");
+        //     this.$router.push({
+        //       name: "orders"
+        //     });
+        //   })
+        //   .catch(() => {
+        //     // this.$router.push("/");
+        //     this.$router.push({
+        //       name: "index"
+        //     });
+        //   });
+      });
     },
     payOrder(type) {
       if (type == "wechat") {
@@ -157,7 +201,7 @@ export default {
       }
     },
     getPayResult(token) {
-      this._getPayResult({
+      getPayResult({
         token
       }).then(({ code, msg }) => {
         if (code != 200) {
@@ -167,40 +211,23 @@ export default {
           }, 5000);
           return false;
         }
-        return this.$messagebox.alert("支付完成,前往查看").then(() => {
+        return Dialog.alert({
+          title: "温馨提示",
+          message: "支付完成,前往查看"
+        }).then(() => {
           this.$router.push("/courseList");
         });
       });
     },
-    bindOpenId(isGet) {
-      if (this.$tools.isWechat()) {
-        if (isGet <= 0) {
-          //console.log(1111111);
-          let token = getToken(); // storage.get("userToken");
-          if (!token) {
-            return this.$router.push("/login");
-          }
-          let redirect_uri = encodeURIComponent(
-            window.location.href + `/${+isGet + 1}`
-          );
-          let href = `${weixinAuth}/api/weixinauth?token=${token}&url=${redirect_uri}`;
-          window.location.href = href;
-        }
-      }
-    },
-    getOrderPay() {
-      // console.log({
-      //   order_id: this.order_id,
-      //   channel: this.payType
-      // });
 
-      if (this.payType == "haimi") {
+    getOrderPay() {
+      if (this.payType == 2) {
         return;
       }
-      // this.order_id &&
+
       orderPay({
         order_id: this.order_id,
-        channel: this.payType
+        channel: this.payTypes[this.payType]
       }).then(data => {
         if (data.code == 210) {
           return Dialog.alert({
@@ -243,31 +270,41 @@ export default {
             });
           });
         }
+
+        if (data.code == 220) {
+          return window.open(
+            `${baseUrl}/api/pay/haimi/pc/${this.order_id}?token=${getToken()}`
+          );
+        }
+
+        if (data.code == 230) {
+          this.status.isFree = true;
+          return false;
+        }
+
         this.order_id = data.order_id;
         this.pay_info = data.pay_info;
         this.order_info = data.order_info;
-
+        this.getPayResult(this.order_id);
         this.getOrderPay();
       });
     }
   },
   created() {
-    let { id } = this.$route.params;
-    id = "" + id;
-    //this.bindOpenId(isGet);
-    if (id.length > 0 && id.length < 17) {
-      this.product_id = id;
-      //console.log(id);
-      // return this.getOrderByProductId();
-    }
-    if (id.length >= 17) {
-      this.order_id = id;
-      // return this.getOrderPay();
+    let { product_id, order_id } = this.$route.query;
+
+    if (product_id || order_id) {
+      this.product_id = product_id;
+      this.order_id = order_id;
+
+      return this.getOrderInfo({
+        product_id,
+        order_id
+      });
     }
 
-    return this.getOrderInfo({
-      product_id: this.product_id,
-      order_id: this.order_id
+    this.$router.push({
+      name: "male"
     });
   },
   beforeDestroy() {
@@ -278,6 +315,8 @@ export default {
 <style lang="less" scoped>
 .page {
   padding: 0 0 50px;
+  box-sizing: border-box;
+  min-height: 100vh;
 }
 .order-info {
   background: #fff;

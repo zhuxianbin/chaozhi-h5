@@ -9,11 +9,13 @@
 
     <van-cell-group class="mb-10">
       <van-field
+        clearable
         v-model="params.phone"
         placeholder="请输入手机号"
       />
       <van-field
         type="password"
+        clearable
         v-model="params.password"
         placeholder="请输入密码"
       />
