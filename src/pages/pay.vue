@@ -161,28 +161,8 @@ export default {
         ...this.haimiParams,
         order_id: this.order_id,
         term: this.pay_info.haimi.term[this.haimiParams.term]
-        // address: `${this.forms.pcaArray.join("")}${this.forms.address}`
       }).then(({ pay_url }) => {
-        // this.openNew(pay_url);
         window.location.href = pay_url;
-        // window.open(pay_url);
-
-        // Dialog.confirm({
-        //   title: "温馨提示",
-        //   message: "您已经提交了海米分期，如果想要了解详情，请进入“订单管理”"
-        // })
-        //   .then(() => {
-        //     // this.$router.push("/");
-        //     this.$router.push({
-        //       name: "orders"
-        //     });
-        //   })
-        //   .catch(() => {
-        //     // this.$router.push("/");
-        //     this.$router.push({
-        //       name: "index"
-        //     });
-        //   });
       });
     },
     payOrder(type) {
