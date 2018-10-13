@@ -113,6 +113,7 @@ export default {
     },
     doChangeServer(item) {
       setServer(item.subname);
+      // set
       window.location.reload();
     }
   },

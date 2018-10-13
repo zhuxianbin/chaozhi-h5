@@ -59,12 +59,16 @@ export default {
           });
         },
         bindWeiXinOpenId(url) {
+          if (location.host === "test.chaozhiedu.com") {
+            return this.$router.push({ name: "index" });
+          }
+
           if (this.$tools.isWechat()) {
             const token = getToken();
             let redirect_uri = encodeURIComponent(url || window.location.href);
             window.location.href = `//aci-api.chaozhiedu.com/api/weixinauth?token=${token}&url=${redirect_uri}`;
           } else {
-            window.location.href = url;
+            return this.$router.push({ name: "index" });
           }
         },
         weixinPay(config, callback) {
