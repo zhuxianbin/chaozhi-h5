@@ -1,23 +1,29 @@
 <template>
   <div class="page">
-    <mt-swipe style='height:140px;' :auto="5000">
-      <mt-swipe-item>
-        <img src="../assets/20180316155148.png" style='height:140px;'>
-      </mt-swipe-item>
-      <mt-swipe-item>
-        <img src="../assets/20180316155148.png" style='height:140px;'>
-      </mt-swipe-item>
-    </mt-swipe>
+    
+    <van-swipe :autoplay="3000">
+      <van-swipe-item>
+        <img class='img-r' src="../assets/20180316155148.png" >
+      </van-swipe-item>
+      <van-swipe-item>
+        <img class='img-r' src="../assets/20180316155148.png" >
+      </van-swipe-item>
+    </van-swipe>
     <div class="t-gray" style='background:#f9f9f9;padding:.5rem;'>
       超职商城欢迎您，请选择学科
     </div>
     <div class="cate-list">
-      <mt-button :type="cateActive==0?'danger':'default'" @click='changeCate(0)' size="small">全部</mt-button><mt-button v-for='item in category' :key='item.id' :type="cateActive==item.id?'danger':'default'" @click='changeCate(item.id)' size="small">{{item.name}}</mt-button>
+      <van-button :type="cateActive==0?'warning':'default'" @click='changeCate(0)' size="small">全部</van-button>
+      <van-button v-for='item in category' :key='item.id' 
+        class='ml-10'
+        :type="cateActive==item.id?'warning':'default'" 
+        @click='changeCate(item.id)' size="small">{{item.name}}</van-button>
     </div>
-    <div class="product-list" 
-      v-infinite-scroll="loadMore"
-      infinite-scroll-disabled="loading"
-      infinite-scroll-distance="10">
+    <van-list
+      v-model="isloading"
+      :finished="finished"
+      @load="loadMore"
+    >
       <template v-for="item in rows">
         <van-card :key='item.id'
           :title="item.name"
@@ -55,10 +61,9 @@
             </div>
           </div>
       </div> -->
-    </div>
-    <mt-popup
-      v-model="popups.show"
-      popup-transition="popup-fade">
+    </van-list>
+    <van-popup
+      v-model="popups.show">
       <div class="ui-alert">
         <div class="ui-alert-title">
           <span>课程介绍</span>
@@ -66,7 +71,7 @@
         </div>
         <div class="ui-alert-body" v-html="popups.content"></div>
       </div>
-    </mt-popup>
+    </van-popup>
   </div>
 </template>
 
@@ -90,6 +95,7 @@ export default {
       rows: [],
       total: 10,
       isloading: false,
+      finished: false,
       popups: {
         show: false,
         content: ""
@@ -112,6 +118,7 @@ export default {
       this.params.category_id = cateId || "";
       this.rows = [];
       this.getRows(1);
+      this.finished = false;
     },
     getRows(page) {
       this.isloading = true;
@@ -121,11 +128,13 @@ export default {
         this.rows = [...this.rows, ...data.rows];
         this.$nextTick(() => {
           this.isloading = false;
+          if (this.rows.length >= this.total) {
+            this.finished = true;
+          }
         });
       });
     },
     loadMore() {
-      if (this.rows.length >= this.total || this.isloading) return false;
       this.getRows(++this.params.p);
     },
     showDesc(item) {
@@ -133,7 +142,7 @@ export default {
       this.popups.show = true;
     }
   },
-  mounted() {
+  created() {
     this.getCategory();
     this.changeCate(0);
   }

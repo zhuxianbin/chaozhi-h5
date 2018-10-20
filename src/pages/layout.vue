@@ -1,12 +1,12 @@
 <template>
   <div>
     <router-view></router-view>
-    <mt-tabbar v-if='!["login","register","forget"].includes(currentRouter)' :fixed="true" v-model="tabActive">
-      <mt-tab-item @click.native="changeTab(item)" v-for='item in tabList' :key='item.id' :id="item.id">
-        <i class='iconfont' :class='item.icon'></i>
+    <van-tabbar v-model="tabActive" @change='changeTab' v-if='!["login","register","forget"].includes(currentRouter)'>
+      <van-tabbar-item icon="shop" v-for='item in tabList' :key='item.id' :id="item.id">
+        <i class='iconfont' slot="icon" :class='item.icon'></i>
         {{item.name}}
-      </mt-tab-item>
-    </mt-tabbar>
+      </van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
         }
       ],
       currentRouter: "index",
-      tabActive: "index"
+      tabActive: 0
     };
   },
   watch: {
@@ -51,13 +51,15 @@ export default {
     }
   },
   methods: {
-    changeTab(item) {
-      this.$router.push({path:`/${item.id}`});
+    changeTab(index) {
+      const { id } = this.tabList[index];
+      this.$router.push({ path: `/${id}` });
     }
   },
   mounted() {
     let { path, name } = this.$route;
-    this.tabActive = name;
+
+    this.tabActive = this.tabList.findIndex(item => item.name == name);
   }
 };
 </script>

@@ -1,8 +1,11 @@
 <template>
-  <div id="app"><router-view></router-view></div>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
+export default {};
 </script>
 
 <style lang="less" scoped>
@@ -11,3 +14,5 @@
   margin: 0 auto;
 }
 </style>
+
+

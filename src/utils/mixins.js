@@ -23,6 +23,9 @@ export default {
           s = s.replace(/\&[a-z]+;/gi, "");
           s = s.replace(/\s+/g, "\n");
           return s;
+        },
+        money(val, accuracy = 1) {
+          return `￥${(val * accuracy).toFixed(2)}`;
         }
       },
       methods: {

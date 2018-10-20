@@ -1,16 +1,17 @@
 <template>
   <div class="page">
-    <div flex class="mb-20 user-info">
-      <div flex-box="0" style='margin-right:1rem;'>
+    <van-row class="mb-20 user-info">
+      <van-col :span='8'>
         <img class="user-avatar" :src='userInfo.user.avatar_file||avatar' style='width:2.5rem;height:2.5rem;'>
-      </div>
-      <div flex-box="1">
+      </van-col>
+      <van-col :span='16'>
         <div class="mb-10">学员账号:<span v-text='userInfo.user.phone'></span></div>
         <div class="t-xs">
           欢迎您来到超职ACI课程培训中心<br>您已购{{courseCount}}个课程
         </div>
-      </div>
-    </div>
+      </van-col>
+    </van-row>
+    
     <!-- <div v-if='userInfo.status==0&&courseCount>0' flex class="mb-20 user-info">
       <div flex-box="0" style='margin-right:1rem;'>
         <i style='color:#7ED321;font-size:2rem;' class="iconfont icon-caifang-tianbaoren"></i>
@@ -35,7 +36,7 @@
           您还未参考网校的ACI注册国际心理咨询师课程培训，请先缴费学习课程，再进行报名。
         </div>
         <div class="t-xs">
-          <mt-button type='danger' @click.native='$router.push("./male")' size='small'>点击购买课程</mt-button>
+          <van-button type='danger' @click.native='$router.push("./male")' size='small'>点击购买课程</van-button>
         </div>
       </div>
     </div>
@@ -61,7 +62,7 @@
     </van-cell-group>
    
     <div class="t-center user-logout">
-      <mt-button @click.native='doLogout' style="width:60vw;">退出登录</mt-button>
+      <van-button @click='doLogout' block >退出登录</van-button>
     </div>
   </div>
 </template>

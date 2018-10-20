@@ -8,11 +8,12 @@
       <div class='swipe-box' style='height:60vh;'>
         <div class="iconfont icon-back"></div>
         <div class="iconfont icon-right"></div>
-        <mt-swipe :showIndicators='false'>
-          <mt-swipe-item>
+
+        <van-swipe :autoplay="3000" :show-indicators="false">
+          <van-swipe-item>
             <div style='padding:1rem 2rem;'>
               <div class="t-center mb-10">
-                <img src='http://www.chaozhiedu.com/static/images/Bitmap1.png' style='width:60vw;'>
+                <img src='http://www.chaozhiedu.com/static/images/Bitmap1.png' class='img-r'>
               </div>
               <div>
                 <div class="t-center t-md mb-10">
@@ -23,11 +24,11 @@
                 </div>
               </div>
             </div>
-          </mt-swipe-item>
-          <mt-swipe-item>
+          </van-swipe-item>
+          <van-swipe-item>
             <div style='padding:1rem 2rem;'>
               <div class="t-center mb-10">
-                <img src='http://www.chaozhiedu.com/static/images/Bitmap2.png' style='width:60vw;'>
+                <img src='http://www.chaozhiedu.com/static/images/Bitmap2.png' class='img-r'>
               </div>
               <div>
                 <div class="t-center t-md mb-10">
@@ -38,11 +39,11 @@
                 </div>
               </div>
             </div>
-          </mt-swipe-item>
-          <mt-swipe-item>
+          </van-swipe-item>
+          <van-swipe-item>
             <div style='padding:1rem 2rem;'>
               <div class="t-center mb-10">
-                <img src='http://www.chaozhiedu.com/static/images/Bitmap3.png' style='width:60vw;'>
+                <img src='http://www.chaozhiedu.com/static/images/Bitmap3.png' class='img-r'>
               </div>
               <div>
                 <div class="t-center t-md mb-10">
@@ -53,11 +54,11 @@
                 </div>
               </div>
             </div>
-          </mt-swipe-item>
-          <mt-swipe-item>
+          </van-swipe-item>
+          <van-swipe-item>
             <div style='padding:1rem 2rem;'>
               <div class="t-center mb-10">
-                <img src='http://www.chaozhiedu.com/static/images/Bitmap4.png' style='width:60vw;'>
+                <img src='http://www.chaozhiedu.com/static/images/Bitmap4.png' class='img-r'>
               </div>
               <div>
                 <div class="t-center t-md mb-10">
@@ -68,8 +69,8 @@
                 </div>
               </div>
             </div>
-          </mt-swipe-item>
-        </mt-swipe>
+          </van-swipe-item>
+        </van-swipe>
       </div>
     </div>
     <div class="t-center t-xs floor-3">
@@ -270,42 +271,42 @@
         <p>超职网集职业教育类、财会类、学历教育类、建筑工程类、教师资格证类等多领域五大体系课程于一体，“精益求精”是超职的核心理念，在职业教育类和学历教育类已取得了高于行业内平均通过率的骄人成绩，在财会类、学历教育类、建筑工程类、教师资格证类获得了行业内的认可和学员的一致好评，但我们不止于此，未来，超职将为更多的追梦人，提供多元化、专业化、人性化的教学课程体系。</p>
       </div>
       <div style='padding: 0 1rem 1rem;'>
-        <div flex class="mb-10">
-          <div flex-box="0">
+        <van-row type="flex" class="mb-10">
+          <van-col>
             <div class="t-center mr-10" style='background:#fd1;color:#666;height:2rem;width:2rem;border-radius:2rem;line-height:2rem;'>01</div>
-          </div>
-          <div flex-box="1">
+          </van-col>
+          <van-col >
             <div style='color:#56509F;'>互动教学</div>
             <div class="t-xs">专业团队悉心打造的优质课程内容，精心设计的教学环节，科学有效</div>
-          </div>
-        </div>
-        <div flex class="mb-10">
-          <div flex-box="0">
+          </van-col>
+        </van-row>
+        <van-row type="flex" class="mb-10">
+          <van-col>
 <div class="t-center mr-10" style='background:#fd1;color:#666;height:2rem;width:2rem;border-radius:2rem;line-height:2rem;'>02</div>
-          </div>
-          <div flex-box="1">
+          </van-col>
+          <van-col>
             <div style='color:#56509F;'>智能题库</div>
             <div class="t-xs">根据学习效果智能匹配训练，巩固学习成果。</div>
-          </div>
-        </div>
-        <div flex class="mb-10">
-          <div flex-box="0">
+          </van-col>
+        </van-row>
+        <van-row type="flex" class="mb-10">
+          <van-col flex-box="0">
 <div class="t-center mr-10" style='background:#fd1;color:#666;height:2rem;width:2rem;border-radius:2rem;line-height:2rem;'>03</div>
-          </div>
-          <div flex-box="1">
+          </van-col>
+          <van-col flex-box="1">
             <div style='color:#56509F;'>社交服务</div>
             <div class="t-xs">贴心的班主任、助教团队全天候贴心答疑，解决各类学习问题。</div>
-          </div>
-        </div>
-        <div flex class="mb-10">
-          <div flex-box="0">
+          </van-col>
+        </van-row>
+        <van-row type="flex" class="mb-10">
+          <van-col flex-box="0">
 <div class="t-center mr-10" style='background:#fd1;color:#666;height:2rem;width:2rem;border-radius:2rem;line-height:2rem;'>04</div>
-          </div>
-          <div flex-box="1">
+          </van-col>
+          <van-col flex-box="1">
             <div style='color:#56509F;'>互动小组</div>
             <div class="t-xs">同窗好友一起聊天学习，共同督促，共同成长</div>
-          </div>
-        </div>
+          </van-col>
+        </van-row>
       </div>
       
     </div>

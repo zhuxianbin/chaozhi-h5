@@ -20,14 +20,14 @@
 </template>
 
 <script>
-import { Collapse, CollapseItem, Cell, CellGroup } from "vant";
+// import { Collapse, CollapseItem, Cell, CellGroup } from "vant";
 export default {
-  components: {
-    [Cell.name]: Cell,
-    [CellGroup.name]: CellGroup,
-    [Collapse.name]: Collapse,
-    [CollapseItem.name]: CollapseItem
-  },
+  // components: {
+  //   [Cell.name]: Cell,
+  //   [CellGroup.name]: CellGroup,
+  //   [Collapse.name]: Collapse,
+  //   [CollapseItem.name]: CollapseItem
+  // },
   data() {
     return {
       activeNames: ["1"]

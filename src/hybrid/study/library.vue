@@ -15,25 +15,25 @@
       <van-row>
         <van-col span="6">
           <div>
-            <img style='width:30px' src='@/../static/images/hybrid/icon_zjlx@2x.png'>
+            <img style='width:30px' src='/static/images/hybrid/icon_zjlx@2x.png'>
             <div>章节练习</div>
           </div>
         </van-col>
         <van-col span="6">
           <div>
-            <img style='width:30px' src='@/../static/images/hybrid/icon_ztmk@2x.png'>
+            <img style='width:30px' src='/static/images/hybrid/icon_ztmk@2x.png'>
             <div>真题模考</div>
           </div>
         </van-col>
         <van-col span="6">
           <div>
-            <img style='width:30px' src='@/../static/images/hybrid/icon_ctlx@2x.png'>
+            <img style='width:30px' src='/static/images/hybrid/icon_ctlx@2x.png'>
             <div>错题练习</div>
           </div>
         </van-col>
         <van-col span="6">
           <div>
-            <img style='width:30px' src='@/../static/images/hybrid/icon_sstk@2x.png'>
+            <img style='width:30px' src='/static/images/hybrid/icon_sstk@2x.png'>
             <div>收藏题库</div>
           </div>
         </van-col>

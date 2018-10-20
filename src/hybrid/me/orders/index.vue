@@ -4,7 +4,7 @@
   :finished="finished"
   @load="onLoad"
 >
-    <van-panel v-for="item in list" :key="item" :title="'订单号:' + '182739273910934'" status="状态">
+    <van-panel v-for="item in rows" :key="item.id" :title="'ID:' + item.order_id" status="状态">
       <div class='padd'>
         <van-row gutter="10">
           <van-col span="8">
@@ -13,9 +13,9 @@
             </div>
           </van-col>
           <van-col span="16">
-            <div class='t-14'>ACI注册国际心理咨询师-零基础特招班</div>
-            <div class='t-16 t-orange'>￥4000</div>
-            <div class='t-12'>2018-07-27 21:05:49</div>
+            <div class='t-14'>{{item.product_name}}</div>
+            <div class='t-16 t-orange'>{{item.price|money(0.01)}}</div>
+            <div class='t-12'>{{item.starttime}}</div>
           </van-col>
         </van-row>
       </div>
@@ -32,35 +32,75 @@
 </template>
 
 <script>
-import { List, Panel, Button, Row, Col } from "vant";
+// import { List, Panel, Button, Row, Col, Step, Steps } from "vant";
+import { getOrderList } from "@/utils/api";
+import { baseUrl } from "@/utils/config";
+import { getToken } from "@/utils/auth";
 export default {
-  components: {
-    [List.name]: List,
-    [Button.name]: Button,
-    [Panel.name]: Panel,
-    [Row.name]: Row,
-    [Col.name]: Col
-  },
+  // components: {
+  //   [List.name]: List,
+  //   [Panel.name]: Panel,
+  //   [Button.name]: Button,
+  //   [Row.name]: Row,
+  //   [Col.name]: Col,
+  //   [Step.name]: Step,
+  //   [Steps.name]: Steps
+  // },
   data() {
     return {
-      list: [],
       loading: false,
-      finished: false
+      finished: true,
+      dialog: {
+        show: false,
+        data: []
+      },
+      rows: [],
+      status: {
+        "-2": "订单超时",
+        "-1": "订单取消",
+        "0": "待支付",
+        "1": "部分支付",
+        "2": "支付完成"
+      }
     };
   },
   methods: {
-    onLoad() {
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        this.loading = false;
+    getRows() {
+      getOrderList().then(({ code, data }) => {
+        let temp = [];
+        this.rows = data.map(item => {
+          if (temp.indexOf(item.product_id) < 0) {
+            temp.push(item.product_id);
+          } else {
+            item.old = true;
+          }
+          return item;
+        });
 
-        if (this.list.length >= 40) {
-          this.finished = true;
-        }
-      }, 500);
+        // if(this.rows.length>=this.)
+      });
+    },
+    onLoad() {},
+    doPay(item) {
+      if (item.can_pay == 2) {
+        const order_id = item.order_id;
+        window.location.href = `${baseUrl}/api/pay/haimi/h5/${order_id}?token=${getToken()}`;
+        return;
+      }
+      return this.$router.push({
+        name: "pay",
+        query: { order_id: item.order_id }
+      });
+    },
+    doOption(item) {
+      return this.$router.push({
+        name: "pay",
+        query: { product_id: item.product_id }
+      });
     }
+  },
+  created() {
+    this.getRows();
   }
 };
 </script>

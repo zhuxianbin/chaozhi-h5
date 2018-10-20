@@ -10,7 +10,7 @@
           您还未参考网校的ACI注册国际心理咨询师课程培训，请先缴费学习课程，再进行报名。
         </div>
         <div class="t-xs">
-          <mt-button type='danger' size='small'>点击购买课程</mt-button>
+          <van-button type='danger' size='small'>点击购买课程</van-button>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
         </van-cell-group>
       </div>
     </div>
-    <mt-popup
+    <van-popup
       v-model="play.show"
       popup-transition="popup-fade">
       <div class="ui-alert" style='width:100vw;'>
@@ -49,7 +49,7 @@
             <iframe frameborder=0 style='width:96vw;height:72vw;' v-if='play.show' :src='play.src'></iframe>
         </div>
       </div>
-    </mt-popup>
+    </van-popup>
   </div>
 </template>
 

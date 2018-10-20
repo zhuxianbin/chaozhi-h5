@@ -51,9 +51,9 @@ export default [
             component: () => import("@/hybrid/study/index.vue")
           },
           {
-            path: "question/:id?",
-            name: "hybrid-study-question",
-            component: () => import("@/hybrid/study/question-bank.vue")
+            path: "library/:id?",
+            name: "hybrid-study-library",
+            component: () => import("@/hybrid/study/library.vue")
           },
           {
             path: "exam",

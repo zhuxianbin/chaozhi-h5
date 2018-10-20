@@ -1,25 +1,25 @@
 <template>
   <div class="page">
-    <div v-if='userInfo.code==200&&!userInfo.orders' flex class="mb-10" style='background:#fff;padding:.5rem;'>
-      <div flex-box="0" style='margin-right:1rem;'>
+    <van-row v-if='userInfo.code==200&&!userInfo.orders' class="mb-10" style='background:#fff;padding:.5rem;'>
+      <van-col span='8'>
         <i style='color:#FF5900;font-size:2rem;' class="iconfont icon-course"></i>
-      </div>
-      <div flex-box="1">
+      </van-col>
+      <van-col span="12">
         <div class="mb-10">亲爱的学员：</div>
         <div class="t-xs mb-10">
           您还未参考网校的ACI注册国际心理咨询师课程培训，请先缴费学习课程，再进行报名。
         </div>
         <div class="t-xs">
-          <mt-button type='danger' size='small'>点击购买课程</mt-button>
+          <van-button type='danger' size='small'>点击购买课程</van-button>
         </div>
-      </div>
-    </div>
+      </van-col>
+    </van-row>
     <div>
       <div class="mb-10" style='background:#fff;box-shadow:0 1px 2px 0 #eee;' v-for='item in rows' :key='item.id'>
-        <div flex style='padding:.5rem;'>
-          <div flex-box="0" style='margin-right:.5rem;'>
+        <van-row flex style='padding:.5rem;'>
+          <van-col flex-box="0" style='margin-right:.5rem;'>
             <img :src='item.product_img' style='width:5rem;' >
-          </div>
+          </van-col>
           <div flex-box="1">
             <div class="mb-10">{{item.product_name}}</div>
             <!-- <div class="t-xs mb-10">
@@ -33,32 +33,18 @@
               </div>
             </div> -->
           </div>
-        </div>
+        </van-row>
         <!-- <div flex class="t-xs border-bottom" style='padding:0 .5rem .5rem;'>
           <div flex-box="1">直播开始时间：<span class="t-orange">{{item.products.live_time}}</span></div>
           <div flex-box="0">当前课时：第{{item.products.current_course}}节</div>
         </div> -->
         <div class="t-xs">
-          <mt-navbar v-model="item.selected">
-            <!-- <mt-tab-item id="1">
-              <i class="v-center t-orange t-lg iconfont icon-zhibodating"></i>
-              <span>进入直播课堂</span>
-            </mt-tab-item> -->
-            <mt-tab-item id="2">
-              <i class="v-center t-blue t-lg iconfont icon-kechenghuifang"></i>
-              <span>查看录播</span>
-            </mt-tab-item>
-            <mt-tab-item id="3">
-              <i class="v-center t-lg iconfont icon-xiazai-xue"></i>
-              <span>查看资料</span>
-            </mt-tab-item>
-          </mt-navbar>
-          <!-- tab-container -->
-          <mt-tab-container v-model="item.selected">
-            <!-- <mt-tab-container-item id="1">
-              
-            </mt-tab-container-item> -->
-            <mt-tab-container-item id="2">
+          <van-tabs v-model="item.selected">
+            <van-tab id="2">
+              <div slot="title">
+                <i class="v-center t-lg iconfont icon-kechenghuifang"></i>
+                查看录播
+              </div>
               <div style='background:#f9f9f9;margin-top:.5rem;'>
                 <div style='padding:.5rem 0;background:#fff' class="mb-10" v-for='course in item.planLine' :key='course.id'>
                   <div class="t-sm mb-10" style='padding:0 .5rem ;'>
@@ -66,26 +52,30 @@
                     <span class="t-gray">讲师:{{course.teacher}}</span>
                   </div>
                   <div style='padding-left:.5rem;box-sizing:border-box;width:100%;overflow:auto;white-space:nowrap'>
-                    <mt-button type='primary' style='margin-right:.5rem' @click.native='toPlay(plan)' size='small' v-for='plan in course.teach_plan' :key='plan.name'>
+                    <van-button type='primary' style='margin-right:.5rem' @click='toPlay(plan)' size='small' v-for='plan in course.teach_plan' :key='plan.name'>
                       <i class="t-md v-center iconfont icon-kechenghuifang"></i>
                       <span>{{plan.name}}</span>
-                    </mt-button>
+                    </van-button>
                   </div>
                 </div>
               </div>
-            </mt-tab-container-item>
-            <mt-tab-container-item id="3">
+            </van-tab>
+            <van-tab id="3">
+              <div slot="title">
+                <i class="v-center t-lg iconfont icon-xiazai-xue"></i>
+                查看资料
+              </div>
               <van-cell-group>
                 <template v-for="dl in item.downList" >
                   <van-cell :key='dl.id' :title="dl.file_name" :url="dl.file" is-link value="查看" />
                 </template>
               </van-cell-group>
-            </mt-tab-container-item>
-          </mt-tab-container>
+            </van-tab>
+          </van-tabs>
         </div>
       </div>
     </div>
-    <mt-popup
+    <van-popup
       v-model="play.show"
       popup-transition="popup-fade">
       <div class="ui-alert" style='width:100vw;'>
@@ -94,7 +84,7 @@
             <iframe frameborder=0 style='width:96vw;height:72vw;' v-if='play.show' :src='play.src'></iframe>
         </div>
       </div>
-    </mt-popup>
+    </van-popup>
   </div>
 </template>
 
