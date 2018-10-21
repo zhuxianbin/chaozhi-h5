@@ -1,6 +1,8 @@
 <template>
 <div class="layout">
-  <router-view></router-view>
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
 </div>
 </template>
 
@@ -8,7 +10,7 @@
 import { setToken, Cookies } from "@/utils/auth";
 export default {
   created() {
-    const [x, native] = window.navigator.userAgent.split("&&");
+    const [ua, native] = window.navigator.userAgent.split("&&");
     const { token, wifi } = JSON.parse(native || "{}");
     if (token) {
       setToken(token);
@@ -25,6 +27,6 @@ export default {
   position: relative;
   min-height: 100vh;
   overflow-y: auto;
-  background: #f5f5f5;
+  // background: #f5f5f5;
 }
 </style>

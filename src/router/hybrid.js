@@ -53,17 +53,22 @@ export default [
           {
             path: "library/:id?",
             name: "hybrid-study-library",
-            component: () => import("@/hybrid/study/library.vue")
+            component: () => import("@/hybrid/study/library")
           },
           {
-            path: "exam",
-            name: "hybrid-study-exam",
-            component: () => import("@/hybrid/study/exam.vue")
+            path: "node/:course_id?",
+            name: "hybrid-study-node",
+            component: () => import("@/hybrid/study/node/index.vue")
           },
           {
-            path: "score",
+            path: "answer/:id/:type",
+            name: "hybrid-study-answer",
+            component: () => import("@/hybrid/study/answer")
+          },
+          {
+            path: "score/:id/:type",
             name: "hybrid-study-score",
-            component: () => import("@/hybrid/study/score.vue")
+            component: () => import("@/hybrid/study/answer/score")
           },
           {
             path: "course-list",

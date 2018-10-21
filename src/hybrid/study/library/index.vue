@@ -4,20 +4,24 @@
       <van-cell title="本班型课程" />
     </van-cell-group>
     <div class='courses'>
-      <div class="courses-card" v-for='item in 10' :key='"item"+item'>
-        <div class='t-16 mb-10'>第一课</div>
+      <div class="courses-card" 
+          v-for='(item,index) in rows' 
+          :class="{active:active==index}"
+          @click='active = index'
+          :key='item.id'>
+        <div class='t-16 mb-10'>{{item.name}}</div>
         <div class='t-gray t-14'>
-          <span>进度：<span class='t-blue'>35</span>/213</span>
+          <span>进度：<span class='t-blue'>{{item.answer_question_num}}</span>/{{item.question_num}}</span>
         </div>
       </div>
     </div>
-    <div class='card t-center t-12 mb-10'>
+    <div class='card t-center t-12 mb-10' v-if='rows.length>0'>
       <van-row>
         <van-col span="6">
-          <div>
+          <router-link tag='div' :to='{name:"hybrid-study-node",params:{course_id:rows[active].id}}'>
             <img style='width:30px' src='/static/images/hybrid/icon_zjlx@2x.png'>
             <div>章节练习</div>
-          </div>
+          </router-link>
         </van-col>
         <van-col span="6">
           <div>
@@ -65,15 +69,40 @@
 /**
  * 题库
  */
-import { Cell, CellGroup, Panel, Button, Row, Col } from "vant";
+import { getCoursePlan } from "../../../api/hybrid";
 export default {
-  components: {
-    [Cell.name]: Cell,
-    [CellGroup.name]: CellGroup,
-    [Panel.name]: Panel,
-    [Button.name]: Button,
-    [Row.name]: Row,
-    [Col.name]: Col
+  // components: {
+  //   [Cell.name]: Cell,
+  //   [CellGroup.name]: CellGroup,
+  //   [Panel.name]: Panel,
+  //   [Button.name]: Button,
+  //   [Row.name]: Row,
+  //   [Col.name]: Col
+  // }
+  data() {
+    return {
+      params: {
+        pid: "",
+        p: 1,
+        offset: 999,
+        is_question: 1
+      },
+      rows: [],
+      active: 0
+    };
+  },
+  methods: {
+    getCoursePlan() {
+      getCoursePlan(this.params).then(({ data }) => {
+        // console.log(data);
+        this.rows = data.rows;
+      });
+    }
+  },
+  created() {
+    const { id } = this.$route.params;
+    this.params.pid = id;
+    this.getCoursePlan();
   }
 };
 </script>
@@ -89,10 +118,15 @@ export default {
   display: inline-block;
   width: 120px;
   padding: 15px;
+  border: 1px solid #fff;
   border-radius: 5px;
   background: #fff;
   text-align: center;
   margin-left: 10px;
+  box-sizing: border-box;
+  &.active {
+    border: 1px solid #c31a1f;
+  }
 }
 .card {
   background: #fff;

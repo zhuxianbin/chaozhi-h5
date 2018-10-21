@@ -16,9 +16,9 @@ import male from "@/pages/male.vue";
 import pay from "@/pages/pay.vue";
 import info from "@/pages/center/info.vue";
 
-import center from "@/pages/center/layout.vue";
+// import center from "@/pages/center/layout.vue";
 import centerIndex from "@/pages/center/index.vue";
-const orders = () => import("@/pages/center/orders");
+// const orders = () => import("@/pages/center/orders");
 
 import hybrid from "./hybrid";
 
@@ -121,7 +121,7 @@ NProgress.configure({
 }); // NProgress Configuration
 // const whiteList = ["/login", "/index", "/male", "/register", "/forget"]; // no redirect whitelist
 router.beforeEach((to, from, next) => {
-  console.log(to, from);
+  // console.log(to, from);
   NProgress.start(); // start progress bar
   // const token = getToken();
 
