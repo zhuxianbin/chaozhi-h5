@@ -1,4 +1,5 @@
 module.exports = {
+  baseUrl: "./",
   // pages: {
   //   index: {
   //     // page 的入口
@@ -20,6 +21,7 @@ module.exports = {
   //   // 输出文件名会被推导为 `subpage.html`。
   //   // subpage: "src/subpage/main.js"
   // },
+  // assetsDir: "./",
   pluginOptions: {
     moment: {
       locales: ["zh-cn"]
