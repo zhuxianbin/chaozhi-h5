@@ -71,14 +71,6 @@
  */
 import { getCoursePlan } from "../../../api/hybrid";
 export default {
-  // components: {
-  //   [Cell.name]: Cell,
-  //   [CellGroup.name]: CellGroup,
-  //   [Panel.name]: Panel,
-  //   [Button.name]: Button,
-  //   [Row.name]: Row,
-  //   [Col.name]: Col
-  // }
   data() {
     return {
       params: {
